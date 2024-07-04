@@ -1,4 +1,61 @@
-body{
-    background-image: url("./assets/BG_SVG.svg");
-    background-color: #cccccc;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  background-image: url("./assets/BG_SVG.svg");
+  background-color: #cccccc;
+}
+
+.content{
+  display: flex;
+  width: 100vh;
+  gap: 91px; /* Horizontal gap between items */
+  align-items: center; /* Center align items vertically */
+}
+
+/*########################textImage########### */
+
+.textImage {
+  text-align: center;
+  margin: 25px;
+  display: inline-block;
+  font-family: "Poppins";
+  font-weight: 500;
+  position: relative;
+
+}
+
+.textImage .textOnly{
+  text-align: left;
+  margin-bottom: 35px;
+}
+
+.textImage .textOnly #text1{
+  font-weight: 500;
+  font-size: 32px;
+}
+
+.textImage .textOnly #text2{
+  font-weight: 400;
+  font-size: 18px;
+  color: #0B322F;
+}
+
+.textImage img{
+  width: 446px;
+  height: 317px;
+  mix-blend-mode:multiply;
+}
+
+/*########################loginForm########### */
+.loginForm{
+  width: 401px;
+  height: 334px;
+  border: 2px solid rgb(0, 0, 0);
+  display: inline-block;
 }

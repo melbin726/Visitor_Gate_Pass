@@ -1,10 +1,17 @@
+import Header from "./Header.jsx";
+import TextImage from "./TextImage.jsx";
+import LoginForm from "./LoginForm.jsx";
 
 function App() {
 
   return (
-    <div className="bodyMain">
-      
-    </div>
+    <>
+      <Header />
+      <div className="content">
+        <TextImage />
+        <LoginForm />
+      </div>  
+    </>
   );
 }
 

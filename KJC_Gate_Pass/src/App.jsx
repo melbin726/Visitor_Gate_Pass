@@ -1,10 +1,13 @@
+import Header from "./Header.jsx";
+import TextImage from "./TextImage.jsx";
 
 function App() {
 
   return (
-    <div className="bodyMain">
-      
-    </div>
+    <>
+      <Header />
+      <TextImage />
+    </>
   );
 }
 

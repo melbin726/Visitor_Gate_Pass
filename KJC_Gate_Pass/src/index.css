@@ -1,4 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins',sans-serif;
+}
+
 body{
     background-image: url("./assets/BG_SVG.svg");
     background-color: #cccccc;
 }
+
+
+/*&&&&&&&&&&&&&&&&&&&&&&&&&&&&LoginPage&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
+
+
+/*###############################headerLogo##################################*/
+
+.headerLogo{
+    padding: 17px 0px 0px 43px;
+    margin: 0 auto;
+    border: 2px solid black;
+}
+
+/*###############################textImage##################################*/
+
+.textImage{
+    display: inline-flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    margin: 20px;
+}
+
+.textImage .texts{
+    text-align: left;
+}
+
+.textImage .texts #text1{
+    font-weight: 500;
+    font-size: 32px;
+    color: #333333;
+}
+
+.textImage .texts #text2{
+    font-weight: 400;
+    font-size: 16px;
+    color: #0B322F;
+}
+
+.textImage img{
+    mix-blend-mode: multiply;
+}
+
+/*###############################headerLogo##################################*/
+
+
+
+/*&&&&&&&&&&&&&&&&&&&&&&&&&&&&LoginPage&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/

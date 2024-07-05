@@ -3,126 +3,206 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   background-image: url("./assets/BG_SVG.svg");
   background-color: #cccccc;
-  margin: 0;
-  padding: 0;
-  height: 100vh; /* Ensure the body takes full viewport height */
-  width: 100%;
-  display: flex;
-  justify-content: center;
   align-items: center;
 }
 
-.bodyMain {
+.fakeBody{
+  height: 100vh;
+}
+
+.totalContent {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100vh; /* Ensure the container takes full viewport height */
-  width: 100%; /* Ensure the container takes full viewport width */
+  height: 100%;
+  align-content: space-between;
 }
 
-/* Header */
 .headerLogo {
-  padding: 17px 0px 0px 43px;
-  width: 100vw;
-  border: 2px solid black;
-  box-sizing: border-box;
+  padding: 10px 25px 5px;
 }
 
-/* Main content container */
-.textImageLoginForm {
+.imageLogin {
   display: flex;
   justify-content: space-evenly;
-  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 10px;
+  padding: 0px 10px;
   align-items: center;
-  width: 100%;
-  border: 3px solid red;
+  flex-wrap: wrap;
+  flex-grow: 1;
 }
 
-/* Text and Image Container */
+/*########################textImage########### */
+
 .textImage {
+  font-family: "Poppins";
+  font-weight: 500;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  align-items: center;
-  margin: 20px;
+  padding: 10px 2px 10px 2px;
 }
 
-.textImage .texts {
-  text-align: left;
+.textImage .textOnly {
+  display: inline-flex;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 35px;
 }
 
-.textImage .texts #text1 {
+.textImage .textOnly #text1 {
   font-weight: 500;
   font-size: 32px;
-  color: #333333;
 }
 
-.textImage .texts #text2 {
+.textImage .textOnly #text2 {
   font-weight: 400;
-  font-size: 16px;
-  color: #0B322F;
+  font-size: 18px;
+  color: #0b322f;
 }
 
 .textImage img {
+  width: 446px;
+  height: 317px;
   mix-blend-mode: multiply;
 }
 
-/* Login Form */
+/*########################loginForm########### */
 .loginForm {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 36px 21px 28px;
-    gap: 29.38px;
-    
-    width: 401px;
-    height: 333.97px;
-    
-    background: #F2F9FF;
-    border: 1px solid #CACACA;
-    border-radius: 24px;
-    
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-    
+  width: 401px;
+  height: 334px;
+  height: auto;
+  border: 1.2px solid #cacaca;
+  background-color: #f2f9ff;
+  border-radius: 24px;
+  gap: 10px;
+  padding: 21px 21px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
-.textInput{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 2.94px;
-
-    width: 359px;
-    height: 63.91px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
+.textInput {
+  width: 100%;
 }
 
-.textInput p{
-    font-size: 12px;
-    color: #000000;
+.textInput p {
+  font-weight: 400;
+  font-size: 14.36px;
+  color: black;
+  margin-bottom: 3px;
 }
 
-.textInput input{
-    width: 100%;
-    height: 30px;
-    border-radius: 5px;
-    border: 1px solid rgb(177, 177, 177);
-    padding: 0px 10px;
+.textInput .textPara {
+  padding: 0px 15px 0px 10px;
+}
+
+.textInput .textState {
+  padding: 0px 15px 0px 0px;
+}
+
+.textInput input {
+  width: 100%;
+  height: 49.24px;
+  border: 1px solid rgba(102, 102, 102, 0.359);
+  border-radius: 10.55px;
+}
+
+.textHide {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.textHide div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.textHide div img {
+  width: 20px;
+  height: 20px;
+  margin-right: 7px;
+}
+
+.loginForm button {
+  width: 100%;
+  height: 42px;
+  background-color: #2995e5;
+  border: 0.8px solid #a3a1a1;
+  font-weight: 500;
+  color: white;
+  padding: 8px 8px;
+  text-align: center;
+  border-radius: 23.5px;
+}
+
+.loginForm a {
+  color: #065a99;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 15px 30px 0px;
+}
+
+.footer .CPtexts {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .textImage .textOnly #text1{
+    font-size: 24px !important;
+  }
+
+  .textOnly #text2{
+    font-size: 12px !important;
+  }
+
+  .textImage img{
+    width: 329px;
+    height: 234.9px;
+  }
+
+}
+
+@media (max-width: 460px) {
+  .loginForm{
+    width: 390px !important;
+    height: 313px !important;
+  }
+}
+
+@media (max-width: 362px) {
+  .textImage img{
+    height: 232.9px !important;
+    width: 300px !important;
+  }
+
+  .headerLogo{
+    padding: 10px 5px 5px !important;
+  }
+
+  .headerLogo img{
+    width: 300px;
+    height: auto;
+  }
+
+  .footer .CPtexts p{
+    font-size: 14px;
+  }
+
 }

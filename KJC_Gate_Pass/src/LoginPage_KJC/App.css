@@ -115,6 +115,11 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  cursor: pointer;
+}
+
+.textHide div p{
+  cursor: pointer;
 }
 
 .textHide div img {

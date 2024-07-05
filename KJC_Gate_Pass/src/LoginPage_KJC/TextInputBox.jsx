@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 // Import your images
-import image1 from './assets/eye_Hide.svg';
-import image2 from './assets/eye_Show.svg';
+import image1 from '../assets/eye_Hide.svg';
+import image2 from '../assets/eye_Show.svg';
 
 function TextInputBox(props){  
 

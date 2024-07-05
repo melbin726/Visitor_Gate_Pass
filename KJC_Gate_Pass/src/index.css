@@ -1,60 +1,128 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins',sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
 }
 
-body{
-    background-image: url("./assets/BG_SVG.svg");
-    background-color: #cccccc;
+body {
+  background-image: url("./assets/BG_SVG.svg");
+  background-color: #cccccc;
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Ensure the body takes full viewport height */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
-/*&&&&&&&&&&&&&&&&&&&&&&&&&&&&LoginPage&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
-
-
-/*###############################headerLogo##################################*/
-
-.headerLogo{
-    padding: 17px 0px 0px 43px;
-    margin: 0 auto;
-    border: 2px solid black;
+.bodyMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh; /* Ensure the container takes full viewport height */
+  width: 100%; /* Ensure the container takes full viewport width */
 }
 
-/*###############################textImage##################################*/
+/* Header */
+.headerLogo {
+  padding: 17px 0px 0px 43px;
+  width: 100vw;
+  border: 2px solid black;
+  box-sizing: border-box;
+}
 
-.textImage{
-    display: inline-flex;
+/* Main content container */
+.textImageLoginForm {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  border: 3px solid red;
+}
+
+/* Text and Image Container */
+.textImage {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  margin: 20px;
+}
+
+.textImage .texts {
+  text-align: left;
+}
+
+.textImage .texts #text1 {
+  font-weight: 500;
+  font-size: 32px;
+  color: #333333;
+}
+
+.textImage .texts #text2 {
+  font-weight: 400;
+  font-size: 16px;
+  color: #0B322F;
+}
+
+.textImage img {
+  mix-blend-mode: multiply;
+}
+
+/* Login Form */
+.loginForm {
+    display: flex;
     flex-direction: column;
-    gap: 14px;
-    align-items: center;
-    margin: 20px;
+    justify-content: space-between;
+    padding: 36px 21px 28px;
+    gap: 29.38px;
+    
+    width: 401px;
+    height: 333.97px;
+    
+    background: #F2F9FF;
+    border: 1px solid #CACACA;
+    border-radius: 24px;
+    
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    
 }
 
-.textImage .texts{
-    text-align: left;
+.textInput{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 2.94px;
+
+    width: 359px;
+    height: 63.91px;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
 }
 
-.textImage .texts #text1{
-    font-weight: 500;
-    font-size: 32px;
-    color: #333333;
+.textInput p{
+    font-size: 12px;
+    color: #000000;
 }
 
-.textImage .texts #text2{
-    font-weight: 400;
-    font-size: 16px;
-    color: #0B322F;
+.textInput input{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid rgb(177, 177, 177);
+    padding: 0px 10px;
 }
-
-.textImage img{
-    mix-blend-mode: multiply;
-}
-
-/*###############################headerLogo##################################*/
-
-
-
-/*&&&&&&&&&&&&&&&&&&&&&&&&&&&&LoginPage&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/

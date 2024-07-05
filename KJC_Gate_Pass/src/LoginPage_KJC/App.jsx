@@ -2,6 +2,7 @@ import Header from "./Header.jsx";
 import TextImage from "./TextImage.jsx";
 import LoginForm from "./LoginForm.jsx";
 import Footer from "./Footer.jsx";
+import "./App.css"
 
 function App() {
   return (

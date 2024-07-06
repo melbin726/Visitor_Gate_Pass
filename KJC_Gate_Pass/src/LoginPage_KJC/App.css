@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 .fakeBody{
-  height: 100vh;
+  height: 100dvh;
 }
 
 .totalContent {
@@ -9,6 +9,9 @@
   flex-direction: column;
   height: 100%;
   align-content: space-between;
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
 }
 
 .headerLogo {

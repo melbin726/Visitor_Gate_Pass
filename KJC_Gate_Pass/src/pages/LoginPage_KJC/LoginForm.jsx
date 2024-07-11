@@ -12,7 +12,7 @@ function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const yourIPAddress = '192.168.29.126';
+    const yourIPAddress = 'Your IP Address';
 
     useEffect(() => {
         document.title = `Login: ${width} x ${height}`;

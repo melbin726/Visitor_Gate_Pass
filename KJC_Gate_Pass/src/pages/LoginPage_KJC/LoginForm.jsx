@@ -12,7 +12,7 @@ function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const yourIPAddress = 'Your IP Address';
+    const API_URL = 'http://192.168.29.126:3001/api'; // Update with your backend URL
 
     useEffect(() => {
         document.title = `Login: ${width} x ${height}`;
@@ -33,7 +33,7 @@ function LoginForm() {
 
     const handleRegister = (event) => {
         event.preventDefault();
-        axios.post(`http://${yourIPAddress}:3001/api/register`, { username, password, role: 'admin'})
+        axios.post(`${API_URL}/register`, { username, password, role: 'admin'})
             .then(result => {
                 console.log(result);
                 setPassword('');
@@ -44,13 +44,15 @@ function LoginForm() {
 
     const handleLogin = (event) => {
         event.preventDefault();
-        axios.post(`http://${yourIPAddress}:3001/api/login`, { username, password })
+        const lowercaseUsername = username.toLowerCase();
+        axios.post(`${API_URL}/login`, { username: lowercaseUsername, password })
             .then(result => {
                 console.log(result);
                 if (result.data === "Success") {
                     navigate('/dashboard');
                 } else {
                     alert(result.data);
+                    navigate('/login');
                 }
                 setPassword('');
                 setUsername('');
@@ -59,7 +61,6 @@ function LoginForm() {
     };
 
     return (
-        <form>
             <div className="loginForm">
                 <div className="textInput">
                     <label className='textPara' htmlFor='usernameText'>Username</label>
@@ -94,7 +95,6 @@ function LoginForm() {
                 <button type="submit" className="login-button" onClick={handleLogin}>Log in</button>
                 <Link to='/dashboard' className="forgetPwd">Forget your password?</Link>
             </div>
-        </form>
     );
 }
 

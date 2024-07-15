@@ -1,3 +1,5 @@
+// ../models/users.js
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -39,6 +41,6 @@ userSchema.pre('save', async function(next) {
 });
 
 // Create a model based on the schema
-const UserModel = mongoose.model('User', userSchema);
+const UserModel = mongoose.model('users', userSchema);
 
 module.exports = UserModel;

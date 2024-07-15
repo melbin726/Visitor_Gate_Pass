@@ -4,8 +4,8 @@ import React from 'react';
 
 const StatusBadge = ({ card }) => {
     const getStatusClass = (status) => {
-        if (status === "checked_in") return "status-green";
-        if (status === "checked_out") return "status-red";
+        if (status === "checked_in") return "status-red";
+        if (status === "checked_out") return "status-green";
         return "status-orange";
     };
 

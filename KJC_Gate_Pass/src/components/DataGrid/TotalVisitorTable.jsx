@@ -49,7 +49,7 @@ const TotalVisitorTable = ({ visitors }) => {
                 <TableHeader onSort={handleSort} sortConfig={sortConfig} />
                 <tbody>
                     {sortedVisitors.map(visitor => (
-                        <TableRow key={visitor.id} visitor={visitor} />
+                        <TableRow key={visitor._id} visitor={visitor} />
                     ))}
                 </tbody>
             </table>

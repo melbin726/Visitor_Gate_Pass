@@ -21,3 +21,81 @@ body {
   background-color: #F3FAFF;
   align-items: center;
 }
+
+
+.fakeBody{
+  height: 100%;
+  width: 100%;
+}
+
+.totalContent {
+  height: 100%;
+  width: 100%;
+}
+
+.content{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.fakeSideBAr{
+  min-width: 191px;
+  min-height: 100%;
+}
+
+.main-content{
+  width: 100%;
+  height: 100vh;
+}
+
+@media (max-width: 419px) {
+  .fakeSideBAr{
+    min-width: 120px;
+  }
+}
+
+@media (max-width:355px) {
+  .fakeSideBAr{
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 620px) {
+  .main-content{
+    width: 820px;    
+  }
+}
+
+@media (max-width: 780px) {
+  .main-content{
+    width: 800px;
+  }
+}
+
+
+  @media (max-width: 419px) {
+    .fakeSideBAr{
+      min-width: 120px;
+    }
+  }
+
+  @media (max-width:355px) {
+    .fakeSideBAr{
+      min-width: 100px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .main-content{
+      width: 820px;    
+    }
+  }
+
+  @media (max-width: 780px) {
+    .main-content{
+      width: 800px;
+    }
+  }

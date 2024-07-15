@@ -48,7 +48,7 @@ tr:nth-child(even){
 }
 
 th {
-    background-color: hsl(212, 99%, 34%);
+    background-color: #0151ad;
     border: 1px solid #dddddd3c;
     color: white;
     cursor: pointer; /* Indicate that columns are sortable */

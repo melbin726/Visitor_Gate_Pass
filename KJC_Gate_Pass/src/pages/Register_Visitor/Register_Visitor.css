@@ -1,0 +1,25 @@
+/* Register_Visitor.css */
+
+
+
+.register-form{
+    display: inline-flex;
+    width: 98%;
+    height: 95%;
+    background-color: white;
+    border: 0.5px solid black;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.form-title{
+    display: flex;
+    width: 100%;
+
+
+}
+
+.form-title img{
+    width: 30px;
+    height: auto;
+}

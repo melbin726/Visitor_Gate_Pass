@@ -1,0 +1,72 @@
+/* Dashboard.css */
+
+.fakeBody{
+    height: 100%;
+    width: 100%;
+  }
+  
+  .totalContent {
+    height: 100%;
+    width: 100%;
+  }
+
+  .content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+  }
+
+  .fakeSideBAr{
+    min-width: 191px;
+    min-height: 100%;
+  }
+
+  .main-content{
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  .Widgets{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    overflow: auto;
+    margin: 20px 10px 20px;
+  }
+
+  .data-grid{
+    width: 100%;
+    margin: 2px;
+  }
+
+  @media (max-width: 419px) {
+    .fakeSideBAr{
+      min-width: 120px;
+    }
+  }
+
+  @media (max-width:355px) {
+    .fakeSideBAr{
+      min-width: 100px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .main-content{
+      width: 820px;    
+    }
+  }
+
+  @media (max-width: 780px) {
+    .main-content{
+      width: 800px;
+    }
+  }

@@ -18,7 +18,7 @@ function Register_Visitor() {
   return (
     <div className="fakeBody">
       <div className="totalContent">
-        <SideBarNavi />
+        <SideBarNavi activeLink="registerLink" />
         <div className="content">
           <div className="fakeSideBAr"/>
           <main className="main-content">

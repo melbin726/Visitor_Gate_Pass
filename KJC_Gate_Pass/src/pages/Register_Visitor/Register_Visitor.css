@@ -1,6 +1,8 @@
 /* Register_Visitor.css */
 
-
+.fakeSideBAr{
+    width: 175px;
+}
 
 .register-form{
     display: inline-flex;
@@ -23,3 +25,9 @@
     width: 30px;
     height: auto;
 }
+
+.main-content{
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+  }

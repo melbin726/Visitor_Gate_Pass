@@ -42,13 +42,14 @@ body {
 }
 
 .fakeSideBAr{
-  min-width: 191px;
+  min-width: 180px;
   min-height: 100%;
 }
 
 .main-content{
   width: 100%;
   height: 100vh;
+  overflow: auto;
 }
 
 @media (max-width: 419px) {

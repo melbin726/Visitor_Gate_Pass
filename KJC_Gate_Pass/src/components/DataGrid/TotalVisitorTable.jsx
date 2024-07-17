@@ -5,7 +5,7 @@ import TableHeader from './TableHeader.jsx';
 import TableRow from './TableRow.jsx';
 import './DataGrid.css';
 
-const TotalVisitorTable = ({ visitors }) => {
+const TotalVisitorTable = ({ visitors , totalVisitorCount}) => {
     const [filterText, setFilterText] = useState('');
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
 
@@ -38,15 +38,20 @@ const TotalVisitorTable = ({ visitors }) => {
 
     return (
         <div className='data-grid-table'>
-            <h2>Visitor Data Grid</h2>
-            <input
-                type="text"
-                placeholder="Filter by name or phone number"
-                value={filterText}
-                onChange={handleFilterChange}
-            />
+            <div className='text-count'>
+                <span>
+                    <h2>Visitor Data Grid</h2>
+                    <input
+                        type="text"
+                        placeholder="Filter by name or phone number"
+                        value={filterText}
+                        onChange={handleFilterChange}
+                    />
+            </span>
+            <h1>{totalVisitorCount}</h1>
+            </div>            
             <table>
-                <TableHeader onSort={handleSort} sortConfig={sortConfig} />
+                <TableHeader onSort={handleSort} sortConfig={sortConfig} mode="totalVisitors" />
                 <tbody>
                     {sortedVisitors.map(visitor => (
                         <TableRow key={visitor._id} visitor={visitor} />

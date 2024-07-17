@@ -12,7 +12,7 @@ const VisitorCardSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['free', 'assigned', 'checked_in', 'checked_out'], // Enum to restrict the values for status
+    enum: ['available', 'assigned'], //'checked_in', 'checked_out'], // Enum to restrict the values for status
     required: true
   },
   assigned_to: {

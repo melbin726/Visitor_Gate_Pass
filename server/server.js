@@ -1,10 +1,9 @@
-//server.js
-
+require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const routes = require('./routes/auth.js'); // Adjust path as necessary
-const db = require('./config/db'); // Adjust path as necessary
+const connectDB = require('./config/db'); // Adjust path as necessary
 
 const app = express();
 
@@ -29,7 +28,7 @@ app.use('/api', routes); // Mount main router
 const PORT = process.env.PORT || 3001;
 
 // Start server
-db.once('open', () => {
+connectDB().then(() => {
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     });

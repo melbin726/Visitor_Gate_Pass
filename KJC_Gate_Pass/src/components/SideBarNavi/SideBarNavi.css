@@ -13,6 +13,11 @@
     box-shadow: 2px 2px 7px hsla(0, 0%, 0%, 0.068);
     position: fixed;
     z-index: 1;
+    overflow: auto;
+}
+
+.sideNaviBar::-webkit-scrollbar{
+  display: none;
 }
   
   .logoNavi{
@@ -63,18 +68,29 @@
     text-align: center;
   }
 
-  #dashboardLink p{
-    text-align: left;
-    padding-left: 10px;
-    color: white;
-  }
 
-  #dashboardLink{
-    background-color: hsl(194, 99%, 34%);
-  }
 
-  #dashboardLink img{
-    filter: invert(100%);
+.naviLinks {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.naviLinks img {
+  max-width: 24px; /* Adjust based on your icon size */
+  margin-right: 10px;
+}
+
+/* Apply styles when link is selected */
+.naviLinks.selected {
+  background-color: #0184AB; /* Change background color when selected */
+}
+
+.naviLinks.selected p {
+  color: white; /* Change text color when selected */
+}
+
+.naviLinks.selected img {
+  filter: invert(100%); /* Invert icon color when selected */
 }
 
 .naviLinks:hover {
@@ -193,9 +209,9 @@
     margin-top: 5px;
   }
 }
-
+/* 
 @media (max-width: 942px) {
   .sideNaviBar{
-    /* height: 940px; */
+     height: 940px; 
   }
-}
+} */

@@ -11,7 +11,8 @@ const VisitorSessionSchema = new Schema({
     exit_gate: String,
     check_out_time: Date,
     group_size: Number,
-    group_id: { type: Schema.Types.ObjectId, ref: 'visitor_groups' }
+    group_id: { type: Schema.Types.ObjectId, ref: 'visitor_groups' },
+    photos: String // Array of base64 encoded images
 });
 
 const VisitorSessionModel = mongoose.model('visitor_sessions', VisitorSessionSchema);

@@ -1,33 +1,117 @@
 /* Register_Visitor.css */
+*{
+    margin: 0;
+    padding: 0;
+}
 
 .fakeSideBAr{
     width: 175px;
 }
 
+.main-content{
+    display: flex;
+    align-items: center;
+}
+
 .register-form{
     display: inline-flex;
+    flex-direction: column;
     width: 98%;
     height: 95%;
     background-color: white;
     border: 0.5px solid black;
-    border-radius: 5px;
-    padding: 15px;
+    border-radius: 2px;
+    overflow: auto;
+}
+
+.register-form h2, p, label, input, img{
+    width: fit-content;
+    height: fit-content;
+    font-family: 'Roboto', 'Poppins';
+    font-weight: 400;
 }
 
 .form-title{
     display: flex;
+    flex-direction: column;
     width: 100%;
-
-
+    height: fit-content;
+    padding: 15px;
 }
 
 .form-title img{
-    width: 30px;
-    height: auto;
+    width: 30px;    
 }
 
-.main-content{
+.form-title h2{
+    font-family: 'Roboto','Poppins';
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.icon-text{
+    display: flex;
+    flex-direction: row;
+}
+
+.lines{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+}
+
+.line1{
+    width: 150px;
+    height: 2px;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.line2{
+    width: 100px;
+    height: 5px;
+    background-color: #254F8E;
+}
+
+.main-form{
     width: 100%;
-    height: 100vh;
+    height: 100%;
+}
+
+.left-section-form{
+    width: 100%;
+    height: 100%;
+    display: flex;
     flex-direction: column;
-  }
+}
+
+.text-inputs{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    flex: 1;
+}
+.text-boxes{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.text-boxes input, select{
+    margin: 0;
+    width: 250px;
+    height: 32px;
+    font-family: 'Roboto', 'Poppins', Arial;
+    font-size: 13px;
+    background-color: #F2F2F2;
+    border: 0.5px solid #8e8989;
+    border-radius: 3px;
+}
+
+.text-boxes label{
+    font-family: 'Roboto', 'Poppins', Arial;
+    font-weight: 500;
+    font-size: 15px;
+}

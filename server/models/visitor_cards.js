@@ -8,6 +8,7 @@ const VisitorCardSchema = new Schema({
   },
   card_id: {
     type: Number,
+    unique: true,
     required: true
   },
   status: {

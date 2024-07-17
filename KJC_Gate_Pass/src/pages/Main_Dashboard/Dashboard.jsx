@@ -24,7 +24,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchVisitorData = async () => {
       try {
-        const response = await axios.get('http://192.168.29.126:3001/api/visitors');
+        const response = await axios.get('http://192.168.29.14:3001/api/visitors');
         setVisitorData(response.data);
         setLoading(false);
       } catch (error) {

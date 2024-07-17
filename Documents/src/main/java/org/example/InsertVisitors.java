@@ -21,6 +21,17 @@ public class InsertVisitors {
         MongoCollection<Document> sessionsCollection = database.getCollection("visitor_sessions");
         MongoCollection<Document> groupsCollection = database.getCollection("visitor_groups");
         MongoCollection<Document> cardsCollection = database.getCollection("visitor_cards");
+        MongoCollection<Document> usersCollection = database.getCollection("users");
+
+        String imagePath = "C:/Users/PDAC-79/Downloads/Big_Image.jpg";
+        String base64Image = ImageUtils.imageToBase64(imagePath);
+        base64Image = "data:image/png;base64," + base64Image;
+
+        Document userDocs = new Document()
+                .append("username", "john")
+                .append("password", "1234")
+                .append("role", "admin");
+        usersCollection.insertOne(userDocs);
 
         // Update existing card documents starting from card_id 103
         for (int i = 103; i <= 500; i++) {
@@ -31,8 +42,9 @@ public class InsertVisitors {
             cardsCollection.updateOne(filter, update);
         }
 
+        int cardId = 103;
         // Insert 9 more visitors with varying group sizes
-        for (int i = 1; i <= 9; i++) {
+        for (int i = 1; i <= 10; i++) {
             int groupSize = 1 + (i % 5); // Group sizes from 1 to 5
 
             // Insert visitor
@@ -64,7 +76,7 @@ public class InsertVisitors {
                     .append("check_out_time", i % 2 == 0 ? new Date() : null) // Null for unchecked out
                     .append("group_size", groupSize)
                     .append("group_id", groupId)
-                    .append("photos", ""); // Empty string for photos
+                    .append("photos", base64Image); // Empty string for photos
 
             sessionsCollection.insertOne(sessionDoc);
 
@@ -75,22 +87,30 @@ public class InsertVisitors {
             // Insert group members
             List<Document> groupMembers = new ArrayList<>();
             for (int j = 0; j < groupSize; j++) {
-                int cardId = 103 + (i - 1) * 5 + j; // Adjust card ID starting from 103 and incrementing
+                 // Adjust card ID starting from 103 and incrementing
+
+                ObjectId groupMemberId = new ObjectId();
 
                 // Insert group member
                 Document groupMember = new Document()
+                        .append("_id", groupMemberId)
                         .append("card_id", cardId)
                         .append("check_in_time", new Date()) // Sample check-in time as Date
                         .append("check_out_time", j % 2 == 0 ? new Date() : null) // Null for unchecked out
                         .append("status", j % 2 == 0 ? "checked_out" : "checked_in");
                 groupMembers.add(groupMember);
-                ObjectId groupMemberId = groupMember.getObjectId("_id");
 
+                List<ObjectId> lastAssignedArray = new ArrayList<ObjectId>();
+                if(j % 2 == 0) {
+                    lastAssignedArray.add(groupMemberId);
+                }
                 // Update card status to assigned and assigned_to to null
                 Document cardUpdate = new Document("$set", new Document("status", j % 2 == 0 ? "available" : "assigned")
                         .append("assigned_to", j % 2 == 0 ? null : groupMemberId)
-                        .append("last_assigned", groupMemberId)); // Update last_assigned to single ObjectId
+                        .append("last_assigned", lastAssignedArray)); // Update last_assigned to single ObjectId
                 cardsCollection.updateOne(new Document("card_id", cardId), cardUpdate);
+                cardId++;
+                System.out.println(cardId);
             }
 
             // Update group members in visitor_groups

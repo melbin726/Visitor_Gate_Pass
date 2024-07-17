@@ -5,6 +5,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,8 @@ public class Main{
             Document doc = new Document()
                     .append("card_id", i)
                     .append("status", "available")
-                    .append("assigned_to", null); // assigned_to is null since the card is available
+                    .append("assigned_to", null) // assigned_to is null since the card is available
+                    .append("last_assigned", new ArrayList<ObjectId>()); // Initialize empty array
             documents.add(doc);
         }
 

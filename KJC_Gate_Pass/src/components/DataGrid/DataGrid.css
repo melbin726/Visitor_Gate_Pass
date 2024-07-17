@@ -97,6 +97,11 @@ th.descending::after {
     background-color: #ffc107;
 }
 
+tr img{
+    width: auto;
+    height: 35px;
+}
+
 @media (max-width: 866px) {
     .data-grid-table{
         width: fit-content;

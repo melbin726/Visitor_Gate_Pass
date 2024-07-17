@@ -18,13 +18,13 @@ public class InsertSession {
         MongoCollection<Document> sessionsCollection = database.getCollection("visitor_sessions");
 
         // Example Base64 encoded image (replace with actual Base64 string)
-        String imagePath = "C:/Users/anton/Downloads/Big Image.png";
+        String imagePath = "C:/Users/PDAC-79/Downloads/Big_Image.jpg";
         String base64Image = ImageUtils.imageToBase64(imagePath);
         base64Image = "data:image/png;base64," + base64Image;
 
-        // Update all documents in sessions collection with the new photos field
-        Document updateDoc = new Document("$set", new Document("photos", base64Image));
-        sessionsCollection.updateMany(Filters.exists("_id"), updateDoc);
+//        // Update all documents in sessions collection with the new photos field
+//        Document updateDoc = new Document("$set", new Document("photos", base64Image));
+//        sessionsCollection.updateMany(Filters.exists("_id"), updateDoc);
 
         // Close the MongoDB connection
         mongoClient.close();

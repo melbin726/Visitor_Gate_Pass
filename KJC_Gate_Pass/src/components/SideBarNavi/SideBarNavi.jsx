@@ -6,7 +6,7 @@ import registerIcon from '../../assets/Icons/RegisterBlack_Icon.svg';
 import checkinIcon from '../../assets/Icons/CheckinBlack_Icon.svg';
 import checkoutIcon from '../../assets/Icons/CheckoutBlack_Icon.svg';
 
-function SideBarNavi(){
+function SideBarNavi(props){
 
     const navigate = useNavigate();
 
@@ -15,23 +15,23 @@ function SideBarNavi(){
             <div className='logoNavi'>
                 <img src={circleLogo} alt="KJC_CircLe_Logo_Blu.svg" />
                 <div className='naviGroups'>
-                    <div className='naviLinks' id='dashboardLink' onClick={() => navigate('/dashboard')}>
+                    <div className={`naviLinks ${props.activeLink == 'dashboardLink' ? 'selected' : ''}`} id={`dashboardLink`} onClick={() => navigate('/dashboard')}>
                         <img className='icons' src={dashboardIcon} alt="HomeBlack_Icon" />
                         <p>Dashboard</p>
                     </div>
-                    <div className='naviLinks' id='registerLink' onClick={() => navigate('/register_visitor')}>
+                    <div className={`naviLinks ${props.activeLink == 'registerLink' ? 'selected' : ''}`} id='registerLink' onClick={() => navigate('/register_visitor')}>
                         <img className='icons' src={registerIcon} alt="RegisterBlack_Icon" />
                         <p>Register Visitor</p>
                     </div>
-                    <div className='naviLinks' id='checkinLink' onClick={() => navigate()}>
+                    <div className={`naviLinks ${props.activeLink == 'checkinLink' ? 'selected' : ''}`} id='checkinLink' onClick={() => navigate('/checkin')}>
                         <img className='icons' src={checkinIcon} alt="CheckinBlack_Icon" />
                         <p>Check-In Visitor</p>
                     </div>
-                    <div className='naviLinks' id='checkoutLink' onClick={() => navigate()}>
+                    <div className={`naviLinks ${props.activeLink == 'checkoutLink' ? 'selected' : ''}`} id='checkoutLink' onClick={() => navigate('/checkout')}>
                         <img className='icons' src={checkoutIcon} alt="CheckoutBlack_Icon" />
                         <p>Check-out Visitor</p>
-                    </div>                    
-                </div>            
+                    </div>
+                </div>         
             </div>
             <Link to={'/login'} className='logout'>
             <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 512 512">

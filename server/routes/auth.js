@@ -1,5 +1,6 @@
 // routes/auth.js
 const express = require('express');
+const upload = require("../middleware/upload");
 const router = express.Router();
 const UsersModel = require('../models/users.js');
 const Visitor = require('../models/visitors.js');
@@ -53,6 +54,12 @@ router.get('/visitors', async (req, res) => {
             const visitor = visitors.find(v => v._id.equals(session.visitor_id));
             const group = groups.find(g => g._id.equals(session.group_id));
             const groupMembers = group ? group.group_members : ['102',130];
+            const checkOutTimes = groupMembers.map(member => member.check_out_time);
+            let latestCheckOutTime = null;
+            if (checkOutTimes.length > 0 && checkOutTimes.every(time => time !== null)) {
+                latestCheckOutTime = new Date(Math.max(...checkOutTimes.map(time => new Date(time))));
+            }
+            // console.log(checkOutTimes);
 
             // Construct the response object
             return {
@@ -63,10 +70,10 @@ router.get('/visitors', async (req, res) => {
                 entry_gate: session.entry_gate,
                 check_in_time: session.check_in_time,
                 exit_gate: session.exit_gate,
-                check_out_time: session.check_out_time,
+                check_out_time: latestCheckOutTime,
                 group_size: session.group_size,
+                photos: session.photos,
                 visitor_cards: groupMembers ? groupMembers : [{ card_id: 404, status: "checked_out" },{ card_id: 500, status: "checked_in" }],
-                photos: '' // Add photos field if necessary
             };
         });
 

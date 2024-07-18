@@ -73,5 +73,5 @@ Your website is now set up and ready for further development. Good luck!
 
 Feel free to modify this README to suit your project's specific needs.
 
-##Do not edit, push or do any changes to Sources branch!!!!##
-Branch managed by Anthony Pinto.
+## Do not edit, push or do any changes to Sources branch!!!!
+**Branch managed by Anthony Pinto.**

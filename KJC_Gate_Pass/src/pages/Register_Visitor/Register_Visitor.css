@@ -11,6 +11,7 @@
 .main-content{
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .register-form{
@@ -109,7 +110,78 @@
     border: 0.5px solid #8e8989;
     border-radius: 3px;
 }
-
+.custom-select__control {
+    margin: 0 !important;
+    width: 250px !important;
+    height: 32px !important;
+    font-family: 'Roboto', 'Poppins', Arial !important;
+    font-size: 13px !important;
+    background-color: #F2F2F2 !important;
+    border: 0.5px solid #8e8989 !important;
+    border-radius: 3px !important;
+    text-align: left;
+  }
+  
+  .custom-select__value-container {
+    padding: 0 8px !important;
+  }
+  
+  .custom-select__placeholder {
+    color: #aaa !important;
+    font-size: 13px !important;
+    text-align: left;
+  }
+  
+  .custom-select__single-value {
+    color: #333 !important;
+    font-size: 13px !important;
+  }
+  
+  .custom-select__input {
+    color: #333 !important;
+  }
+  
+  .custom-select__indicator {
+    padding: 0 8px !important;
+  }
+  
+  .custom-select__indicator-separator {
+    background-color: #ccc !important;
+  }
+  
+  .custom-select__menu {
+    width: 250px !important;
+    margin: 0 !important;
+  }
+  
+  .custom-select__menu-list {
+    padding: 0 !important;
+  }
+  
+  .custom-select__option {
+    font-family: 'Roboto', 'Poppins', Arial !important;
+    font-size: 13px !important;
+    background-color: #F2F2F2 !important;
+    color: #333 !important;
+    border: 0.1px solid rgba(237, 235, 235, 0.486);
+    padding: 2px !important;
+  }
+  
+  .custom-select__option--is-selected {
+    background-color: #b7becb !important;
+    color: #333 !important;
+  }
+  
+  .custom-select__option--is-focused {
+    background-color: #0d79c7 !important;
+    color: #ffffff !important;
+  }
+  
+  .custom-select__option--is-disabled {
+    background-color: #f9f9f9 !important;
+    color: #ccc !important;
+  }
+  
 .text-boxes label{
     font-family: 'Roboto', 'Poppins', Arial;
     font-weight: 500;

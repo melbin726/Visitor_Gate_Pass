@@ -5,14 +5,45 @@ import SideBarNavi from '../../components/SideBarNavi/SideBarNavi.jsx';
 import registerFormIcon from '../../assets/Icons/RegisterFormIcon.svg';
 
 import { useEffect, useState } from "react";
+import Select from 'react-select';
 import useWindowSize from '../../hooks/useWindowSize.jsx';
 import axios from 'axios'; // Import axios
+
+const options = [
+  { value: 'Campus Tour', label: 'Campus Tour' },
+  { value: 'Meeting', label: 'Meeting' },
+  { value: 'Event', label: 'Event' }
+];
+
+// const customStyles = {
+//   control: (provided) => ({
+//     ...provided,
+//     margin: 0,
+//     width: "250px",
+//     height: "32px",
+//     fontFamily: 'Roboto, Poppins, Arial',
+//     fontSize: "13px",
+//     backgroundColor: "#F2F2F2",
+//     border: "0.5px solid #8e8989",
+//     borderRadius: '3px'
+//   }),
+//   option: (provided) => ({
+//     ...provided,
+//     fontFamily: 'Roboto, Poppins, Arial',
+//     fontSize: "13px",
+//     backgroundColor: "#F2F2F2",
+//   }),
+//       menu: (provided) => ({
+//         ...provided,
+//         width: 200,
+//       }),
+//     };
 
 function Register_Visitor() {
   const { width, height } = useWindowSize();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [name, setName] = useState('');
-  const [purposeOfVisit, setPurposeOfVisit] = useState('');
+  const [purposeOfVisit, setPurposeOfVisit] = useState(null);
   const [entryGate, setEntryGate] = useState('Gate 1'); // Default entry gate
   const [groupSize, setGroupSize] = useState(1);
   const [currentDateTime, setCurrentDateTime] = useState('');
@@ -59,9 +90,10 @@ function Register_Visitor() {
     setPhoneNumber(sanitizedInput.slice(0, 10));
   };
 
-  const handlePurposeChange = (event) => {
-    setPurposeOfVisit(event.target.value);
-  }
+  const handlePurposeChange = (selectedOption) => {
+    setPurposeOfVisit(selectedOption);
+    console.log(selectedOption)
+  };
 
   const handleEntryChange = (event) => {
     setEntryGate(event.target.value);
@@ -106,13 +138,15 @@ function Register_Visitor() {
                     </div>
                     <div className="text-boxes">
                       <label htmlFor="purpose">Purpose of Visit:</label>
-                      <select name="purpose" id="purpose" value={purposeOfVisit} onChange={handlePurposeChange}>
-                        <option value="">Select Purpose</option>
-                        <option value="Campus Tour">Campus Tour</option>
-                        <option value="Meeting">Meeting</option>
-                        <option value="Event">Event</option>
-                        <option value="Other">Other</option>
-                      </select>
+                      <Select 
+                        id="purpose"
+                        name="purpose"
+                        value={purposeOfVisit}
+                        classNamePrefix="custom-select"
+                        onChange={handlePurposeChange}
+                        options={options}
+                        placeholder="Type or select..."
+                      />
                     </div>
                     <div className="text-boxes">
                       <label htmlFor="entry">Entry Gate:</label>
@@ -123,7 +157,13 @@ function Register_Visitor() {
                     </div>
                     <div className="text-boxes">
                       <label htmlFor="groupSize">Group Size:</label>
-                      <input type="number" name="groupSize" id="groupSize" value={groupSize} onChange={handleGroupSizeChange} min="1" max="5" />
+                      <select name="groupSize" id="groupSize" value={groupSize} onChange={handleGroupSizeChange}>
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                        <option value={3}>3</option>
+                        <option value={4}>4</option>
+                        <option value={5}>5</option>
+                      </select>
                     </div>
                     <div className="text-boxes">
                       <label htmlFor="checkInTime">Check-in Time:</label>

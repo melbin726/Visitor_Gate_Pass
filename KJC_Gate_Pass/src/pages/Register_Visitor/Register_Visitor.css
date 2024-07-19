@@ -4,11 +4,16 @@
     padding: 0;
 }
 
+.totalContent{
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
 .fakeSideBAr{
     width: 175px;
 }
 
-.main-content{
+.mainContent{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,6 +98,7 @@
     align-items: center;
     justify-content: space-evenly;
     flex: 1;
+    border: 0.5px solid rgb(194, 194, 194);
 }
 .text-boxes{
     display: flex;

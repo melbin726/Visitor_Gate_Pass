@@ -1,4 +1,4 @@
-  //Dasboard.jsx
+//Dasboard.jsx
 
 import "./Dashboard.css";
 import SideBarNavi from '../../components/SideBarNavi/SideBarNavi.jsx';
@@ -24,7 +24,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchVisitorData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/visitors'); // replace <localhost> with this device's IP address to access the website in your network
+        const response = await axios.get('http://192.168.29.14:3001/api/visitors');
         setVisitorData(response.data);
         setLoading(false);
       } catch (error) {

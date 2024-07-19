@@ -1,52 +1,28 @@
 // Register_Visitor.jsx
-
 import "./Register_Visitor.css";
 import SideBarNavi from '../../components/SideBarNavi/SideBarNavi.jsx';
 import registerFormIcon from '../../assets/Icons/RegisterFormIcon.svg';
 
-import { useEffect, useState } from "react";
-import Select from 'react-select';
+import { useEffect, useState, useRef} from "react";
 import useWindowSize from '../../hooks/useWindowSize.jsx';
-import axios from 'axios'; // Import axios
-
-const options = [
-  { value: 'Campus Tour', label: 'Campus Tour' },
-  { value: 'Meeting', label: 'Meeting' },
-  { value: 'Event', label: 'Event' }
-];
-
-// const customStyles = {
-//   control: (provided) => ({
-//     ...provided,
-//     margin: 0,
-//     width: "250px",
-//     height: "32px",
-//     fontFamily: 'Roboto, Poppins, Arial',
-//     fontSize: "13px",
-//     backgroundColor: "#F2F2F2",
-//     border: "0.5px solid #8e8989",
-//     borderRadius: '3px'
-//   }),
-//   option: (provided) => ({
-//     ...provided,
-//     fontFamily: 'Roboto, Poppins, Arial',
-//     fontSize: "13px",
-//     backgroundColor: "#F2F2F2",
-//   }),
-//       menu: (provided) => ({
-//         ...provided,
-//         width: 200,
-//       }),
-//     };
+import axios from 'axios';
+import CustomDropdown from './CustomDropDown.jsx';
 
 function Register_Visitor() {
   const { width, height } = useWindowSize();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [name, setName] = useState('');
-  const [purposeOfVisit, setPurposeOfVisit] = useState(null);
+  const [purposeOfVisit, setPurposeOfVisit] = useState('');
   const [entryGate, setEntryGate] = useState('Gate 1'); // Default entry gate
   const [groupSize, setGroupSize] = useState(1);
   const [currentDateTime, setCurrentDateTime] = useState('');
+  const NameInputRef = useRef(null);
+  const [options, setOptions] = useState([
+    { value: 'Campus Tour', label: 'Campus Tour' },
+    { value: 'Meeting', label: 'Meeting' },
+    { value: 'Event', label: 'Event' }
+  ]); // Initial options
+  const [filteredOptions, setFilteredOptions] = useState(options); // Define filteredOptions state
 
   useEffect(() => {
     document.title = `Register_Visitor: ${width} x ${height}`;
@@ -62,37 +38,83 @@ function Register_Visitor() {
       const minutes = now.getMinutes().toString().padStart(2, '0');
       const seconds = now.getSeconds().toString().padStart(2, '0');
       const ampm = hours >= 12 ? 'PM' : 'AM';
-  
+
       // Convert hours to 12-hour format
       hours = hours % 12;
       hours = hours ? hours : 12; // Handle midnight (0 hours)
-  
+
       const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds} ${ampm}`;
       setCurrentDateTime(formattedDateTime);
     };
-  
+
     // Update the date and time immediately on mount
     updateCurrentDateTime();
-  
+
     // Update the date and time every second
     const intervalId = setInterval(updateCurrentDateTime, 1000);
-  
+
     // Clean up the interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
-  
 
-  const handlePhonenoChange = (event) => {
+  const handlePhonenoChange = async (event) => {
     const input = event.target.value;
+    NameInputRef.current.readOnly = false;
     const sanitizedInput = input.replace(/\D/g, ''); // Remove non-digit characters
+    const phonenum = sanitizedInput.slice(0, 10); // Ensure the input length is no more than 10
 
-    // Ensure the input length is no more than 10
-    setPhoneNumber(sanitizedInput.slice(0, 10));
+    setPhoneNumber(phonenum); // Update the phone number state
+
+    if (phonenum.length === 10) {
+        try {
+            // Correctly pass phone_number as query parameter
+            const response = await axios.get('http://192.168.29.14:3001/api/phoneNumber', {
+                params: { phone_number: phonenum }
+            });
+
+            if (response.data === '') {
+                console.log('Visitor does not exist');
+                setName(''); // Clear the name if visitor does not exist
+            } else {
+                setName(response.data); // Update the name state with the returned name
+                if(NameInputRef){
+                  NameInputRef.current.readOnly = true;
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching name by phone number:', error);
+            // Optionally set an error state here
+        }
+    } else {
+        setName(''); // Clear the name state if phone number length is less than 10
+    }
+};
+
+  const handlePurposeInputChange = async (selectedOption) => {
+    setPurposeOfVisit(selectedOption);
+    console.log(selectedOption.value); // Log the selected option's value
   };
 
-  const handlePurposeChange = (selectedOption) => {
-    setPurposeOfVisit(selectedOption);
-    console.log(selectedOption)
+  useEffect(() => {
+    // Use this effect to do something when purposeOfVisit updates
+    console.log('Updated purposeOfVisit:', purposeOfVisit);
+  }, [purposeOfVisit]);
+
+  const handlePurposeChange = async (inputValue) => {
+    setPurposeOfVisit(inputValue.value);
+
+    if (!inputValue.value) {
+      setFilteredOptions(options); // Reset to initial options if input is empty
+      return;
+    }
+
+    try {
+      const response = await axios.get('http://192.168.29.14:3001/api/purpose', { params: { query: inputValue.value } });
+      const newOptions = response.data.map(item => ({ value: String(item), label: String(item) }));
+      setFilteredOptions(newOptions);
+    } catch (error) {
+      console.error('Error fetching options:', error);
+    }
   };
 
   const handleEntryChange = (event) => {
@@ -113,7 +135,7 @@ function Register_Visitor() {
         <SideBarNavi activeLink="registerLink" />
         <div className="content">
           <div className="fakeSideBAr" />
-          <main className="main-content">
+          <main className="mainContent">
             <div className="register-form">
               <div className="form-title">
                 <div className="icon-text">
@@ -134,17 +156,16 @@ function Register_Visitor() {
                     </div>
                     <div className="text-boxes">
                       <label htmlFor="name">Name:</label>
-                      <input type="text" name="name" id="name" value={name} onChange={handleNameChange} />
+                      <input type="text" name="name" id="name" ref={NameInputRef} value={name} onChange={handleNameChange} />
                     </div>
                     <div className="text-boxes">
                       <label htmlFor="purpose">Purpose of Visit:</label>
-                      <Select 
+                      <CustomDropdown
                         id="purpose"
                         name="purpose"
                         value={purposeOfVisit}
-                        classNamePrefix="custom-select"
                         onChange={handlePurposeChange}
-                        options={options}
+                        options={filteredOptions}
                         placeholder="Type or select..."
                       />
                     </div>
@@ -171,7 +192,7 @@ function Register_Visitor() {
                     </div>
                   </div>
                   <div className="ID-selects">
-
+                    {/* Additional elements if necessary */}
                   </div>
                 </div>
               </form>

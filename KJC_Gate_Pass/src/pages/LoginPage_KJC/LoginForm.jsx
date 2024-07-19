@@ -12,7 +12,7 @@ function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const API_URL = 'http://localhost:3001/api'; // replace <localhost> with this device's IP address to access the website in your network
+    const API_URL = 'http://192.168.29.14:3001/api'; // replace <localhost> with this device's IP address to access the website in your network
 
     useEffect(() => {
         document.title = `Login: ${width} x ${height}`;

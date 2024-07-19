@@ -7,6 +7,7 @@ const Visitor = require('../models/visitors.js');
 const VisitorSession = require('../models/visitor_sessions.js');
 const VisitorGroup = require('../models/visitor_groups.js');
 const VisitorCard = require('../models/visitor_cards.js');
+const VisitorModel = require('../models/visitors.js');
 
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -85,6 +86,40 @@ router.get('/visitors', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+// New route to handle purpose filtering
+router.get('/purpose', async (req, res) => {
+    try {
+        const query = req.query.query || '';
+        const regex = new RegExp(query, 'i'); // Case-insensitive regex for matching purposes
+        const sessions = await VisitorSession.find({ purpose_of_visit: regex }).distinct('purpose_of_visit');
+        res.json(sessions);
+    } catch (err) {
+        console.error('Error fetching purposes:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+router.get('/phoneNumber', async (req, res) => {
+    const { phone_number } = req.query; // Use req.query for GET parameters
+
+    try {
+        const visitor = await VisitorModel.findOne({ phone_number: phone_number });
+
+        if (visitor) {
+            // visitor found
+            const { name } = visitor; // Assuming you want to return the name
+            res.json(name || ""); // Return the name or an empty string if name is falsy
+        } else {
+            // visitor not found
+            res.json(""); // Return an empty string if no visitor found
+        }
+    } catch (err) {
+        console.error('Visitor lookup error:', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 
 module.exports = router;
 

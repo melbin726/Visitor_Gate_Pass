@@ -57,8 +57,11 @@ public class Loading_Database {
         // Prepare the documents to be inserted
         List<Document> cardDocuments = new ArrayList<>();
         for (int i = 1; i <= 500; i++) {
+            // Format the card_id with leading zeros to ensure it is always three digits
+            String formattedCardId = String.format("%03d", i);
+
             Document cardDoc = new Document()
-                    .append("card_id", i)
+                    .append("card_id", formattedCardId)
                     .append("status", "available")
                     .append("assigned_to", null) // assigned_to is null since the card is available
                     .append("last_assigned", new ArrayList<ObjectId>()); // Initialize empty array
@@ -80,7 +83,9 @@ public class Loading_Database {
                 .append("assigned_to", null)
                 .append("last_assigned", new ArrayList<ObjectId>()));
         for (int i = 103; i <= 500; i++) {
-            Document filter = new Document("card_id", i);
+            String formattedCardId = String.format("%03d", i);
+
+            Document filter = new Document("card_id", formattedCardId);
             cardsCollection.updateOne(filter, updateQuery);
         }
 
@@ -131,7 +136,7 @@ public class Loading_Database {
                 // Insert group member
                 Document groupMember = new Document()
                         .append("_id", groupMemberId)
-                        .append("card_id", cardId)
+                        .append("card_id", String.format("%03d", cardId))
                         .append("check_in_time", new Date())
                         .append("check_out_time", j % 2 == 0 ? new Date() : null)
                         .append("status", j % 2 == 0 ? "checked_out" : "checked_in");
@@ -146,7 +151,7 @@ public class Loading_Database {
                 Document cardUpdate = new Document("$set", new Document("status", j % 2 == 0 ? "available" : "assigned")
                         .append("assigned_to", j % 2 == 0 ? null : groupMemberId)
                         .append("last_assigned", lastAssignedArray));
-                cardsCollection.updateOne(new Document("card_id", cardId), cardUpdate);
+                cardsCollection.updateOne(new Document("card_id", String.format("%03d", cardId)), cardUpdate);
 
                 cardId++;
             }

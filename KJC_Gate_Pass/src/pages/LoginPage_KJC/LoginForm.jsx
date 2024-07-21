@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast , Bounce, Slide} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import useWindowSize from '../../hooks/useWindowSize';
 import eyeClosed from '../../assets/eye_Hide.svg';
 import eyeOpened from '../../assets/eye_Show.svg';
@@ -31,6 +33,30 @@ function LoginForm() {
         setPassword(event.target.value);
     };
 
+    const notifyErr = (text) => toast.error(`${text}`, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+        });
+
+    const notifySuccess = () => toast.success('Sucess', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+        });
+
     const handleRegister = (event) => {
         event.preventDefault();
         axios.post(`${API_URL}/register`, { username, password, role: 'admin'})
@@ -49,9 +75,10 @@ function LoginForm() {
             .then(result => {
                 console.log(result);
                 if (result.data === "Success") {
-                    navigate('/dashboard');
-                } else {
-                    alert(result.data);
+                    notifySuccess();
+                    setTimeout(() => {navigate('/dashboard');}, 2500);              
+                } else{
+                    notifyErr(result.data);
                     navigate('/login');
                 }
                 setPassword('');
@@ -61,6 +88,7 @@ function LoginForm() {
     };
 
     return (
+            <>
             <div className="loginForm">
                 <div className="textInput">
                     <label className='textPara' htmlFor='usernameText'>Username</label>
@@ -95,6 +123,8 @@ function LoginForm() {
                 <button type="submit" className="login-button" onClick={handleLogin}>Log in</button>
                 <Link to='/dashboard' className="forgetPwd">Forget your password?</Link>
             </div>
+            <ToastContainer />
+            </>
     );
 }
 

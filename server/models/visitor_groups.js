@@ -5,16 +5,44 @@ const Schema = mongoose.Schema;
 
 // Define schema for group members within visitor_groups collection
 const GroupMemberSchema = new Schema({
-  card_id: Number,
-  check_in_time: Date,
-  check_out_time: Date
+  _id: {
+    type: Schema.Types.ObjectId,
+    auto: true // Automatically generate ObjectId
+  },
+  card_id: {
+    type: String,
+    required: true
+  },
+  check_in_time: {
+    type: Date,
+    required: true
+  },
+  check_out_time: {
+    type: Date,
+    required: false
+  },
+  status: {
+    type: String,
+    enum: ['checked_in', 'checked_out'],
+    required: true
+  }
 });
 
 // Define schema for visitor_groups collection
 const VisitorGroupSchema = new Schema({
-  _id: Schema.Types.ObjectId, // Automatically generated ObjectId
-  session_id: { type: Schema.Types.ObjectId, ref: 'visitor_sessions' }, // Reference to VisitorSession collection
-  group_members: [GroupMemberSchema]
+  _id: {
+    type: Schema.Types.ObjectId,
+    auto: true // Automatically generate ObjectId
+  },
+  session_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'visitor_sessions',
+    required: true // Assuming session_id is required
+  },
+  group_members: {
+    type: [GroupMemberSchema],
+    required: true // Assuming there must be at least one group member
+  }
 });
 
 // Create and export the model based on the schema

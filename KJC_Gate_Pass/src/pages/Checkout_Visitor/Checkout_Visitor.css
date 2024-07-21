@@ -1,0 +1,40 @@
+/*Checkout_Visitor.css */
+
+/* General reset and base styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
+}
+
+/* Full viewport height and width for main content */
+.totalContent {
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
+/* Sidebar styling */
+.fakeSideBAr {
+    width: 175px;
+}
+
+/* Main content area flexbox */
+.mainContent {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    padding: 10px;
+}
+
+/* Form container */
+.checkout-register-form {
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border: 0.5px solid black;
+    border-radius: 2px;
+    overflow: auto;
+}

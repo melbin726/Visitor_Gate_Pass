@@ -23,11 +23,7 @@ function SideBarNavi(props){
                         <img className='icons' src={registerIcon} alt="RegisterBlack_Icon" />
                         <p>Register Visitor</p>
                     </div>
-                    <div className={`naviLinks ${props.activeLink == 'checkinLink' ? 'selected' : ''}`} id='checkinLink' onClick={() => navigate('/checkin')}>
-                        <img className='icons' src={checkinIcon} alt="CheckinBlack_Icon" />
-                        <p>Check-In Visitor</p>
-                    </div>
-                    <div className={`naviLinks ${props.activeLink == 'checkoutLink' ? 'selected' : ''}`} id='checkoutLink' onClick={() => navigate('/checkout')}>
+                    <div className={`naviLinks ${props.activeLink == 'checkoutLink' ? 'selected' : ''}`} id='checkoutLink' onClick={() => navigate('/checkout_visitor')}>
                         <img className='icons' src={checkoutIcon} alt="CheckoutBlack_Icon" />
                         <p>Check-out Visitor</p>
                     </div>

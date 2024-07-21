@@ -74,7 +74,7 @@ router.get('/visitors', async (req, res) => {
                 check_out_time: latestCheckOutTime,
                 group_size: session.group_size,
                 photos: session.photos,
-                visitor_cards: groupMembers ? groupMembers : [{ card_id: 404, status: "checked_out" },{ card_id: 500, status: "checked_in" }],
+                visitor_cards: groupMembers ? groupMembers : [{ card_id: '404', status: "checked_out" },{ card_id: '500', status: "checked_in" }],
             };
         });
 
@@ -83,19 +83,6 @@ router.get('/visitors', async (req, res) => {
     } catch (err) {
         // Handle any errors and send an error response
         console.error('Error fetching visitors:', err);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
-// New route to handle purpose filtering
-router.get('/purpose', async (req, res) => {
-    try {
-        const query = req.query.query || '';
-        const regex = new RegExp(query, 'i'); // Case-insensitive regex for matching purposes
-        const sessions = await VisitorSession.find({ purpose_of_visit: regex }).distinct('purpose_of_visit');
-        res.json(sessions);
-    } catch (err) {
-        console.error('Error fetching purposes:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -120,6 +107,34 @@ router.get('/phoneNumber', async (req, res) => {
     }
 });
 
+// New route to handle purpose filtering
+router.get('/purpose', async (req, res) => {
+    try {
+        const query = req.query.query || '';
+        const regex = new RegExp(query, 'i'); // Case-insensitive regex for matching purposes
+        const sessions = await VisitorSession.find({ purpose_of_visit: regex }).distinct('purpose_of_visit');
+        res.json(sessions);
+    } catch (err) {
+        console.error('Error fetching purposes:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+router.get('/available_id_cards', async (req, res) => {
+    try {
+        const query = req.query.query || '';
+        const regex = new RegExp(query, 'i'); // Case-insensitive regex for matching purposes
+
+        // Find visitor cards where card_id matches the regex and status is 'available'
+        const cards = await VisitorCard.find({ card_id: { $regex: regex }, status: 'available' }).distinct('card_id');
+
+        res.json(cards); // Return the array of matching card_id values
+    } catch (err) {
+        console.error('Error fetching card IDs:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 module.exports = router;
+
 

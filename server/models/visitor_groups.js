@@ -17,6 +17,10 @@ const GroupMemberSchema = new Schema({
     type: Date,
     required: true
   },
+  exit_gate: {
+    type: String,
+    required: false
+  },
   check_out_time: {
     type: Date,
     required: false

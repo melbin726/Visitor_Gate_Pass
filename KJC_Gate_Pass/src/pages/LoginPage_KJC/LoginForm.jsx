@@ -47,7 +47,7 @@ function LoginForm() {
 
     const notifySuccess = () => toast.success('Sucess', {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -76,7 +76,7 @@ function LoginForm() {
                 console.log(result);
                 if (result.data === "Success") {
                     notifySuccess();
-                    setTimeout(() => {navigate('/dashboard');}, 2500);              
+                    setTimeout(() => {navigate('/dashboard');}, 1000);              
                 } else{
                     notifyErr(result.data);
                     navigate('/login');

@@ -10,6 +10,7 @@ import CustomDropdown from '../../components/CustomDropDown/CustomDropDown.jsx';
 
 function Register_Visitor() {
   const { width, height } = useWindowSize();
+  const [visitorExists, setVisitorExists] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [name, setName] = useState('');
   const [purposeOfVisit, setPurposeOfVisit] = useState('');
@@ -32,7 +33,15 @@ function Register_Visitor() {
   const [filteredICards, setFilteredICards] = useState([]);
   const streamRef = useRef(null); // Reference to hold the media stream
 
-  useEffect(() => { console.log("idCards: " + idCards) }, [idCards]);
+  useEffect(() => {
+    // Convert all elements in idCards to strings
+    const idCardsAsStrings = idCards.map(id => String(id));
+    
+    console.log(`idCards: ${idCardsAsStrings} arraySize: ${idCardsAsStrings.length}`);
+    
+    // Log each element with pipes around them to clearly show the boundaries of each string
+    idCardsAsStrings.map(id => console.log(`|${id}|`));
+  }, [idCards]);
 
   useEffect(() => {
     fetchAvailableCards('').then(initialOptions => {
@@ -84,7 +93,7 @@ function Register_Visitor() {
 
   const notifyExists = (phone_number, name) => {toast.info(`Visitor '${name}' with ${phone_number} exists`, {
     position: "top-left",
-    autoClose: 5000,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -93,6 +102,30 @@ function Register_Visitor() {
     theme: "colored",
     transition: Slide,
     });};
+
+    const notifyErr = (err) => {toast.error(`${err}`, {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Slide,
+    });};
+
+    const notifySuccess = (text) => {toast.success(`${text}`, {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Slide,
+    });}
 
   const fetchAvailableCards = async (query) => {
     try {
@@ -147,8 +180,10 @@ function Register_Visitor() {
         if (response.data === '') {
           // console.log('Visitor does not exist');
           setName(''); // Clear the name if visitor does not exist
+          setVisitorExists(false);
         } else {
           setName(response.data); // Update the name state with the returned name
+          setVisitorExists(true);
           notifyExists(phonenum, response.data);
           if (NameInputRef) {
             NameInputRef.current.readOnly = true;
@@ -271,19 +306,150 @@ function Register_Visitor() {
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const finalData = { phoneNumber, name, purposeOfVisit, entryGate, groupSize, currentDateTime, idCards, photoDataUrl };
-    console.log(finalData);
-    console.log(`Phone Number: ${phoneNumber}`);
-    console.log(`Name: ${name}`);
-    console.log(`Purpose of Visit: ${purposeOfVisit}`);
-    console.log(`Entry Gate: ${entryGate}`);
-    console.log(`Group Size: ${groupSize}`);
-    console.log(`Checkin-Time: ${currentDateTime}`);
-    console.log(`ID cards: ${idCards}`);
-    console.log(`Photo: ${photoDataUrl ? true : false}`);
+  const checkArrayFilled = async () => {
+    if (groupSize !== idCards.length) {
+      notifyErr('IDs are not assigned');
+      return false;
+    } else if (idCards.some(id => id === false)) {
+      notifyErr('All ID slots must be filled');
+      return false;
+    } else if (!idCards.every(id => /^\d{3}$/.test(id))) {
+      notifyErr('Each ID must be a string of exactly 3 numeric characters');
+      return false;
+    } else {
+      // Check if all IDs are unique
+      const uniqueIds = new Set(idCards);
+      if (uniqueIds.size !== idCards.length) {
+        notifyErr('Each ID must be unique');
+        return false;
+      }
+      // Check if all IDs are between 001 and 500
+      if (idCards.some(id => id < "001" || id > "500")) {
+        notifyErr('Each ID must be between 001 and 500');
+        return false;
+      }
+      try {
+        const response = await axios.get('http://192.168.29.14:3001/api/checkIDAvailable', {
+          params: { ID_Array: idCards }
+        });
+        if (!response.data.checking) {
+          notifyErr(response.data.msg);
+          return false;
+        }
+      } catch (error) {
+        console.error('Error checking ID availability: ', error);
+        notifyErr('Error checking ID availability');
+        return false;
+      }
+      notifySuccess('All ID slots are filled');
+      return true;
+    }
   };
+  
+  const checkVisitorAccessibility = async () => {
+    if (visitorExists) {
+      try {
+        const response = await axios.get('http://192.168.29.14:3001/api/checkVisitorAccessibility', {
+          params: { phone_number: phoneNumber }
+        });
+        if (response.data.checking) {
+          notifySuccess('Visitor is accessible');
+          return true;
+        } else {
+          notifyErr(response.data.msg);
+          return false;
+        }
+      } catch (error) {
+        console.error('Error checking visitor accessibility: ', error);
+        notifyErr('Error checking visitor accessibility');
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+  
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(visitorExists);
+  
+    if (phoneNumber.length !== 10) {
+      notifyErr('Please fill Phone number appropriately');
+      return;
+    }
+    
+    if (!name) {
+      notifyErr('Please provide a name');
+      return;
+    }
+    
+    if (!purposeOfVisit) {
+      notifyErr('Please provide a purpose of visit');
+      return;
+    }
+    
+    if (!entryGate) {
+      notifyErr('Please provide an entry gate');
+      return;
+    }
+    
+    if (!groupSize) {
+      notifyErr('Please provide a group size');
+      return;
+    }
+    
+    if (!currentDateTime) {
+      notifyErr('Please provide the current date and time');
+      return;
+    }
+    
+    if (!photoDataUrl) {
+      notifyErr('Please provide a photo');
+      return;
+    }
+    
+    const idArrayFilled = await checkArrayFilled();
+    const accessibleVisitor = await checkVisitorAccessibility();
+    
+    if (!idArrayFilled) {
+      return;
+    }
+  
+    if (!accessibleVisitor) {
+      return;
+    }
+  
+    console.log(`bananas`);
+    
+    const finalData = {
+      PhoneNumber: phoneNumber,
+      Name: name,
+      PurposeOfVisit: purposeOfVisit,
+      EntryGate: entryGate,
+      GroupSize: groupSize,
+      Checkin_time: new Date(),
+      IdCards: idCards,
+      Photo: photoDataUrl
+    };
+
+    console.log(finalData);
+
+    try {
+      const response = await axios.post('http://192.168.29.14:3001/api/register_Checkin_Visitor', {
+        params: { VisitorSessionInfo: finalData }
+      });
+      if(response.data.checking){
+        notifySuccess(response.data.msg);
+      }else{
+        notifyErr(response.data.msg);
+      }
+    }catch (error) {
+      console.error('Error Register/Checkin Visitor: ', error);
+      notifyErr('Error Register/Checkin Visitor: ', error);
+      return false;
+    }
+  };
+  
 
   return (
     <div className="fakeBody">
@@ -291,6 +457,7 @@ function Register_Visitor() {
         <SideBarNavi activeLink="registerLink" />
         <div className="content">
           <div className="fakeSideBAr" />
+          <ToastContainer />
           <main className="mainContent">
             <div className="register-form">
               <div className="form-title">
@@ -301,7 +468,6 @@ function Register_Visitor() {
                 <div className="lines">
                   <div className="line1" />
                   <div className="line2" />
-                  <ToastContainer />
                 </div>
               </div>
               <form className="main-form">
@@ -357,6 +523,7 @@ function Register_Visitor() {
                                 id={`id${index + 1}`}
                                 name={`id${index + 1}`}
                                 widths={50}
+                                types="number"
                                 value={idCards[index]}
                                 onChange={(inputValue) => handleIdCardChange(inputValue, index)}
                                 options={filteredICards}

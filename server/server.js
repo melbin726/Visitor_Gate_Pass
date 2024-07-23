@@ -4,10 +4,16 @@ const cors = require('cors');
 const session = require('express-session');
 const routes = require('./routes/auth.js'); // Adjust path as necessary
 const connectDB = require('./config/db'); // Adjust path as necessary
+const bodyParser = require('body-parser');
 
 const app = express();
 
 // Middleware
+// Increase the limit for JSON payloads
+app.use(bodyParser.json({ limit: '10mb' })); // or any limit you need
+
+// Increase the limit for URL-encoded payloads
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.json());
 app.use(cors({
     origin: true, // Adjust to your frontend's URL

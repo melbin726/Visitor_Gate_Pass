@@ -28,7 +28,7 @@ const VisitorSessionSchema = new Schema({
   },
   exit_gate: {
     type: String,
-    required: true
+    required: false
   },
   check_out_time: {
     type: Date,

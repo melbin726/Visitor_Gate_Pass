@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './CustomDropDown.css';
 
-const CustomDropDown = ({ options = [], value, onChange, placeholder, widths, heights }) => {
+const CustomDropDown = ({ options = [], value, onChange, placeholder, widths, heights, types }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(value ? value.label : '');
   const [filteredOptions, setFilteredOptions] = useState(options);
@@ -57,7 +57,7 @@ const CustomDropDown = ({ options = [], value, onChange, placeholder, widths, he
       {isOpen && (
         <div className="custom-dropdown-menu" style={{ width: `${widths * 3.5}px`, height: heights ? `${heights}px` : 'auto' }}>
           <input
-            type="text"
+            type={types ? types : 'text'}
             className="custom-dropdown-search"
             style={{ width: `${widths * 3}px`, height: heights ? `${heights}px` : 'auto' }}
             value={searchTerm}

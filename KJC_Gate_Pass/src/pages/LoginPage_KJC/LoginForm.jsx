@@ -6,6 +6,7 @@ import useWindowSize from '../../hooks/useWindowSize';
 import eyeClosed from '../../assets/eye_Hide.svg';
 import eyeOpened from '../../assets/eye_Show.svg';
 import axios from 'axios';
+import { API_BASE_URL } from '../../library/helper.js'
 
 function LoginForm() {
     const { width, height } = useWindowSize();
@@ -14,7 +15,7 @@ function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const API_URL = 'http://192.168.29.14:3001/api'; // replace <localhost> with this device's IP address to access the website in your network
+    const API_URL = API_BASE_URL; 
 
     useEffect(() => {
         document.title = `Login: ${width} x ${height}`;
@@ -45,7 +46,7 @@ function LoginForm() {
         transition: Slide,
         });
 
-    const notifySuccess = () => toast.success('Sucess', {
+    const notifySuccess = (text) => toast.success(`${text}`, {
         position: "top-center",
         autoClose: 1500,
         hideProgressBar: false,
@@ -74,8 +75,11 @@ function LoginForm() {
         axios.post(`${API_URL}/login`, { username: lowercaseUsername, password })
             .then(result => {
                 console.log(result);
+                if(result.data === "Dummy database loaded successfully"){
+                    notifySuccess('Dummy database loaded successfully');
+                }
                 if (result.data === "Success") {
-                    notifySuccess();
+                    notifySuccess("Success");
                     setTimeout(() => {navigate('/dashboard');}, 1000);              
                 } else{
                     notifyErr(result.data);

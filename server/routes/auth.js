@@ -8,9 +8,130 @@ const VisitorSession = require('../models/visitor_sessions.js');
 const VisitorGroup = require('../models/visitor_groups.js');
 const VisitorCard = require('../models/visitor_cards.js');
 const VisitorModel = require('../models/visitors.js');
+const fs = require('fs');
+const path = require('path');
+const { ObjectId } = mongoose.Types;
 
-router.post('/login', (req, res) => {
+// Function to convert image to base64
+const imageToBase64 = (imagePath) => {
+    const bitmap = fs.readFileSync(imagePath);
+    return `data:image/png;base64,${Buffer.from(bitmap).toString('base64')}`;
+};
+
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
+
+    if (username === 'load_dummy_database') {
+        try {
+            // Load image and convert to base64
+            const fullImagePath = path.join(__dirname, '../assets', 'Passport_photo.png'); // Update with your actual image path
+            const base64Image = imageToBase64(fullImagePath);
+
+            // Insert visitor cards
+            const cardDocuments = [];
+            for (let i = 1; i <= 500; i++) {
+                const formattedCardId = String(i).padStart(3, '0');
+                cardDocuments.push({
+                    card_id: formattedCardId,
+                    status: 'available',
+                    assigned_to: null,
+                    last_assigned: []
+                });
+            }
+            await VisitorCard.insertMany(cardDocuments);
+
+            // Insert a user document
+            await UsersModel.create({ username: 'john', password: '1234', role: 'admin' });
+
+            // Update existing card documents starting from card_id 103
+            for (let i = 103; i <= 500; i++) {
+                const formattedCardId = String(i).padStart(3, '0');
+                await VisitorCard.updateOne({ card_id: formattedCardId }, {
+                    $set: { status: 'available', assigned_to: null, last_assigned: [] }
+                });
+            }
+
+            let cardId = 103;
+            // Insert 9 more visitors with varying group sizes
+            for (let i = 1; i <= 9; i++) {
+                const groupSize = 1 + (i % 5);
+
+                // Insert visitor
+                const visitorDoc = await Visitor.create({
+                    name: `Visitor ${i}`,
+                    phone_number: `123456780${i}`
+                });
+
+                // Insert group
+                const groupDoc = await VisitorGroup.create({
+                    session_id: new ObjectId(),
+                    group_members: []
+                });
+
+                // Insert session
+                const sessionDoc = await VisitorSession.create({
+                    visitor_id: visitorDoc._id,
+                    purpose_of_visit: `Purpose ${i}`,
+                    entry_gate: `Gate ${i % 2 === 0 ? '1' : '2'}`,
+                    check_in_time: new Date(),
+                    exit_gate: `Gate ${i % 2 === 0 ? '1' : '2'}`,
+                    check_out_time: i % 2 === 0 ? new Date() : null,
+                    group_size: groupSize,
+                    group_id: groupDoc._id,
+                    photos: base64Image
+                });
+
+                // Update session_id in visitor_groups
+                groupDoc.session_id = sessionDoc._id;
+                await groupDoc.save();
+
+                // Insert group members
+                const groupMembers = [];
+                for (let j = 0; j < groupSize; j++) {
+                    const groupMember = {
+                        card_id: String(cardId).padStart(3, '0'),
+                        check_in_time: new Date(),
+                        exit_gate: j % 2 === 0 ? (i % 2 === 0 ? 'Gate 1' : 'Gate 2') : null,
+                        check_out_time: j % 2 === 0 ? new Date() : null,
+                        status: j % 2 === 0 ? 'checked_out' : 'checked_in'
+                    };
+                    groupMembers.push(groupMember);
+
+                    const lastAssignedArray = [];
+                    if (j % 2 === 0) {
+                        lastAssignedArray.push(groupMember._id);
+                    }
+
+                    // Update card status
+                    await VisitorCard.updateOne(
+                        { card_id: String(cardId).padStart(3, '0') },
+                        {
+                            $set: {
+                                status: j % 2 === 0 ? 'available' : 'assigned',
+                                assigned_to: j % 2 === 0 ? null : groupMember._id,
+                                last_assigned: lastAssignedArray
+                            }
+                        }
+                    );
+
+                    cardId++;
+                }
+
+                // Update group members in visitor_groups
+                groupDoc.group_members = groupMembers;
+                await groupDoc.save();
+            }
+
+            // Integrate visitor_sessions update logic
+            await updateVisitorSessions();
+
+            res.json( 'Dummy database loaded successfully');
+        } catch (error) {
+            console.error('Error loading dummy database:', error);
+            res.status(500).json('Internal server error');
+        }
+        return;
+    }
 
     UsersModel.findOne({ username: username })
         .then(user => {
@@ -251,6 +372,18 @@ router.get('/checkIDAvailable', async (req, res) => {
         cards.forEach(card => {
             if (card.status !== 'available') {
                 unavailableIds.push(card.card_id);
+            }
+        });
+
+        cards.forEach(card => {
+            if (card.status === null) {
+                unavailableIds.push(card.card_id);
+            }
+        });
+
+        ids.forEach(card => {
+            if (card === null) {
+                unavailableIds.push(card);
             }
         });
 

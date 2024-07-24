@@ -10,6 +10,7 @@ import CheckoutCountICon from '../../assets/Icons/CheckoutCount_Icon.svg';
 import registerIcon from '../../assets/Icons/RegisterBlack_Icon.svg';
 import checkinIcon from '../../assets/Icons/CheckinBlack_Icon.svg';
 import checkoutIcon from '../../assets/Icons/CheckoutBlack_Icon.svg';
+import { API_BASE_URL } from '../../library/helper.js'
 
 import { useEffect, useState } from "react";
 
@@ -20,11 +21,12 @@ function Dashboard() {
   const { width, height } = useWindowSize();
   const [visitorData, setVisitorData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_URL = API_BASE_URL;
 
   useEffect(() => {
     const fetchVisitorData = async () => {
       try {
-        const response = await axios.get('http://192.168.29.14:3001/api/visitors');
+        const response = await axios.get(`${API_URL}/visitors`);
         setVisitorData(response.data);
         setLoading(false);
       } catch (error) {

@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import useWindowSize from '../../hooks/useWindowSize.jsx';
 import axios from 'axios';
 import CustomDropdown from '../../components/CustomDropDown/CustomDropDown.jsx';
+import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../../library/helper.js'
 
 function Register_Visitor() {
   const { width, height } = useWindowSize();
@@ -32,6 +34,8 @@ function Register_Visitor() {
   const [idCards, setIdCards] = useState(['', '', '', '', '']);
   const [filteredICards, setFilteredICards] = useState([]);
   const streamRef = useRef(null); // Reference to hold the media stream
+  const API_URL = API_BASE_URL;
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Convert all elements in idCards to strings
@@ -129,7 +133,7 @@ function Register_Visitor() {
 
   const fetchAvailableCards = async (query) => {
     try {
-      const response = await axios.get('http://192.168.29.14:3001/api/available_id_cards', { params: { query } });
+      const response = await axios.get(`${API_URL}/available_id_cards`, { params: { query } });
       return response.data.map(item => String(item));
     } catch (error) {
       console.error('Error fetching options:', error);
@@ -173,7 +177,7 @@ function Register_Visitor() {
     if (phonenum.length === 10) {
       try {
         // Correctly pass phone_number as query parameter
-        const response = await axios.get('http://192.168.29.14:3001/api/phoneNumber', {
+        const response = await axios.get(`${API_URL}/phoneNumber`, {
           params: { phone_number: phonenum }
         });
 
@@ -212,7 +216,7 @@ function Register_Visitor() {
     }
 
     try {
-      const response = await axios.get('http://192.168.29.14:3001/api/purpose', { params: { query: inputValue.value } });
+      const response = await axios.get(`${API_URL}/purpose`, { params: { query: inputValue.value } });
       const newOptions = response.data.map(item => ({ value: String(item), label: String(item) }));
       setFilteredOptions(newOptions);
       console.log(newOptions);
@@ -329,7 +333,7 @@ function Register_Visitor() {
         return false;
       }
       try {
-        const response = await axios.get('http://192.168.29.14:3001/api/checkIDAvailable', {
+        const response = await axios.get(`${API_URL}/checkIDAvailable`, {
           params: { ID_Array: idCards }
         });
         if (!response.data.checking) {
@@ -349,7 +353,7 @@ function Register_Visitor() {
   const checkVisitorAccessibility = async () => {
     if (visitorExists) {
       try {
-        const response = await axios.get('http://192.168.29.14:3001/api/checkVisitorAccessibility', {
+        const response = await axios.get(`${API_URL}/checkVisitorAccessibility`, {
           params: { phone_number: phoneNumber }
         });
         if (response.data.checking) {
@@ -435,7 +439,7 @@ function Register_Visitor() {
     console.log(finalData);
 
     try {
-      const response = await axios.post('http://192.168.29.14:3001/api/register_Checkin_Visitor', {
+      const response = await axios.post(`${API_URL}/register_Checkin_Visitor`, {
         params: { VisitorSessionInfo: finalData }
       });
       if(response.data.checking){
@@ -449,6 +453,27 @@ function Register_Visitor() {
       return false;
     }
   };
+
+  const handleClear = () => {
+  setVisitorExists(false);
+  setPhoneNumber('');
+  setName('');
+  setPurposeOfVisit('');
+  setEntryGate('Gate 1'); // Default entry gate
+  setGroupSize(1);
+  // const [currentDateTime, setCurrentDateTime] = useState('');
+  setHasPhoto(false);
+  setIsCameraON(false);
+  setPhotoDataUrl(''); // New state variable to hold the photo data URL
+  setOptions([
+    { value: 'Campus Tour', label: 'Campus Tour' },
+    { value: 'Meeting', label: 'Meeting' },
+    { value: 'Event', label: 'Event' }
+  ]); // Initial options
+  setFilteredOptions(options); // Define filteredOptions state
+  setIdCards(['', '', '', '', '']);
+  setFilteredICards([]);
+  }
   
 
   return (
@@ -563,8 +588,8 @@ function Register_Visitor() {
                 </div>
                 <div className="form-footer">
                   <button onClick={handleSubmit} style={{ backgroundColor: "#16a34a" }}>Submit</button>
-                  <button type="reset">Clear</button>
-                  <button type="button" style={{ backgroundColor: "#dc2626" }}>Cancel</button>
+                  <button type="reset" onClick={handleClear}>Clear</button>
+                  <button type="button" onClick={() => {handleClear(); navigate('/dashboard');}} style={{ backgroundColor: "#dc2626" }}>Cancel</button>
                   {/* Add any additional footer elements here */}
                 </div>
               </form>

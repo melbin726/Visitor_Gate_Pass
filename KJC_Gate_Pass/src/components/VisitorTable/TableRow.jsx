@@ -1,11 +1,9 @@
-// TableRow.jsx
-
 import React from 'react';
 import StatusBadge from './StatusBadge.jsx';
 
 const TableRow = ({ visitor }) => {
     return (
-        <tr>
+        <tr >
             <td>{visitor.name}</td>
             <td>{visitor.phone_number}</td>
             <td>{visitor.purpose_of_visit}</td>
@@ -14,7 +12,7 @@ const TableRow = ({ visitor }) => {
             <td>{visitor.exit_gate}</td>
             <td>{visitor.check_out_time ? new Date(visitor.check_out_time).toLocaleString() : 'N/A'}</td>
             <td>{visitor.group_size}</td>
-            <td>
+            <td style={{textAlign: "left"}}>
                 {visitor.visitor_cards.map(card => (
                     <StatusBadge key={card.card_id} card={card} />
                 ))}

@@ -4,6 +4,7 @@ import "./Dashboard.css";
 import SideBarNavi from '../../components/SideBarNavi/SideBarNavi.jsx';
 import DashboardWidget from './DashboardWidget.jsx';
 import TotalVisitorTable from "../../components/DataGrid/TotalVisitorTable.jsx";
+import VisitorTable from '../../components/VisitorTable/VisitorTable.jsx';
 import totalVisitorIcons from '../../assets/Icons/TotalVisitoirBlack_Icon.svg';
 import CheckinCountICon from '../../assets/Icons/CheckinCount_Icon.svg';
 import CheckoutCountICon from '../../assets/Icons/CheckoutCount_Icon.svg';
@@ -74,7 +75,7 @@ function Dashboard() {
               <DashboardWidget isCountWidget={false} icon={checkoutIcon} widgets='checkoutVisitor' title='Check-out Visitor' /> */}
             </div>
             <div className="data-grid">
-              <TotalVisitorTable visitors={visitorData} isLoading={loading} totalVisitorCount={totalVisitors}/>
+              <VisitorTable visitors={visitorData} isLoading={loading} totalVisitorCount={totalVisitors}/>
             </div>
           </main>
         </div>

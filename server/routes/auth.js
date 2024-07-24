@@ -185,7 +185,7 @@ router.get('/visitors', async (req, res) => {
 
             // Construct the response object
             return {
-                _id: visitor._id,
+                _id: session._id,
                 name: visitor ? visitor.name : 'Nah',  // Ensure visitor.name is properly fetched
                 phone_number: visitor ? visitor.phone_number : 'Nah',  // Ensure visitor.phone_number is properly fetched
                 purpose_of_visit: session.purpose_of_visit,
@@ -194,7 +194,7 @@ router.get('/visitors', async (req, res) => {
                 exit_gate: session.exit_gate,
                 check_out_time: latestCheckOutTime,
                 group_size: session.group_size,
-                photos: session.photos,
+                photos: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAAD4CAIAAAA......', // session.photos,
                 visitor_cards: groupMembers ? groupMembers : [{ card_id: '404', status: "checked_out" },{ card_id: '500', status: "checked_in" }],
             };
         });

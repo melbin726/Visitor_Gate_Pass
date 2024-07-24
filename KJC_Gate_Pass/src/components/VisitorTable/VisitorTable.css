@@ -1,0 +1,74 @@
+body {
+    background-color: #cccccc;
+    font-family: "Poppins", sans-serif;
+}
+
+.data-grid-table {
+    padding: 20px 0px 20px 0px;
+    margin: 1px 1px 20px;
+    width: 100%;
+}
+
+.text-count span, h1 {
+    display: inline-block;
+    width: fit-content;
+    height: auto;
+}
+
+.text-count {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 25px 0px 5px;
+}
+
+h2 {
+    margin: 3px 15px;
+    width: fit-content;
+}
+
+input {
+    margin: 4px 15px 10px;
+    padding: 5px;
+}
+
+tr:nth-child(odd) {
+    background-color: white;
+}
+
+tr:nth-child(even) {
+    background-color: hsl(212, 99%, 96%);
+}
+
+tr:hover {
+    background-color: hsla(0, 0%, 91%, 0.63);
+}
+
+.visitor-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.visitor-table th, .visitor-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.visitor-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #0151ad;
+    color: white;
+}
+
+.visitor-card {
+    display: inline-block;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+td{
+    padding: 14px 8px !important;
+}

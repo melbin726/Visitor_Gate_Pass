@@ -198,7 +198,7 @@
     flex-direction: column;
     align-items: center;
     min-width: 100%;
-    width: 90%;
+    width: 100%;
     height: fit-content;
     background-color: #E0E0E0;
 }
@@ -276,5 +276,5 @@ canvas button{
 
 .form-footer button{
     font-weight: 500;
-    width: 80px;
+    width: 90px;
 }

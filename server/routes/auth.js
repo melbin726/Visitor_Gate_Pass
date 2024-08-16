@@ -1,6 +1,6 @@
 // routes/auth.js
 const express = require('express');
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const router = express.Router();
 const UsersModel = require('../models/users.js');
 const Visitor = require('../models/visitors.js');
@@ -194,7 +194,7 @@ router.get('/visitors', async (req, res) => {
                 exit_gate: session.exit_gate,
                 check_out_time: latestCheckOutTime,
                 group_size: session.group_size,
-                photos: session.photos, // session.photos,
+                photos: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAAD4CAIAAAA......', // session.photos,
                 visitor_cards: groupMembers ? groupMembers : [{ card_id: '404', status: "checked_out" },{ card_id: '500', status: "checked_in" }],
             };
         });
@@ -466,216 +466,53 @@ router.get('/checkIDAvailable', async (req, res) => {
     }
 });
 
-    //Yunus changes 
-    
-router.get('/checked-in-ids', async (req, res) => {
-  try {
-      const query = req.query.query || '';
-      const regex = new RegExp(query, 'i'); // Case-insensitive regex for matching purposes
-      // Find visitor cards where card_id matches the regex and status is 'available'
-      const cards = await VisitorCard.find({ card_id: { $regex: regex }, status: 'assigned' }).distinct('card_id');
-      res.json(cards); // Return the array of matching card_id values
-  } catch (err) {
-      console.error('Error in checkout availabe card IDs:', err);
-      res.status(500).json({ error: 'Internal server error' });
-  }
-  });
-  
-router.get('/checkout-visitor-details', async (req, res) => {
-  const { id } = req.query;
-  try {
-      const result = await VisitorGroup.aggregate([
-      {
-          $match: {
-          group_members: {
-              $elemMatch: {
-              card_id: id,
-              status: "checked_in"
-              }
-          }
-          }
-      },
-      {
-          $lookup: {
-          from: 'visitor_sessions',
-          localField: 'session_id',
-          foreignField: '_id',
-          as: 'sessionDetails'
-          }
-      },
-      {
-          $unwind: '$sessionDetails'
-      },
-      {
-          $lookup: {
-          from: 'visitors',
-          localField: 'sessionDetails.visitor_id',
-          foreignField: '_id',
-          as: 'visitorDetails'
-          }
-      },
-      {
-          $unwind: '$visitorDetails'
-      },
-      {
-          $project: {
-          name: "$visitorDetails.name",
-          phone_number: "$visitorDetails.phone_number",
-          purpose_of_visit: "$sessionDetails.purpose_of_visit",
-          entry_gate: "$sessionDetails.entry_gate",
-          check_in_time: "$sessionDetails.check_in_time",
-          group_size: "$sessionDetails.group_size",
-          photos: {
-              $cond: {
-                  if: { $gt: [{ $strLenCP: "$sessionDetails.photos" }, 0] },
-                  then: "$sessionDetails.photos",
-                  else: ""
-              }
-          },
-          member_details: {
-              $map: {
-                  input: "$group_members",
-                  as: "member",
-                  in: {
-                      card_id: "$$member.card_id",
-                      status: "$$member.status"
-                  }
-              }
-          }
-          }
-      }
-      ]).exec();
-      if (result.length === 0) {
-          return res.status(404).json({ message: 'No matching visitor found.' });
-      }
-      res.json(result[0]);
-  } catch (error) {
-      console.error('Error retrieving visitor details:', error);
-      res.status(500).json({ message: 'Internal server error' });
-  }
-});
 
-router.post('/checkout-visitor', async (req, res) => {
-    const { selectedValues, selectedExit } = req.body;
-    const currentTime = new Date();
 
-    // Ensure selectedValues is an array
-    const cardIds = Array.isArray(selectedValues) ? selectedValues : [selectedValues];
+//isaac 
 
+router.get('/visitors', async (req, res) => {
     try {
-        // Step 1: Update VisitorGroup collection for specific card_ids
-        await VisitorGroup.updateMany(
-            { "group_members.card_id": { $in: cardIds } },
-            {
-                $set: {
-                    "group_members.$[elem].check_out_time": currentTime,
-                    "group_members.$[elem].status": "checked_out",
-                    "group_members.$[elem].exit_gate": selectedExit
-                }
-            },
-            {
-                arrayFilters: [{ "elem.card_id": { $in: cardIds } }]
-            }
-        );
+        const visitors = await Visitor.find({});
+        const sessions = await VisitorSession.find({});
+        const groups = await VisitorGroup.find({});
+        const cards = await VisitorCard.find({});
 
-        // Step 2: Retrieve the _id of group_members based on card_ids
-        const groupMembers = await VisitorGroup.aggregate([
-            { $unwind: "$group_members" },
-            { $match: { "group_members.card_id": { $in: cardIds } } },
-            { $project: { _id: 0, "group_members._id": 1, "group_members.card_id": 1 } }
-        ]);
+        const result = sessions.map(session => {
+            const visitor = visitors.find(v => v._id.equals(session.visitor_id));
+            const group = groups.find(g => g._id.equals(session.group_id));
+            const groupMembers = group ? group.group_members : [];
 
-        // Map card_id to group_member _id for easier access
-        const cardIdToMemberIdMap = groupMembers.reduce((map, member) => {
-            map[member.group_members.card_id] = member.group_members._id;
-            return map;
-        }, {});
+            // Add card details
+            const visitorCards = cards.filter(card => 
+                groupMembers.some(member => member.visitor_id === visitor._id && card.card_id === member.card_id)
+            ).map(card => ({
+                card_id: card.card_id,
+                
+            }));
+            
 
-        // Step 3: Update VisitorCard collection using group_member IDs
-        for (const cardId of cardIds) {
-            const memberId = cardIdToMemberIdMap[cardId];
+            return {
+                _id: session._id,
+                name: visitor ? visitor.name : 'Nah',
+                phone_number: visitor ? visitor.phone_number : 'Nah',
+                purpose_of_visit: session.purpose_of_visit,
+                entry_gate: session.entry_gate,
+                check_in_time: session.check_in_time,
+                exit_gate: session.exit_gate,
+                check_out_time: session.check_out_time,
+                group_size: session.group_size,
+                photos: session.photos,
+                visitor_cards: visitorCards // Include card details
+            };
+        });
 
-            if (memberId) {
-                const updateResult = await VisitorCard.updateOne(
-                    { card_id: cardId },
-                    {
-                        $set: {
-                            status: "available",
-                            assigned_to: null
-                        },
-                        $push: {
-                            last_assigned: memberId
-                        }
-                    }
-                );
-
-                console.log(`Update result for card_id ${cardId}:`, updateResult);
-            } else {
-                console.warn(`No member ID found for card_id ${cardId}`);
-            }
-        }
-
-        // Step 4: Check if all group members of each session are checked_out
-        const sessionsToUpdate = await VisitorGroup.aggregate([
-            { $unwind: "$group_members" },
-            {
-                $group: {
-                    _id: "$session_id",
-                    totalCount: { $sum: 1 },
-                    checkedOutCount: {
-                        $sum: {
-                            $cond: [{ $eq: ["$group_members.status", "checked_out"] }, 1, 0]
-                        }
-                    },
-                    checkedInCount: {
-                        $sum: {
-                            $cond: [{ $eq: ["$group_members.status", "checked_in"] }, 1, 0]
-                        }
-                    }
-                }
-            },
-            {
-                $match: {
-                    checkedInCount: 0 // Ensure no "checked_in" members
-                }
-            },
-            { $project: { _id: 1 } }
-        ]);
-
-        // Step 5: Update VisitorSession collection if all group members are "checked_out"
-        for (const sessionId of sessionsToUpdate.map(session => session._id)) {
-            const groupMembersStatus = await VisitorGroup.aggregate([
-                { $match: { session_id: sessionId } },
-                { $unwind: "$group_members" },
-                {
-                    $group: {
-                        _id: "$session_id",
-                        allCheckedOut: {
-                            $min: { $eq: ["$group_members.status", "checked_out"] }
-                        }
-                    }
-                }
-            ]);
-
-            const isAllCheckedOut = groupMembersStatus[0]?.allCheckedOut;
-
-            await VisitorSession.updateOne(
-                { _id: sessionId },
-                {
-                    $set: {
-                        exit_gate: isAllCheckedOut ? selectedExit : null,
-                        check_out_time: isAllCheckedOut ? currentTime : null
-                    }
-                }
-            );
-        }
-
-        res.status(200).json({ message: 'Checkout successful' });
-    } catch (error) {
-        console.error("Error during checkout process:", error);
-        res.status(500).json({ message: 'Error during checkout process', error });
+        res.json(result);
+    } catch (err) {
+        console.error('Error fetching visitors:', err);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
-
 module.exports = router;
+
+

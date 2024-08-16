@@ -444,6 +444,8 @@ function Register_Visitor() {
       });
       if(response.data.checking){
         notifySuccess(response.data.msg);
+        handleClear();
+        setTimeout(() => {navigate('/dashboard');}, 3000);
       }else{
         notifyErr(response.data.msg);
       }

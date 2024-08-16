@@ -27,6 +27,10 @@ function SideBarNavi(props){
                         <img className='icons' src={checkoutIcon} alt="CheckoutBlack_Icon" />
                         <p>Check-out Visitor</p>
                     </div>
+                    <div className={`naviLinks ${props.activeLink == 'VisiorDetailsLink' ? 'selected' : ''}`} id='VisiorDetailsLink' onClick={() => navigate('/visitor_details')}>
+                        <img className='icons' src={checkoutIcon} alt="CheckoutBlack_Icon" />
+                        <p>Visitor_Details</p>
+                    </div>
                 </div>         
             </div>
             <Link to={'/login'} className='logout'>

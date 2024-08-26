@@ -220,6 +220,7 @@ const VisitorTable2 = ({ visitors }) => {
                     Next
                 </button>
             </div>
+
         </div>
     );
 };

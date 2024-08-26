@@ -23,6 +23,7 @@
     width: 100%;
     overflow: auto;
     padding: 10px;
+
 }
 
 /* Form container */
@@ -171,6 +172,7 @@
 }
 
 .ID-selects .text-boxes .ID-drops {
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

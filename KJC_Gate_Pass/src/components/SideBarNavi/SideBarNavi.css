@@ -32,7 +32,7 @@
   .sideNaviBar .logoNavi img{
     width: 120px;
     height: auto;
-    margin: 15px 0px;
+    margin: 3px 0px;
   }
 
   .naviGroups{
@@ -50,8 +50,8 @@
     align-content: center;
     justify-content: space-between;
     padding: 0px 10px 0px 15px;
-    margin: 2px 0px;
-    border-radius: 9px;
+    margin: 1px 0px;
+    border-radius: 2px;
     cursor: default;
   }
 
@@ -94,7 +94,7 @@
 }
 
 .naviLinks:hover {
-    background-color: #0184AB;
+    background-color: #0183aba9;
 }
 
 .naviLinks:hover p {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './CustomDropDown.css';
 
-const CustomDropDown = ({ options = [], value, onChange, placeholder, widths, heights, types }) => {
+const CustomDropDown = ({ options = [], value, onChange, placeholder, widths, heights, types, option_width, search_box_width }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(value ? value.label : '');
   const [filteredOptions, setFilteredOptions] = useState(options);
@@ -55,11 +55,11 @@ const CustomDropDown = ({ options = [], value, onChange, placeholder, widths, he
         </div>
       </div>
       {isOpen && (
-        <div className="custom-dropdown-menu" style={{ width: `${widths * 3.5}px`, height: heights ? `${heights}px` : 'auto' }}>
+        <div className="custom-dropdown-menu" style={{ width: `${search_box_width * 1.3}px`, height: heights ? `${heights}px` : 'auto' }}>
           <input
             type={types ? types : 'text'}
             className="custom-dropdown-search"
-            style={{ width: `${widths * 3}px`, height: heights ? `${heights}px` : 'auto' }}
+            style={{ width: `${search_box_width}px`, height: heights ? `${heights}px` : 'auto' }}
             value={searchTerm}
             onChange={handleInputChange}
             placeholder="Type to search..."
@@ -71,7 +71,7 @@ const CustomDropDown = ({ options = [], value, onChange, placeholder, widths, he
                   key={option.value}
                   className="custom-dropdown-option"
                   onClick={() => handleOptionClick(option)}
-                  style={{ width: `${widths}px`, height: heights ? `${heights}px` : 'auto' }}
+                  style={{ width: `${option_width}px`, height: heights ? `${heights}px` : 'auto' }}
                 >
                   {option.label}
                 </div>

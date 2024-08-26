@@ -15,6 +15,10 @@ body {
     height: auto;
 }
 
+.filter-input{
+    width: 240px;
+}
+
 .text-count {
     display: flex;
     align-items: center;
@@ -70,5 +74,17 @@ tr:hover {
 }
 
 td{
-    padding: 14px 8px !important;
+    padding: 7px 8px !important;
+}
+
+.page-button{
+    margin: 5px;
+    padding: 10px;
+    font-family: 'Inter';
+    font-weight: 400;
+    color: white;
+    background-color: #3873cc;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px #62626268;
 }

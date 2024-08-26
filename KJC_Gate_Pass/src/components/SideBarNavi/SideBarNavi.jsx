@@ -3,7 +3,7 @@ import './SideBarNavi.css';
 import circleLogo from '../../assets/KJC_CircLe_Logo_Blu.svg';
 import dashboardIcon from '../../assets/Icons/HomeBlack_Icon.svg';
 import registerIcon from '../../assets/Icons/RegisterBlack_Icon.svg';
-import checkinIcon from '../../assets/Icons/CheckinBlack_Icon.svg';
+import VisitorDetails from '../../assets/Icons/VisitorDetails.svg';
 import checkoutIcon from '../../assets/Icons/CheckoutBlack_Icon.svg';
 
 function SideBarNavi(props){
@@ -28,8 +28,8 @@ function SideBarNavi(props){
                         <p>Check-out Visitor</p>
                     </div>
                     <div className={`naviLinks ${props.activeLink == 'VisiorDetailsLink' ? 'selected' : ''}`} id='VisiorDetailsLink' onClick={() => navigate('/visitor_details')}>
-                        <img className='icons' src={checkoutIcon} alt="CheckoutBlack_Icon" />
-                        <p>Visitor_Details</p>
+                        <img className='icons' src={VisitorDetails} alt="Visitor_Details" />
+                        <p>Visitor Details</p>
                     </div>
                 </div>         
             </div>

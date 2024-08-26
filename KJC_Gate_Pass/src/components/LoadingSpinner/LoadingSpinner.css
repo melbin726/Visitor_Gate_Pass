@@ -1,0 +1,26 @@
+/* LoadingSpinner.css */
+
+/* Container to center the spinner */
+.loading-spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: #f0f0f0; /* Optional background color */
+}
+
+/* Styling the spinner */
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 8px solid rgba(0, 0, 0, 0.1); /* Light border for background */
+    border-radius: 50%;
+    border-top: 8px solid #3498db; /* Primary color for the rotating part */
+    animation: spin 1.5s linear infinite;
+}
+
+/* Spinner rotation animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

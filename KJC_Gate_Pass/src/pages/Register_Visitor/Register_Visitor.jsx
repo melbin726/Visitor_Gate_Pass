@@ -550,6 +550,8 @@ function Register_Visitor() {
                                 id={`id${index + 1}`}
                                 name={`id${index + 1}`}
                                 widths={50}
+                                option_width={50}
+                                search_box_width={135}
                                 types="number"
                                 value={idCards[index]}
                                 onChange={(inputValue) => handleIdCardChange(inputValue, index)}

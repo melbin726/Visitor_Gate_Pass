@@ -4,7 +4,6 @@ import React from 'react';
 import StatusBadge from './StatusBadge.jsx';
 
 const TableRow = ({ visitor }) => {
-
     return (
         <tr>
             <td>{visitor.name}</td>

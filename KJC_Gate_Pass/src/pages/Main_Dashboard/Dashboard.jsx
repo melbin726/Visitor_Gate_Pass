@@ -1,15 +1,19 @@
-  //Dasboard.jsx
+//Dasboard.jsx
 
 import "./Dashboard.css";
 import SideBarNavi from '../../components/SideBarNavi/SideBarNavi.jsx';
 import DashboardWidget from './DashboardWidget.jsx';
 import TotalVisitorTable from "../../components/DataGrid/TotalVisitorTable.jsx";
+import VisitorTable from '../../components/VisitorTable/VisitorTable.jsx';
+import ReactVisitorTable from '../../components/VisitorTable/ReactVisitorTable.jsx';
 import totalVisitorIcons from '../../assets/Icons/TotalVisitoirBlack_Icon.svg';
 import CheckinCountICon from '../../assets/Icons/CheckinCount_Icon.svg';
 import CheckoutCountICon from '../../assets/Icons/CheckoutCount_Icon.svg';
 import registerIcon from '../../assets/Icons/RegisterBlack_Icon.svg';
 import checkinIcon from '../../assets/Icons/CheckinBlack_Icon.svg';
 import checkoutIcon from '../../assets/Icons/CheckoutBlack_Icon.svg';
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner.jsx";
+import { API_BASE_URL } from '../../library/helper.js'
 
 import { useEffect, useState } from "react";
 
@@ -20,11 +24,12 @@ function Dashboard() {
   const { width, height } = useWindowSize();
   const [visitorData, setVisitorData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_URL = API_BASE_URL;
 
   useEffect(() => {
     const fetchVisitorData = async () => {
       try {
-        const response = await axios.get('http://192.168.29.14:3001/api/visitors');
+        const response = await axios.get(`${API_URL}/visitors`);
         setVisitorData(response.data);
         setLoading(false);
       } catch (error) {
@@ -72,7 +77,11 @@ function Dashboard() {
               <DashboardWidget isCountWidget={false} icon={checkoutIcon} widgets='checkoutVisitor' title='Check-out Visitor' /> */}
             </div>
             <div className="data-grid">
-              <TotalVisitorTable visitors={visitorData} isLoading={loading} totalVisitorCount={totalVisitors}/>
+            {loading ? (
+                <LoadingSpinner /> // Show spinner while loading
+              ) : (
+                <ReactVisitorTable visitors={visitorData} isLoading={loading} totalVisitorCount={totalVisitors}/>
+              )}
             </div>
           </main>
         </div>

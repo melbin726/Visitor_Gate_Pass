@@ -1,3 +1,5 @@
+// ../models/visitor_cards.js
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -7,19 +9,25 @@ const VisitorCardSchema = new Schema({
     required: true
   },
   card_id: {
-    type: Number,
+    type: String,
+    unique: true,
     required: true
   },
   status: {
     type: String,
-    enum: ['free', 'assigned', 'checked_in', 'checked_out'], // Enum to restrict the values for status
+    enum: ['available', 'assigned'],
     required: true
   },
   assigned_to: {
     type: Schema.Types.ObjectId,
-    ref: 'visitor_sessions', // Assuming 'Visitor' is the collection for visitors
-    required: false // Optional, as it might not be assigned
-  }
+    ref: 'visitor_groups.group_members',
+    required: false
+  },
+  last_assigned: [{
+    type: Schema.Types.ObjectId,
+    ref: 'visitor_groups.group_members',
+    required: false
+  }]
 });
 
 const VisitorCard = mongoose.model('visitor_cards', VisitorCardSchema);

@@ -4,8 +4,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const VisitorSchema = new Schema({
-    name: String,
-    phone_number: String
+    name: {
+        type: String,
+        required: true
+    },
+    phone_number: {
+        type: String,
+        required: true,
+        unique: true
+    }
 });
 
 const VisitorModel = mongoose.model('visitors', VisitorSchema);

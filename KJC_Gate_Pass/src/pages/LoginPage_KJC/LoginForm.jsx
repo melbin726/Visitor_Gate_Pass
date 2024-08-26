@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast , Bounce, Slide} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import useWindowSize from '../../hooks/useWindowSize';
 import eyeClosed from '../../assets/eye_Hide.svg';
 import eyeOpened from '../../assets/eye_Show.svg';
 import axios from 'axios';
+import { API_BASE_URL } from '../../library/helper.js'
 
 function LoginForm() {
     const { width, height } = useWindowSize();
@@ -12,7 +15,7 @@ function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const API_URL = 'http://192.168.29.126:3001/api'; // Update with your backend URL
+    const API_URL = API_BASE_URL; 
 
     useEffect(() => {
         document.title = `Login: ${width} x ${height}`;
@@ -31,6 +34,30 @@ function LoginForm() {
         setPassword(event.target.value);
     };
 
+    const notifyErr = (text) => toast.error(`${text}`, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+        });
+
+    const notifySuccess = (text) => toast.success(`${text}`, {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+        });
+
     const handleRegister = (event) => {
         event.preventDefault();
         axios.post(`${API_URL}/register`, { username, password, role: 'admin'})
@@ -48,10 +75,14 @@ function LoginForm() {
         axios.post(`${API_URL}/login`, { username: lowercaseUsername, password })
             .then(result => {
                 console.log(result);
+                if(result.data === "Dummy database loaded successfully"){
+                    notifySuccess('Dummy database loaded successfully');
+                }
                 if (result.data === "Success") {
-                    navigate('/dashboard');
-                } else {
-                    alert(result.data);
+                    notifySuccess("Success");
+                    setTimeout(() => {navigate('/dashboard');}, 1000);              
+                } else{
+                    notifyErr(result.data);
                     navigate('/login');
                 }
                 setPassword('');
@@ -61,6 +92,7 @@ function LoginForm() {
     };
 
     return (
+            <>
             <div className="loginForm">
                 <div className="textInput">
                     <label className='textPara' htmlFor='usernameText'>Username</label>
@@ -95,6 +127,8 @@ function LoginForm() {
                 <button type="submit" className="login-button" onClick={handleLogin}>Log in</button>
                 <Link to='/dashboard' className="forgetPwd">Forget your password?</Link>
             </div>
+            <ToastContainer />
+            </>
     );
 }
 

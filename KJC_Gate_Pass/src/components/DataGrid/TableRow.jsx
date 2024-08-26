@@ -20,7 +20,7 @@ const TableRow = ({ visitor }) => {
                 ))}
             </td>
             <td>
-                <img src={visitor.photos} alt="Visitor" width="50" height="50" />
+                <img src={visitor.photos} alt="Visitor" width="30" height="30" />
             </td>
         </tr>
     );

@@ -1,3 +1,6 @@
+
+// Register_Visitor.jsx
+
 import "./Register_Visitor.css";
 import SideBarNavi from '../../components/SideBarNavi/SideBarNavi.jsx';
 import registerFormIcon from '../../assets/Icons/RegisterFormIcon.svg';
@@ -477,6 +480,7 @@ function Register_Visitor() {
   setFilteredICards([]);
   }
   
+
 
   return (
     <div className="fakeBody">

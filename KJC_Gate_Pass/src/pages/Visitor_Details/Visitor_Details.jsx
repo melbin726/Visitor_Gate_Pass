@@ -3,6 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SideBarNavi from "../../components/SideBarNavi/SideBarNavi.jsx";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner.jsx";
+import CustomDatePicker from "../../components/CustomDatePicker/CustomDatePicker.jsx";
+import Download_Button from "./Download_Button.jsx";
 import TotalVisitoirBlack_Icon from "../../assets/Icons/TotalVisitoirBlack_Icon.svg";
 import "./Visitor_Details.css";
 import VisitorTable2 from "./VisitorTable2.jsx";
@@ -17,6 +19,9 @@ const Visitor_Details = () => {
   const [filteredVisitors, setFilteredVisitors] = useState([]);
   const [visitorData, setVisitorData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -104,6 +109,17 @@ const Visitor_Details = () => {
                       value={filterText}
                       onChange={handleFilterChange}
                     />
+                    <div className="filter-by-date">
+                      <CustomDatePicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        startDate={startDate}
+                        endDate={endDate}
+                      />
+                    </div>
+                    <div className="dowload-data">
+                      <Download_Button />
+                    </div>
                   </div>
                   {loading ? (
                     <LoadingSpinner />

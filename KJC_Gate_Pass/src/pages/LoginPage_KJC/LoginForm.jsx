@@ -15,7 +15,7 @@ function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const API_URL = API_BASE_URL; 
+    const API_URL = API_BASE_URL;
 
     useEffect(() => {
         document.title = `Login: ${width} x ${height}`;

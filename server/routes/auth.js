@@ -11,7 +11,9 @@ const VisitorCard = require("../models/visitor_cards.js");
 const VisitorModel = require("../models/visitors.js");
 const fs = require("fs");
 const path = require("path");
+const bcrypt = require("bcrypt");
 const { ObjectId } = mongoose.Types;
+const otpStorage = {};
 
 // Function to convert image to base64
 const imageToBase64 = (imagePath) => {
@@ -19,159 +21,140 @@ const imageToBase64 = (imagePath) => {
   return `data:image/png;base64,${Buffer.from(bitmap).toString("base64")}`;
 };
 
+// Function to generate a random 4-character OTP
+const generateOtp = () => {
+  return Math.floor(10000 + Math.random() * 90000).toString(); // 4-digit numeric OTP
+};
+
 router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  if (username === "load_dummy_database") {
-    try {
-      // Load image and convert to base64
-      const fullImagePath = path.join(
-        __dirname,
-        "../assets",
-        "Passport_photo.png"
-      ); // Update with your actual image path
-      const base64Image = imageToBase64(fullImagePath);
+  try {
+    // Find user by email
+    const user = await UsersModel.findOne({ email });
 
-      // Insert visitor cards
-      const cardDocuments = [];
-      for (let i = 1; i <= 500; i++) {
-        const formattedCardId = String(i).padStart(3, "0");
-        cardDocuments.push({
-          card_id: formattedCardId,
-          status: "available",
-          assigned_to: null,
-          last_assigned: [],
-        });
-      }
-      await VisitorCard.insertMany(cardDocuments);
-
-      // Insert a user document
-      await UsersModel.create({
-        username: "john",
-        password: "1234",
-        role: "admin",
-      });
-
-      // Update existing card documents starting from card_id 103
-      for (let i = 103; i <= 500; i++) {
-        const formattedCardId = String(i).padStart(3, "0");
-        await VisitorCard.updateOne(
-          { card_id: formattedCardId },
-          {
-            $set: { status: "available", assigned_to: null, last_assigned: [] },
-          }
-        );
-      }
-
-      let cardId = 103;
-      // Insert 9 more visitors with varying group sizes
-      for (let i = 1; i <= 9; i++) {
-        const groupSize = 1 + (i % 5);
-
-        // Insert visitor
-        const visitorDoc = await Visitor.create({
-          name: `Visitor ${i}`,
-          phone_number: `123456780${i}`,
-        });
-
-        // Insert group
-        const groupDoc = await VisitorGroup.create({
-          session_id: new ObjectId(),
-          group_members: [],
-        });
-
-        // Insert session
-        const sessionDoc = await VisitorSession.create({
-          visitor_id: visitorDoc._id,
-          purpose_of_visit: `Purpose ${i}`,
-          entry_gate: `Gate ${i % 2 === 0 ? "1" : "2"}`,
-          check_in_time: new Date(),
-          exit_gate: `Gate ${i % 2 === 0 ? "1" : "2"}`,
-          check_out_time: i % 2 === 0 ? new Date() : null,
-          group_size: groupSize,
-          group_id: groupDoc._id,
-          photos: base64Image,
-        });
-
-        // Update session_id in visitor_groups
-        groupDoc.session_id = sessionDoc._id;
-        await groupDoc.save();
-
-        // Insert group members
-        const groupMembers = [];
-        for (let j = 0; j < groupSize; j++) {
-          const groupMember = {
-            card_id: String(cardId).padStart(3, "0"),
-            check_in_time: new Date(),
-            exit_gate: j % 2 === 0 ? (i % 2 === 0 ? "Gate 1" : "Gate 2") : null,
-            check_out_time: j % 2 === 0 ? new Date() : null,
-            status: j % 2 === 0 ? "checked_out" : "checked_in",
-          };
-          groupMembers.push(groupMember);
-
-          const lastAssignedArray = [];
-          if (j % 2 === 0) {
-            lastAssignedArray.push(groupMember._id);
-          }
-
-          // Update card status
-          await VisitorCard.updateOne(
-            { card_id: String(cardId).padStart(3, "0") },
-            {
-              $set: {
-                status: j % 2 === 0 ? "available" : "assigned",
-                assigned_to: j % 2 === 0 ? null : groupMember._id,
-                last_assigned: lastAssignedArray,
-              },
-            }
-          );
-
-          cardId++;
-        }
-
-        // Update group members in visitor_groups
-        groupDoc.group_members = groupMembers;
-        await groupDoc.save();
-      }
-
-      // Integrate visitor_sessions update logic
-      await updateVisitorSessions();
-
-      res.json("Dummy database loaded successfully");
-    } catch (error) {
-      console.error("Error loading dummy database:", error);
-      res.status(500).json("Internal server error");
+    if (!user) {
+      return res.status(404).json({ message: "No record existed" });
     }
-    return;
-  }
 
-  UsersModel.findOne({ username: username })
-    .then((user) => {
-      if (!user) {
-        return res.json("No record existed");
-      }
-      if (password === user.password) {
-        req.session.user = {
-          username: user.username,
-          role: user.role,
-        };
-        res.json("Success");
-      } else {
-        res.json("The password is incorrect");
-      }
-    })
-    .catch((err) => {
-      console.error("User lookup error:", err);
-      res.status(500).json({ message: "Internal server error" });
-    });
+    // Compare provided password with hashed password in the database
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+    if (isPasswordCorrect) {
+      // Set session data
+      req.session.user = {
+        email: user.email,
+        role: user.role,
+      };
+
+      return res.status(200).json({ message: "Success" });
+    } else {
+      return res.status(401).json({ message: "The password is incorrect" });
+    }
+  } catch (err) {
+    console.error("User lookup error:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+router.post("/send-otp", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Check if the email exists in the database
+    const user = await UsersModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+
+    // Generate a 4-character OTP
+    const otp = generateOtp();
+
+    // Set OTP expiration time (e.g., 5 minutes from now)
+    const expiresAt = Date.now() + 5 * 60 * 1000;
+
+    // Store the OTP and its expiration time in otpStorage
+    otpStorage[email] = { otp, expiresAt };
+
+    // Here, you would typically send the OTP to the user's email
+    // For now, we just return it in the response for testing purposes
+    console.log(`Generated OTP for ${email}: ${otp}`); // Log the OTP (for debugging)
+
+    return res.status(200).json({ message: "OTP sent successfully", otp });
+  } catch (err) {
+    console.error("Error in /send-otp:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 });
 
-router.post("/register", (req, res) => {
-  const { username, password, role } = req.body;
+router.post("/verify-otp", async (req, res) => {
+  try {
+    const { email, otp } = req.body;
 
-  UsersModel.create({ username, password, role })
-    .then((user) => res.status(201).json(user))
-    .catch((err) => res.status(400).json(err));
+    // Check if the email exists in the database
+    const user = await UsersModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+
+    // Check if an OTP was generated for this email
+    const storedOtpDetails = otpStorage[email];
+
+    if (!storedOtpDetails) {
+      return res.status(400).json({ message: "OTP not found for this email" });
+    }
+
+    const { otp: storedOtp, expiresAt } = storedOtpDetails;
+
+    // Check if the OTP has expired
+    if (Date.now() > expiresAt) {
+      delete otpStorage[email]; // Clean up expired OTP
+      return res.status(400).json({ message: "OTP has expired" });
+    }
+
+    // Check if the provided OTP matches the stored OTP
+    if (otp !== storedOtp) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+    // OTP is valid, proceed with the desired action (e.g., password reset)
+    delete otpStorage[email]; // Remove the OTP after successful verification
+
+    return res.status(200).json({ message: "OTP verified successfully" });
+  } catch (err) {
+    console.error("Error in /verify-otp:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.post("/change-password", async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    // Find the user by email
+    const user = await UsersModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+
+    // Hash the new password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    // Update the user's password in the database
+    await UsersModel.findOneAndUpdate(
+      { email },
+      { $set: { password: hashedPassword } },
+      { new: true } // This option returns the modified document
+    );
+
+    return res.status(200).json({ message: "Password changed successfully" });
+  } catch (err) {
+    console.error("Error in /change-password:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 router.get("/visitors", async (req, res) => {

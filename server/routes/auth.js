@@ -229,6 +229,78 @@ router.get("/visitors", async (req, res) => {
   }
 });
 
+router.get("/visitors-currentDay", async (req, res) => {
+  try {
+    // Get the start and end of the current day
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    // Fetch only the sessions for the current day
+    const sessions = await VisitorSession.find({
+      check_in_time: {
+        $gte: startOfDay,
+        $lt: endOfDay,
+      },
+    });
+
+    // Fetch all necessary visitors, groups, and cards data
+    const visitorIds = sessions.map((session) => session.visitor_id);
+    const groupIds = sessions.map((session) => session.group_id);
+
+    const visitors = await Visitor.find({ _id: { $in: visitorIds } });
+    const groups = await VisitorGroup.find({ _id: { $in: groupIds } });
+    const cards = await VisitorCard.find({});
+
+    // Map through sessions to construct the desired response format
+    const result = sessions.map((session) => {
+      // Find corresponding visitor and group information
+      const visitor = visitors.find((v) => v._id.equals(session.visitor_id));
+      const group = groups.find((g) => g._id.equals(session.group_id));
+      const groupMembers = group ? group.group_members : [];
+      const checkOutTimes = groupMembers.map((member) => member.check_out_time);
+      let latestCheckOutTime = null;
+      if (
+        checkOutTimes.length > 0 &&
+        checkOutTimes.every((time) => time !== null)
+      ) {
+        latestCheckOutTime = new Date(
+          Math.max(...checkOutTimes.map((time) => new Date(time)))
+        );
+      }
+
+      // Construct the response object
+      return {
+        _id: session._id,
+        name: visitor ? visitor.name : "Unknown", // Ensure visitor.name is properly fetched
+        phone_number: visitor ? visitor.phone_number : "Unknown", // Ensure visitor.phone_number is properly fetched
+        purpose_of_visit: session.purpose_of_visit,
+        entry_gate: session.entry_gate,
+        check_in_time: session.check_in_time,
+        exit_gate: session.exit_gate,
+        check_out_time: latestCheckOutTime,
+        group_size: session.group_size,
+        photos: session.photos,
+        visitor_cards:
+          groupMembers.length > 0
+            ? groupMembers
+            : [
+                { card_id: "404", status: "checked_out" },
+                { card_id: "500", status: "checked_in" },
+              ],
+      };
+    });
+
+    // Send the constructed response as JSON
+    res.json(result);
+  } catch (err) {
+    // Handle any errors and send an error response
+    console.error("Error fetching visitors:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.get("/phoneNumber", async (req, res) => {
   const { phone_number } = req.query; // Use req.query for GET parameters
 

@@ -111,7 +111,7 @@ function Checkout_Visitor() {
           const data = response.data;
           setVisitorData(data); // Set visitor data including photo
           notifyExists(selectedId);
-
+          console.log(data);
           // Set checked states based on member_details
           const newCheckedStates = data.member_details.map(
             (member) => member.status === "checked_out"

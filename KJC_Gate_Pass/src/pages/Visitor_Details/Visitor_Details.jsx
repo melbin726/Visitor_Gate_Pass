@@ -1,42 +1,33 @@
 import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import SideBarNavi from "../../components/SideBarNavi/SideBarNavi.jsx";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner.jsx";
-import CustomDatePicker from "../../components/CustomDatePicker/CustomDatePicker.jsx";
 import Download_Button from "./Download_Button.jsx";
 import TotalVisitoirBlack_Icon from "../../assets/Icons/TotalVisitoirBlack_Icon.svg";
 import "./Visitor_Details.css";
 import VisitorTable2 from "./VisitorTable2.jsx";
 import axios from "axios";
-import { API_BASE_URL } from "../../library/helper.js";
+import { API_BASE_URL, formatDateWithPadding } from "../../library/helper.js";
+// import DateFilter from "./DateFilter.jsx";
 
 const API_URL = API_BASE_URL + "/visitors";
 
 const Visitor_Details = () => {
-  const [isOpen, setIsOpen] = useState(false);
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from your database API
+    fetch('/visitors') // Replace with your actual API endpoint
+      .then(response => response.json())
+      .then(fetchedData => setData(fetchedData));
+  }, []);
+
+
   const [filterText, setFilterText] = useState("");
   const [filteredVisitors, setFilteredVisitors] = useState([]);
   const [visitorData, setVisitorData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleClickOutside = (event) => {
-    if (event.target.closest(".dropdown2") === null) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
 
   useEffect(() => {
     const fetchVisitorData = async () => {
@@ -53,28 +44,45 @@ const Visitor_Details = () => {
 
     fetchVisitorData();
   }, []);
-
   useEffect(() => {
-    console.log("Filter text changed:", filterText); // Log filter text
-    console.log("Visitor data before filtering:", visitorData); // Log visitor data before filtering
+    const filtered = visitorData.filter((visitor) => {
+      // Filter by name or phone number
+      const matchesNameOrPhone =
+        visitor.name?.toLowerCase().includes(filterText.toLowerCase()) ||
+        visitor.phone_number?.includes(filterText);
 
-    try {
-      const filtered = visitorData.filter(
-        (visitor) =>
-          visitor.name?.toLowerCase().includes(filterText.toLowerCase()) ||
-          visitor.phone_number?.includes(filterText) // Use correct key for phone number
-      );
+      // Parse the visitor's check-in time as a Date object
+      const visitorDate = new Date(visitor.check_in_time);
 
-      setFilteredVisitors(filtered);
-      console.log("Filtered visitors:", filtered); // Log filtered visitors
-    } catch (error) {
-      console.error("Error during filtering:", error);
-      setFilteredVisitors([]); // Clear the list on error
-    }
-  }, [filterText, visitorData]);
+      // Check if the visitor's check_in_time matches the selected date
+      const isSameDate =
+        formatDateWithPadding(visitorDate.toDateString()) ===
+        startDate.toDateString();
+
+      // Return true if either the name/phone number matches OR the date matches
+      return matchesNameOrPhone || isSameDate;
+    });
+
+    setFilteredVisitors(filtered);
+
+    console.log("Filtered visitors:", filtered); // Log filtered visitors
+  }, [filterText, visitorData, startDate]); // Re-run the filtering whenever filterText, visitorData, or startDate changes
 
   const handleFilterChange = (event) => {
     setFilterText(event.target.value);
+  };
+
+  const handleDateChange = (event) => {
+    const selectedValue = event.target.value;
+    const date = new Date(selectedValue); // Convert the input value to a Date object
+
+    if (!isNaN(date.getTime())) {
+      // Check if the date is valid
+      setStartDate(date); // Update the start date
+      console.log("Selected Date:", date);
+    } else {
+      console.log("Invalid Date selected");
+    }
   };
 
   return (
@@ -109,14 +117,9 @@ const Visitor_Details = () => {
                       value={filterText}
                       onChange={handleFilterChange}
                     />
-                    <div className="filter-by-date">
-                      <CustomDatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        startDate={startDate}
-                        endDate={endDate}
-                      />
-                    </div>
+                    {/* <div className="filter">
+                    <DateFilter data={data} />
+                    </div> */}
                     <div className="dowload-data">
                       <Download_Button />
                     </div>
@@ -124,7 +127,7 @@ const Visitor_Details = () => {
                   {loading ? (
                     <LoadingSpinner />
                   ) : filteredVisitors.length === 0 ? (
-                    <h1>No Vistor Found!</h1>
+                    <h1>No Visitor Found!</h1>
                   ) : (
                     <VisitorTable2 visitors={filteredVisitors} />
                   )}

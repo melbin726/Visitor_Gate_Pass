@@ -1,5 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { useTable, useSortBy, usePagination } from 'react-table';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TextField } from '@mui/material'; // Don't forget to import TextField
+import { format } from 'date-fns';
 import './VisitorTable2.css';
 import dropdown_logo from '../../assets/Icons/dropdown_logo.svg';
 import profile from '../../assets/profile.svg';
@@ -7,6 +12,17 @@ import { formatDateWithPadding } from '../../library/helper.js';
 
 const VisitorTable2 = ({ visitors }) => {
     const [expandedRows, setExpandedRows] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    const filteredVisitors = useMemo(() => {
+        if (!selectedDate) return visitors;
+        // Ensure selectedDate is valid before formatting
+        if (selectedDate.isValid()) {
+            const formattedSelectedDate = format(selectedDate.toDate(), 'yyyy-MM-dd'); // Convert to JavaScript date
+            return visitors.filter(visitor => format(new Date(visitor.check_in_time), 'yyyy-MM-dd') === formattedSelectedDate);
+        }
+        return visitors; // If the date is invalid, return the original visitors array
+    }, [visitors, selectedDate]);
 
     const columns = useMemo(
         () => [
@@ -47,13 +63,13 @@ const VisitorTable2 = ({ visitors }) => {
         [expandedRows]
     );
 
-    const data = useMemo(() => visitors, [visitors]);
+    const data = useMemo(() => filteredVisitors, [filteredVisitors]);
 
     const {
         getTableProps,
         getTableBodyProps,
         headerGroups,
-        page, // Get the current page's rows
+        page,
         prepareRow,
         state: { pageIndex, pageSize },
         setPageSize,
@@ -87,6 +103,22 @@ const VisitorTable2 = ({ visitors }) => {
 
     return (
         <div className="vt_table-container">
+            <LocalizationProvider dateAdapter={AdapterDayjs} >
+<DatePicker
+    label="Select Date"
+    value={selectedDate}
+    onChange={(newValue) => setSelectedDate(newValue)}
+    renderInput={(params) => (
+        <TextField {...params} />
+    )}
+    components={{
+        OpenPickerIcon: () => (
+            <CalendarTodayIcon style={{ fontSize: '1px' }} /> // Set a smaller size for the custom icon
+        ),
+    }}
+/>
+            </LocalizationProvider>
+
             <table className="vt_visitor-table" {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
@@ -125,7 +157,7 @@ const VisitorTable2 = ({ visitors }) => {
                                                 : cell.render('Cell')}
                                         </td>
                                     ))}
-                                </tr>
+                                </tr> 
                                 {expandedRows.includes(row.index) && (
                                     <tr className="expanded-row">
                                         <td className="vt_tdclass" colSpan="6">
@@ -137,19 +169,18 @@ const VisitorTable2 = ({ visitors }) => {
                                                         <div className='vt_sessiondetail'><b>Check-In Time:</b> {formatDateWithPadding(row.original.check_in_time)}</div>
                                                         <div className='vt_sessiondetail'><b>Exit Gate:</b> {row.original.exit_gate}</div>
                                                         <div className='vt_sessiondetail'><b>Check-out Time:</b> {formatDateWithPadding(row.original.check_out_time)}</div>
-                                                        <div className='vt_sessiondetail'><b>Group Size:</b> {row.original.group_size}</div>
-                                                       
+                                                        <div className='vt_sessiondetail'><b>Group Size:</b> {row.original.group_size}</div> 
                                                         <div className="vt_sessiondetail">
-                                                        <b>Card Id</b>:&nbsp;&nbsp;
-                                                        {row.original.visitor_cards.map((card, index) => (
-                                                            <span
-                                                            key={card.card_id}
-                                                            style={{ backgroundColor: card.status === 'checked_out' ? '#28a745' : 'red'}}
-                                                            className='card-left-section'
-                                                            >
-                                                            {card.card_id}
-                                                            </span>
-                                                        )).reduce((prev, curr) => [prev, '', curr])}
+                                                            <b>Card Id</b>:&nbsp;&nbsp;
+                                                            {row.original.visitor_cards.map((card, index) => (
+                                                                <span
+                                                                    key={card.card_id}
+                                                                    style={{ backgroundColor: card.status === 'checked_out' ? '#28a745' : 'red'}}
+                                                                    className='card-left-section'
+                                                                >
+                                                                    {card.card_id}
+                                                                </span>
+                                                            )).reduce((prev, curr) => [prev, '', curr])}
                                                         </div>
                                                     </div>
 
@@ -167,7 +198,7 @@ const VisitorTable2 = ({ visitors }) => {
                                                                             <p><b>Exit Gate:</b> {card.exit_gate || 'N/A'}</p>
                                                                         </div>
                                                                         <div className='vt_card_details'>
-                                                                           <p><b>Check-out Time:</b> {formatDateWithPadding(card.check_out_time)}</p>
+                                                                            <p><b>Check-out Time:</b> {formatDateWithPadding(card.check_out_time)}</p>
                                                                         </div>
                                                                         <div className='vt_card_details' style={{margin: 0}}>
                                                                             <b>Status:</b> <span style={{backgroundColor: card.status === 'checked_out' ? '#28a745' : 'red'}}>{card.status}</span>
@@ -219,8 +250,19 @@ const VisitorTable2 = ({ visitors }) => {
                 >
                     Next
                 </button>
+                <select
+                    value={pageSize}
+                    onChange={e => {
+                        setPageSize(Number(e.target.value));
+                    }}
+                >
+                    {[10, 20, 30, 40].map(pageSize => (
+                        <option key={pageSize} value={pageSize}>
+                            Show {pageSize}
+                        </option>
+                    ))}
+                </select>
             </div>
-
         </div>
     );
 };

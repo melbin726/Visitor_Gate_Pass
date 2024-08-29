@@ -100,15 +100,12 @@
   width: 100%;
 }
 .vt_searchcontainer {
-  /* background-color:black; */
-  margin-left: 2px;
-  padding: 7px;
-  border: 1px solid grey;
-  width: 240px;
+  max-width: 120px;
+  padding: 8px;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: -9px;
-}
-
+  font-size: 14px;
+  margin: 0px 5px;
 .vt_date_search {
   width: 100%;
   display: flex;

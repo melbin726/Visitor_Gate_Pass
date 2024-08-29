@@ -282,13 +282,26 @@ const VisitorTable2 = ({ visitors }) => {
 
       {/* Pagination Controls */}
       <div className="pagination-controls">
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+        <button
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+          className={`${
+            canPreviousPage ? "!bg-blue-800" : "!bg-gray-200 !text-gray-400"
+          }`}
+        >
+
           Previous
         </button>
         <span>
           Page {pageIndex + 1} of {pageCount}
         </span>
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        <button
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+          className={`${
+            !canPreviousPage ? "!bg-blue-800" : "!bg-gray-200 !text-gray-400"
+          }`}
+        >
           Next
         </button>
       </div>

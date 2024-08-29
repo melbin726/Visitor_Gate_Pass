@@ -5,7 +5,8 @@
 
 .download-button-container .custom-download-btn,
 .custom-proceed-btn {
-  margin: 4px 15px 10px;
+  margin: 3px;
+  margin-right: 7px;
   padding: 10px;
   background-color: #4caf50;
   color: white;
@@ -17,7 +18,7 @@
 .custom-popover {
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 7%;
   width: 200px;
   background-color: white;
   border: 1px solid #ddd;
@@ -51,7 +52,7 @@
 }
 
 .radio-group label {
-    width: 180px ;
+  width: 180px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #cecece;
@@ -62,7 +63,6 @@
 .radio-group label:hover {
   background-color: #f0f0f0;
   border-color: #000000; /* Matches the button color */
-  background-color: #0184AB;
+  background-color: #0184ab;
   color: white;
 }
-

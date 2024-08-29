@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "lucide-react": "^0.436.0",
     "mui-one-time-password-input": "^2.0.3",
     "nodemailer": "^6.9.14",
     "pdfkit": "^0.15.0",

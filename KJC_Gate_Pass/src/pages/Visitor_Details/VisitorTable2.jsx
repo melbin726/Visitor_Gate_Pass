@@ -5,6 +5,9 @@ import dropdown_logo from "../../assets/Icons/dropdown_logo.svg";
 import profile from "../../assets/profile.svg";
 import { formatDateWithPadding } from "../../library/helper.js";
 
+// Helper function to parse dates
+const parseDate = (dateString) => new Date(dateString).getTime();
+
 const VisitorTable2 = ({ visitors }) => {
   const [expandedRows, setExpandedRows] = useState([]);
 
@@ -28,7 +31,11 @@ const VisitorTable2 = ({ visitors }) => {
       {
         Header: "Check-out Time",
         accessor: "check_out_time",
-        sortType: "basic",
+        sortType: (rowA, rowB, columnId) => {
+          const dateA = parseDate(rowA.values[columnId]);
+          const dateB = parseDate(rowB.values[columnId]);
+          return dateA - dateB;
+        },
       },
       {
         Header: "Details",

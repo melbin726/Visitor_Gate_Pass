@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { API_BASE_URL } from "../../library/helper.js";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import CompleteSidebar from "../../components/SideBarNavi/CompleteSidebar.jsx";
 
 function Checkout_Visitor() {
   const [selectedValuesArray, setSelectedValuesArray] = useState([]);
@@ -111,7 +112,7 @@ function Checkout_Visitor() {
           const data = response.data;
           setVisitorData(data); // Set visitor data including photo
           notifyExists(selectedId);
-          console.log(data);
+
           // Set checked states based on member_details
           const newCheckedStates = data.member_details.map(
             (member) => member.status === "checked_out"
@@ -223,9 +224,8 @@ function Checkout_Visitor() {
   return (
     <div className="fakeBody">
       <div className="totalContent">
-        <SideBarNavi activeLink="checkoutLink" />
         <div className="content">
-          <div className="fakeSideBAr" />
+          <CompleteSidebar isActive="checkoutVisitor" />
           <ToastContainer />
           <main className="mainContent">
             <div className="checkout-register-form">

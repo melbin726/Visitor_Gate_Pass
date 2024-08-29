@@ -6,10 +6,11 @@
 .download-button-container .custom-download-btn,
 .custom-proceed-btn {
   margin: 4px 15px 10px;
-  padding: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
+  padding: 8px;
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  border: solid 1px rgb(159, 159, 159);
+  border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
 }
@@ -51,7 +52,7 @@
 }
 
 .radio-group label {
-    width: 180px ;
+  width: 180px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #cecece;
@@ -62,7 +63,6 @@
 .radio-group label:hover {
   background-color: #f0f0f0;
   border-color: #000000; /* Matches the button color */
-  background-color: #0184AB;
+  background-color: #0184ab;
   color: white;
 }
-

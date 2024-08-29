@@ -18,6 +18,7 @@
     "express-session": "^1.18.0",
     "gridfs-stream": "^1.1.1",
     "mongoose": "^8.5.1",
+    "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4"
   }
 }

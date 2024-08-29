@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import DatePicker from "react-datepicker";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import DownloadIcon from "@mui/icons-material/Download";
 import "react-datepicker/dist/react-datepicker.css";
 import CustomDatePicker from "../../components/CustomDatePicker/CustomDatePicker";
 import "./Download_Button.css";
@@ -112,14 +114,18 @@ const Download_Button = () => {
 
   return (
     <div className="download-button-container">
-      <button
-        className="custom-download-btn"
-        onClick={togglePopover}
-        id="downloadBtn"
-        // type="button"
-      >
-        Download
-      </button>
+      <Stack direction="row" spacing={1}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          startIcon={<DownloadIcon />}
+          className="custom-download-btn"
+          onClick={togglePopover}
+          type="button"
+        >
+          <h6>Download</h6>
+        </Button>
+      </Stack>
 
       {isOpen && (
         <div className="custom-popover">

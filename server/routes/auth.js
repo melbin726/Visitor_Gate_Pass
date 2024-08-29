@@ -9,6 +9,7 @@ const VisitorSession = require("../models/visitor_sessions.js");
 const VisitorGroup = require("../models/visitor_groups.js");
 const VisitorCard = require("../models/visitor_cards.js");
 const VisitorModel = require("../models/visitors.js");
+const { sendOtpEmail } = require("../models/emailService.js");
 const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcrypt");
@@ -76,8 +77,8 @@ router.post("/send-otp", async (req, res) => {
     // Store the OTP and its expiration time in otpStorage
     otpStorage[email] = { otp, expiresAt };
 
-    // Here, you would typically send the OTP to the user's email
-    // For now, we just return it in the response for testing purposes
+    // Send the OTP to the user's email
+    await sendOtpEmail(email, otp);
     console.log(`Generated OTP for ${email}: ${otp}`); // Log the OTP (for debugging)
 
     return res.status(200).json({ message: "OTP sent successfully", otp });

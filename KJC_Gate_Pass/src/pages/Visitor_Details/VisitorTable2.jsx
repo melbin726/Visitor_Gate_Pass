@@ -289,6 +289,7 @@ const VisitorTable2 = ({ visitors }) => {
             canPreviousPage ? "!bg-blue-800" : "!bg-gray-200 !text-gray-400"
           }`}
         >
+
           Previous
         </button>
         <span>

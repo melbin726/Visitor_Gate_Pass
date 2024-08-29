@@ -151,6 +151,7 @@
   /* width: 13rem; w-52 */
   flex: 1;
   margin-left: 0.74rem; /* ml-3 */
+  font-size: 13px;
   overflow: hidden;
   transition: all 0.3s ease;
 }

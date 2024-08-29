@@ -103,7 +103,7 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
             placeholder="Filter by name or phone number"
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
-            className="border w-56 border-gray-400 rounded"
+            className="border w-56 border-gray-400 rounded px-1 h-8 mb-1"
           />
         </span>
         <h1 className="text-2xl">{totalVisitorCount}</h1>

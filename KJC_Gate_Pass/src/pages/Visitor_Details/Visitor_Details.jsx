@@ -10,11 +10,14 @@ import "./Visitor_Details.css";
 import VisitorTable2 from "./VisitorTable2.jsx";
 import axios from "axios";
 import { API_BASE_URL } from "../../library/helper.js";
+import useWindowSize from "../../hooks/useWindowSize";
+import CompleteSidebar from "../../components/SideBarNavi/CompleteSidebar.jsx";
 
 const API_URL = API_BASE_URL + "/visitors";
 
 const Visitor_Details = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { width, height } = useWindowSize();
   const [filterText, setFilterText] = useState("");
   const [filteredVisitors, setFilteredVisitors] = useState([]);
   const [visitorData, setVisitorData] = useState([]);
@@ -22,6 +25,9 @@ const Visitor_Details = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
+  useEffect(() => {
+    document.title = `Visitor Details: ${width} x ${height}`;
+  }, [width, height]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -79,13 +85,12 @@ const Visitor_Details = () => {
 
   return (
     <div className="totalContent">
-      <SideBarNavi activeLink="VisiorDetailsLink" />
       <div className="content">
-        <div className="fakeSideBAr" />
+        <CompleteSidebar isActive="visitorDetails" />
         <main className="mainContent">
           <div className="visitor-register-form">
             <div className="form-title">
-              <div className="icon-text-visitor">
+              <div className="icon-text">
                 <img
                   src={TotalVisitoirBlack_Icon}
                   alt="TotalVisitoirBlack_Icon"

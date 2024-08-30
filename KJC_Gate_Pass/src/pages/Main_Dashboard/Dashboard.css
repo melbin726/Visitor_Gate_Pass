@@ -1,6 +1,6 @@
 /* Dashboard.css */
 
-.fakeBody{
+.fakeBody {
   height: 100%;
   width: 100%;
 }
@@ -10,7 +10,7 @@
   width: 100%;
 }
 
-.content{
+.content {
   width: 100%;
   height: 100%;
   display: flex;
@@ -18,12 +18,12 @@
   flex-direction: row;
 }
 
-.fakeSideBAr{
+.fakeSideBAr {
   min-width: 175px;
   min-height: 100%;
 }
 
-.main-content{
+.main-content {
   width: 100%;
   height: 100vh;
   padding-right: 5px;
@@ -32,11 +32,11 @@
   overflow-x: visible;
 }
 
-.main-content::-webkit-scrollbar{
+.main-content::-webkit-scrollbar {
   display: none;
 }
 
-.Widgets{
+.Widgets {
   width: 95%;
   height: fit-content;
   display: flex;
@@ -46,7 +46,7 @@
   padding: 20px 10px 20px;
 }
 
-.data-grid{
+.data-grid {
   width: 100%;
   padding: 1px;
   background-color: #ffffff;
@@ -55,25 +55,24 @@
   overflow: auto;
 }
 
-.data-grid::-webkit-scrollbar{
+.data-grid::-webkit-scrollbar {
   display: none;
 }
 
 @media (max-width: 419px) {
-  .fakeSideBAr{
+  .fakeSideBAr {
     min-width: 120px;
   }
 }
 
-@media (max-width:355px) {
-  .fakeSideBAr{
+@media (max-width: 355px) {
+  .fakeSideBAr {
     min-width: 100px;
   }
 }
 
 @media (max-width: 829px) {
-  .Widgets{
+  .Widgets {
     flex-direction: column;
   }
 }
-

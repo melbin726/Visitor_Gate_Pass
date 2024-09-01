@@ -5,9 +5,11 @@ const session = require('express-session');
 const routes = require('./routes/auth.js'); // Adjust path as necessary
 const connectDB = require('./config/db'); // Adjust path as necessary
 const bodyParser = require('body-parser');
+const guestRoutes = require("./pre_approval_routes/guestRoutes");
+const securityRoutes = require("./pre_approval_routes/securityRoutes");
 
 const app = express();
-
+require("dotenv").config();
 // Middleware
 // Increase the limit for JSON payloads
 app.use(bodyParser.json({ limit: '10mb' })); // or any limit you need
@@ -28,6 +30,9 @@ app.use(session({
     cookie: { secure: false } // Set secure to true in production if using HTTPS
 }));
 
+// Routes
+app.use("/api", guestRoutes); // localhost:3002/api/
+app.use("/api/security", securityRoutes);
 // Routes
 app.use('/api', routes); // Mount main router
 

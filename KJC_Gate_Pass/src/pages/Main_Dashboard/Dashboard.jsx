@@ -1,5 +1,3 @@
-// File: D:\workspace2\Visitor_Gate_Pass\KJC_Gate_Pass\src\pages\Main_Dashboard\Dashboard.jsx
-
 import "./Dashboard.css";
 import DashboardWidget from "./DashboardWidget.jsx";
 import ReactVisitorTable from "../../components/VisitorTable/ReactVisitorTable.jsx";
@@ -12,9 +10,9 @@ import { API_BASE_URL } from "../../library/helper.js";
 import { useEffect, useState } from "react";
 
 import useWindowSize from "../../hooks/useWindowSize";
-import axios from "axios"; // Import axios
+import axios from "axios";
 import CompleteSidebar from "../../components/SideBarNavi/CompleteSidebar.jsx";
-import Footer from "../../components/Footer/Footer.jsx";  // Import Footer component
+import Footer from "../../components/Footer/Footer.jsx";  
 
 function Dashboard() {
   const { width, height } = useWindowSize();
@@ -62,7 +60,7 @@ function Dashboard() {
       <div className="totalContent">
         <div className="content">
           <CompleteSidebar isActive="dashboard" />
-          <main className="main-content">
+          <main className="main-content" style={{ paddingBottom: "50px" }}> {/* Added padding here */}
             <div className="Widgets">
               <DashboardWidget
                 isCountWidget={true}
@@ -86,7 +84,7 @@ function Dashboard() {
                 count={checkedOutVisitors}
               />
             </div>
-            <div className="data-grid" >
+            <div className="data-grid">
               {loading ? (
                 <LoadingSpinner /> 
               ) : (
@@ -97,7 +95,6 @@ function Dashboard() {
                 />
               )}
             </div>
-            
           </main>
         </div>
         <Footer /> 

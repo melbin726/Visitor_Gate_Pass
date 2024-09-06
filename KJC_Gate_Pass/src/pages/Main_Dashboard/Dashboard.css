@@ -1,9 +1,9 @@
-/* Dashboard.css */
+
 
 .fakeBody {
   height: 100%;
   width: 100%;
-  overflow-x: hidden; /* Correctly written without quotes */
+  overflow-x: hidden; 
 }
 
 

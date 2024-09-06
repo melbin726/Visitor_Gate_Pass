@@ -59,86 +59,83 @@ const Visitor_Details = () => {
   };
 
   return (
-    <div className="fakeBody" style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-  <div className="totalContent" style={{ flex: 1 }}>
-    <div className="content">
-      <CompleteSidebar isActive="visitorDetails" />
-      <main className="mainContent">
-        <Container
-          maxWidth="lg"
-          sx={{
-            backgroundColor: "transparent",
-            padding: { xs: 2, sm: 3, md: 4 },
-            pb: 5,
-            minHeight: "100vh",
-          }}
-        >
-          <Typography variant="h5" sx={{ marginBottom: 2 }}>
-            Today's Visitors
-          </Typography>
-
-          {/* Filter and Download Button */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", sm: "row" },
-              justifyContent: "flex-end",
-              alignItems: { xs: "stretch", sm: "center" },
-              marginBottom: 3,
-            }}
+    <div className="fakeBody">
+      <div className="totalContent">
+        <div className="content">
+          <CompleteSidebar isActive="visitorDetails" />
+          <main
+            className="mainContent"
+            style={{ paddingBottom: "50px" }} 
           >
-            {/* Search Field */}
-            <TextField
-              variant="outlined"
-              placeholder="Search"
-              value={filterText}
-              onChange={handleFilterChange}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-                sx: {
-                  borderRadius: "20px",
-                  backgroundColor: "#fff",
-                  boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
-                },
-              }}
+            <Container
+              maxWidth="lg"
               sx={{
-                width: {
-                  xs: "90%",
-                  sm: "50%",
-                  md: "30%",
-                },
-                marginBottom: { xs: 2, sm: 0 },
-                marginRight: { sm: 2 },
+                backgroundColor: "transparent",
+                padding: { xs: 2, sm: 3, md: 4 },
+                minHeight: "100vh",
+                paddingBottom: "50px" 
               }}
-            />
+            >
+              <Typography variant="h5" sx={{ marginBottom: 2 }}>
+                Today's Visitors
+              </Typography>
 
-            {/* Download Button */}
-            <Box sx={{ width: { xs: "100%", sm: "auto" } }}>
-              <Download_Button />
-            </Box>
-          </Box>
+              {/* Filter and Download Button */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end", // Align to right
+                  alignItems: "center",
+                  marginBottom: 3 // Spacing below the filter section
+                }}
+              >
+                {/* Search Field */}
+                <TextField
+                  variant="outlined"
+                  placeholder="Search"
+                  value={filterText}
+                  onChange={handleFilterChange}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                    sx: {
+                      borderRadius: "20px",
+                      backgroundColor: "#fff",
+                      boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)"
+                    }
+                  }}
+                  sx={{
+                    width: {
+                      xs: "70%", // Adjusted for smaller screens
+                      sm: "50%", // Adjusted for tablets
+                      md: "30%" // Adjusted for larger screens
+                    },
+                    marginRight: 2 // Space between search and download button
+                  }}
+                />
 
-          {/* Visitor Data Table */}
-          <Box>
-            {loading ? (
-              <LoadingSpinner />
-            ) : filteredVisitors.length === 0 ? (
-              <Typography variant="h6">No Visitor Found!</Typography>
-            ) : (
-              <VisitorTable2 visitors={filteredVisitors} />
-            )}
-          </Box>
-        </Container>
-      </main>
+                <Download_Button />
+              </Box>
+
+              {/* Visitor Data Table */}
+              <Box>
+                {loading ? (
+                  <LoadingSpinner />
+                ) : filteredVisitors.length === 0 ? (
+                  <Typography variant="h6">No Visitor Found!</Typography>
+                ) : (
+                  <VisitorTable2 visitors={filteredVisitors} />
+                )}
+              </Box>
+            </Container>
+          </main>
+        </div>
+        <Footer />
+      </div>
     </div>
-  </div>
-  <Footer />
-</div>
-
   );
 };
 

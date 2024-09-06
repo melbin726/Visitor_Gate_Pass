@@ -1,82 +1,57 @@
 import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import SideBarNavi from "../../components/SideBarNavi/SideBarNavi.jsx";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner.jsx";
-import CustomDatePicker from "../../components/CustomDatePicker/CustomDatePicker.jsx";
-import Download_Button from "./Download_Button.jsx";
-import TotalVisitoirBlack_Icon from "../../assets/Icons/TotalVisitoirBlack_Icon.svg";
-import "./Visitor_Details.css";
+import CompleteSidebar from "../../components/SideBarNavi/CompleteSidebar.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
 import VisitorTable2 from "./VisitorTable2.jsx";
+import Download_Button from "./Download_Button.jsx"; // Your original download button component
 import axios from "axios";
 import { API_BASE_URL } from "../../library/helper.js";
 import useWindowSize from "../../hooks/useWindowSize";
-import CompleteSidebar from "../../components/SideBarNavi/CompleteSidebar.jsx";
+import {
+  Box,
+  Container,
+  Typography,
+  TextField,
+  InputAdornment,
+  IconButton
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 const API_URL = API_BASE_URL + "/visitors";
 
 const Visitor_Details = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const { width, height } = useWindowSize();
   const [filterText, setFilterText] = useState("");
   const [filteredVisitors, setFilteredVisitors] = useState([]);
   const [visitorData, setVisitorData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
 
   useEffect(() => {
     document.title = `Visitor Details: ${width} x ${height}`;
   }, [width, height]);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleClickOutside = (event) => {
-    if (event.target.closest(".dropdown2") === null) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
-
   useEffect(() => {
     const fetchVisitorData = async () => {
       try {
         const response = await axios.get(API_URL);
-        setVisitorData(response.data); // Store data from API
+        setVisitorData(response.data);
         setLoading(false);
-        console.log("Fetched visitor data:", response.data); // Log data
       } catch (error) {
         console.error("Error fetching visitor data:", error);
         setLoading(false);
       }
     };
-
     fetchVisitorData();
   }, []);
 
   useEffect(() => {
-    console.log("Filter text changed:", filterText); // Log filter text
-    console.log("Visitor data before filtering:", visitorData); // Log visitor data before filtering
-
-    try {
-      const filtered = visitorData.filter(
-        (visitor) =>
-          visitor.name?.toLowerCase().includes(filterText.toLowerCase()) ||
-          visitor.phone_number?.includes(filterText) // Use correct key for phone number
-      );
-
-      setFilteredVisitors(filtered);
-      console.log("Filtered visitors:", filtered); // Log filtered visitors
-    } catch (error) {
-      console.error("Error during filtering:", error);
-      setFilteredVisitors([]); // Clear the list on error
-    }
+    const filtered = visitorData.filter(
+      (visitor) =>
+        visitor.name?.toLowerCase().includes(filterText.toLowerCase()) ||
+        visitor.phone_number?.includes(filterText)
+    );
+    setFilteredVisitors(filtered);
   }, [filterText, visitorData]);
 
   const handleFilterChange = (event) => {
@@ -84,62 +59,86 @@ const Visitor_Details = () => {
   };
 
   return (
-    <div className="totalContent">
-      <div className="content">
-        <CompleteSidebar isActive="visitorDetails" />
-        <main className="mainContent">
-          <div className="visitor-register-form">
-            <div className="form-title">
-              <div className="icon-text">
-                <img
-                  src={TotalVisitoirBlack_Icon}
-                  alt="TotalVisitoirBlack_Icon"
-                />
-                <h2 className="visitorname2">Visitor Details</h2>
-              </div>
-              <div className="lines">
-                <div className="line1" />
-                <div className="line2" />
-              </div>
-            </div>
+    <div className="fakeBody" style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+  <div className="totalContent" style={{ flex: 1 }}>
+    <div className="content">
+      <CompleteSidebar isActive="visitorDetails" />
+      <main className="mainContent">
+        <Container
+          maxWidth="lg"
+          sx={{
+            backgroundColor: "transparent",
+            padding: { xs: 2, sm: 3, md: 4 },
+            pb: 5,
+            minHeight: "100vh",
+          }}
+        >
+          <Typography variant="h5" sx={{ marginBottom: 2 }}>
+            Today's Visitors
+          </Typography>
 
-            <form className="main-form-vd">
-              <div className="Vcontainer">
-                <div className="visitor-details-container">
-                  <div className="vt_date_search">
-                    <input
-                      className="vt_searchcontainer"
-                      type="text"
-                      placeholder="Filter by name or phone number"
-                      value={filterText}
-                      onChange={handleFilterChange}
-                    />
-                    <div className="filter-by-date">
-                      <CustomDatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        startDate={startDate}
-                        endDate={endDate}
-                      />
-                    </div>
-                    <div className="dowload-data">
-                      <Download_Button />
-                    </div>
-                  </div>
-                  {loading ? (
-                    <LoadingSpinner />
-                  ) : filteredVisitors.length === 0 ? (
-                    <h1>No Vistor Found!</h1>
-                  ) : (
-                    <VisitorTable2 visitors={filteredVisitors} />
-                  )}
-                </div>
-              </div>
-            </form>
-          </div>
-        </main>
-      </div>
+          {/* Filter and Download Button */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              justifyContent: "flex-end",
+              alignItems: { xs: "stretch", sm: "center" },
+              marginBottom: 3,
+            }}
+          >
+            {/* Search Field */}
+            <TextField
+              variant="outlined"
+              placeholder="Search"
+              value={filterText}
+              onChange={handleFilterChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                sx: {
+                  borderRadius: "20px",
+                  backgroundColor: "#fff",
+                  boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
+                },
+              }}
+              sx={{
+                width: {
+                  xs: "90%",
+                  sm: "50%",
+                  md: "30%",
+                },
+                marginBottom: { xs: 2, sm: 0 },
+                marginRight: { sm: 2 },
+              }}
+            />
+
+            {/* Download Button */}
+            <Box sx={{ width: { xs: "100%", sm: "auto" } }}>
+              <Download_Button />
+            </Box>
+          </Box>
+
+          {/* Visitor Data Table */}
+          <Box>
+            {loading ? (
+              <LoadingSpinner />
+            ) : filteredVisitors.length === 0 ? (
+              <Typography variant="h6">No Visitor Found!</Typography>
+            ) : (
+              <VisitorTable2 visitors={filteredVisitors} />
+            )}
+          </Box>
+        </Container>
+      </main>
     </div>
+  </div>
+  <Footer />
+</div>
+
   );
 };
 

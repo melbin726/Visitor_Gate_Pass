@@ -9,7 +9,15 @@
   font-family: "Poppins", sans-serif;
   font-size: 12px;
   font-weight: 400;
+  
 }
+
+/* .fakeBody {
+  height: 100%;
+  width: 100%;
+overflow: hidden; /* Correctly written without quotes */
+} */
+
 
 .headerLogo {
   padding: 10px 25px 5px;

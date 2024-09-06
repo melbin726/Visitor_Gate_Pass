@@ -2,21 +2,28 @@
 .totalContent {
   width: 100vw !important;
   height: 100vh !important;
+  background-color: #f9f9f9;
+  
 }
 
 /* Sidebar styling */
 .fakeSideBAr {
   width: 175px;
 }
+.fakeBody{
+  
+    height: calc(100vh - 38px);
+    padding-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;   
+  left: 0;  /* Fixes the element to the left of the screen */
+  width: 100%;
+}
 
 /* Main content area flexbox */
-.mainContent {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  padding: 10px;
-}
 
 /* Form container */
 .register-form2 {

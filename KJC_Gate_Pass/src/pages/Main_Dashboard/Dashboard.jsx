@@ -1,4 +1,4 @@
-//Dasboard.jsx
+// File: D:\workspace2\Visitor_Gate_Pass\KJC_Gate_Pass\src\pages\Main_Dashboard\Dashboard.jsx
 
 import "./Dashboard.css";
 import DashboardWidget from "./DashboardWidget.jsx";
@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import axios from "axios"; // Import axios
 import CompleteSidebar from "../../components/SideBarNavi/CompleteSidebar.jsx";
+import Footer from "../../components/Footer/Footer.jsx";  // Import Footer component
 
 function Dashboard() {
   const { width, height } = useWindowSize();
@@ -84,13 +85,10 @@ function Dashboard() {
                 title="Check-out Visitor"
                 count={checkedOutVisitors}
               />
-              {/* <DashboardWidget isCountWidget={false} icon={registerIcon} widgets='registerVisitor' title='Register Visitor' />
-              <DashboardWidget isCountWidget={false} icon={checkinIcon} widgets='checkinVisitor' title='Check-in Visitor' />
-              <DashboardWidget isCountWidget={false} icon={checkoutIcon} widgets='checkoutVisitor' title='Check-out Visitor' /> */}
             </div>
-            <div className="data-grid">
+            <div className="data-grid" >
               {loading ? (
-                <LoadingSpinner /> // Show spinner while loading
+                <LoadingSpinner /> 
               ) : (
                 <ReactVisitorTable
                   visitors={visitorData}
@@ -99,8 +97,10 @@ function Dashboard() {
                 />
               )}
             </div>
+            
           </main>
         </div>
+        <Footer /> 
       </div>
     </div>
   );

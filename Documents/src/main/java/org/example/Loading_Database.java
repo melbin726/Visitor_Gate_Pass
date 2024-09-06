@@ -74,10 +74,11 @@ public class Loading_Database {
         cardsCollection.insertMany(cardDocuments);
 
         // Insert a user document
-        Document userDoc = new Document()
-                .append("username", "john")
+        Document userDoc = new Document("name", "John Doe")
+                .append("email", "johndoe43@gmail.com")
                 .append("password", "1234")
-                .append("role", "admin");
+                .append("role", "HOD")
+                .append("phone_number", "1234567890");
         usersCollection.insertOne(userDoc);
 
         // Update existing card documents starting from card_id 103

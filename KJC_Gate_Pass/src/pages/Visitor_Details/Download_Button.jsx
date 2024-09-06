@@ -118,6 +118,7 @@ const Download_Button = () => {
         <Button
           variant="outlined"
           color="secondary"
+          sx={{textTransform:"none"}}
           startIcon={<DownloadIcon />}
           className="custom-download-btn"
           onClick={togglePopover}

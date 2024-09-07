@@ -196,14 +196,14 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
               xs: 2, 
             },
             width: {
-              xs: "100%", // Full width on mobile
-              sm: "auto", // Auto width on larger screens
+              xs: "100%", 
+              sm: "auto", 
             },
-            "& .MuiInputBase-root": { // Adjust input styles inside TextField
-              fontSize: "12px", // Reduce font size for small screens
+            "& .MuiInputBase-root": { 
+              fontSize: "12px", 
               padding: {
-                xs: "4px 8px", // Thinner padding on mobile
-                sm: "8px 12px", // Default padding on larger screens
+                xs: "4px 8px", 
+                sm: "8px 12px", 
               },
             },
           }}
@@ -266,52 +266,84 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
         </Table>
       </StyledTableContainer>
 
-      <PaginationControls>
-        <Button
-          variant="outlined"
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
-          sx={{
-            fontSize: {
-              xs: "10px", // Smaller font size for mobile
-              sm: "12px", // Larger font size for bigger screens
-            },
-            padding: {
-              xs: "4px 6px", // Thinner button padding on small screens
-              sm: "8px 12px", // Default padding on larger screens
-            },
-          }}
-        >
-          Previous
-        </Button>
-        <Typography
-          sx={{
-            fontSize: {
-              xs: "12px",
-              sm: "14px",
-            },
-          }}
-        >
-          Page {pageIndex + 1} of {pageCount}
-        </Typography>
-        <Button
-          variant="outlined"
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
-          sx={{
-            fontSize: {
-              xs: "10px", // Smaller font size for mobile
-              sm: "12px", // Larger font size for bigger screens
-            },
-            padding: {
-              xs: "4px 6px", // Thinner button padding on small screens
-              sm: "8px 12px", // Default padding on larger screens
-            },
-          }}
-        >
-          Next
-        </Button>
-      </PaginationControls>
+     <PaginationControls
+  sx={{
+    display: "flex",
+    alignItems: "center", 
+    justifyContent: "space-between", 
+    gap: "8px",
+    flexDirection: {
+      xs: "row",
+      sm: "row", 
+    },
+    flexWrap: "nowrap", 
+    marginTop: {
+      xs: 1,
+      sm: 2,
+    },
+  }}
+>
+  <Button
+    variant="outlined"
+    onClick={() => previousPage()}
+    disabled={!canPreviousPage}
+    sx={{
+      fontSize: {
+        xs: "8px",
+        sm: "10px", 
+        md: "12px", 
+      },
+      padding: {
+        xs: "4px 8px",
+        sm: "6px 10px",
+        md: "8px 12px", 
+      },
+      minWidth: {
+        xs: "50px",
+        sm: "80px", 
+      },
+    }}
+  >
+    Previous
+  </Button>
+
+  <Typography
+    sx={{
+      fontSize: {
+        xs: "8px", 
+        sm: "10px", 
+        md: "12px", 
+      },
+    }}
+  >
+    Page {pageIndex + 1} of {pageCount}
+  </Typography>
+
+  <Button
+    variant="outlined"
+    onClick={() => nextPage()}
+    disabled={!canNextPage}
+    sx={{
+      fontSize: {
+        xs: "8px", 
+        sm: "10px", 
+        md: "12px", 
+      },
+      padding: {
+        xs: "4px 8px", 
+        sm: "6px 10px", 
+        md: "8px 12px",
+      },
+      minWidth: {
+        xs: "50px", 
+        sm: "80px", 
+      },
+    }}
+  >
+    Next
+  </Button>
+</PaginationControls>
+
     </Container>
   );
 };

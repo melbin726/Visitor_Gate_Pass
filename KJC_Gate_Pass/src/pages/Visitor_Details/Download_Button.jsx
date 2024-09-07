@@ -28,7 +28,6 @@ const Download_Button = () => {
     e.preventDefault();
 
     let formattedStartDate, formattedEndDate;
-
     const today = new Date();
 
     if (selectedOption === "today") {
@@ -86,12 +85,12 @@ const Download_Button = () => {
             aria-label="download"
             onClick={togglePopover}
             sx={{
-              backgroundColor: "black",
-              color: "white",
-              border: "1px solid white",
+              backgroundColor: "white !important", 
+              color: "black !important",
+              border: "1px solid white !important", 
               "&:hover": {
-                backgroundColor: "white",
-                color: "black",
+                backgroundColor: "white !important", 
+                color: "black !important", 
               },
             }}
           >
@@ -103,13 +102,13 @@ const Download_Button = () => {
             onClick={togglePopover}
             sx={{
               textTransform: "none",
-              backgroundColor: "black", // Black background
-              color: "white", // White text color
-              border: "1px solid white", // White border
+              backgroundColor: "white !important", 
+              color: "black !important", 
+              border: "1px solid black !important", 
               "&:hover": {
-                backgroundColor: "white",
-                color: "black",
-                border: "1px solid black",
+                backgroundColor: "white !important",
+                color: "black !important", 
+                border: "1px solid white !important",
               },
             }}
             startIcon={<DownloadIcon />}
@@ -207,13 +206,14 @@ const Download_Button = () => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: "black",
-              color: "white",
+              backgroundColor: "white !important",
+              color: "black !important",
+              border: "1px solid black !important", 
               mt: 2,
               "&:hover": {
-                backgroundColor: "white",
-                color: "black",
-                border: "1px solid black",
+                backgroundColor: "white !important", 
+                color: "black !important", 
+                
               },
             }}
             onClick={handleProceed}

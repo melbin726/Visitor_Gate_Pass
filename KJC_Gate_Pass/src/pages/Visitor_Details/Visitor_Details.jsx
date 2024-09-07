@@ -63,7 +63,7 @@ const Visitor_Details = () => {
         <CompleteSidebar isActive="visitorDetails" />
         <main
           className="mainContent"
-          style={{ flexGrow: 1, paddingBottom: "80px" }} // Padding to give space for footer
+          style={{ flexGrow: 1, paddingBottom: "80px" }} 
         >
           <Container
             maxWidth="lg"
@@ -71,7 +71,7 @@ const Visitor_Details = () => {
               backgroundColor: "transparent",
               padding: { xs: 2, sm: 3, md: 4 },
               minHeight: "100vh",
-              paddingBottom: "120px", // Ensures space for the footer
+              paddingBottom: "120px", 
             }}
           >
             <Typography variant="h4"sx={{
@@ -132,7 +132,7 @@ const Visitor_Details = () => {
               ) : filteredVisitors.length === 0 ? (
                 <Typography variant="h6">No Visitor Found!</Typography>
               ) : (
-                <VisitorTable2 visitors={filteredVisitors} /> // Only one pagination is used in VisitorTable2
+                <VisitorTable2 visitors={filteredVisitors} /> 
               )}
             </Box>
           </Container>

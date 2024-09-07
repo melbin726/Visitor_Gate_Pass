@@ -80,7 +80,8 @@ const VisitorTable2 = ({ visitors }) => {
             sx={{
               backgroundColor: "white !important",
               color: "black !important",
-              border: "1px",
+
+              border: "1px solid black !important",
               borderRadius: "px !important",
               padding: "6px 12px",
               textTransform: "none",
@@ -89,7 +90,7 @@ const VisitorTable2 = ({ visitors }) => {
                 backgroundColor: "#f0f0f0 !important",
                 borderColor: "black",
               },
-              // Reduce size on small screens
+
               '@media (max-width: 600px)': {
                 padding: "4px 8px",
                 fontSize: "12px"
@@ -117,7 +118,7 @@ const VisitorTable2 = ({ visitors }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box>
-        {/* Date Range Filter */}
+
         <Box
           sx={{
             mb: 2,
@@ -128,7 +129,11 @@ const VisitorTable2 = ({ visitors }) => {
         >
           <Grid container spacing={2} justifyContent="flex-end">
             <Grid item xs={12} sm={6} md={3}>
-              <DatePicker
+              <DatePicker sx={{
+                '& .MuiIconButton-root': {
+                  color: 'black',
+                },
+              }}
                 label="From Date"
                 value={fromDate ? dayjs(fromDate) : null}
                 onChange={(newValue) => setFromDate(newValue ? dayjs(newValue).toDate() : null)}
@@ -136,7 +141,11 @@ const VisitorTable2 = ({ visitors }) => {
               />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-              <DatePicker
+              <DatePicker sx={{
+                '& .MuiIconButton-root': {
+                  color: 'black',
+                },
+              }}
                 label="To Date"
                 value={toDate ? dayjs(toDate) : null}
                 onChange={(newValue) => setToDate(newValue ? dayjs(newValue).toDate() : null)}
@@ -150,7 +159,7 @@ const VisitorTable2 = ({ visitors }) => {
           <Table
             sx={{
               minWidth: 650,
-              // Adjust for small screens
+
               '@media (max-width: 600px)': {
                 fontSize: "12px",
                 minWidth: "100%",
@@ -165,7 +174,7 @@ const VisitorTable2 = ({ visitors }) => {
                     key={column.accessor}
                     sx={{
                       fontWeight: "bold",
-                      // Adjust for mobile
+
                       '@media (max-width: 600px)': {
                         fontSize: "10px",
                         padding: "8px",
@@ -187,7 +196,7 @@ const VisitorTable2 = ({ visitors }) => {
                         <TableCell
                           key={column.accessor}
                           sx={{
-                            // Adjust row size for mobile
+
                             '@media (max-width: 600px)': {
                               fontSize: "12px",
                               padding: "6px",

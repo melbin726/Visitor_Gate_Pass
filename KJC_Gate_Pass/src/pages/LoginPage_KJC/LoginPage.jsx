@@ -20,22 +20,22 @@ function LoginPage() {
           pb: 5,
         }}
       >
-      
+
         <Box
           sx={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
-            height: '60vh', 
-            backgroundColor: '#F0EBFA', 
-            clipPath: 'ellipse(150% 100% at 50% 0%)',  
-            zIndex: 1, 
+            height: '60vh',
+            backgroundColor: '#F0EBFA',
+            clipPath: 'ellipse(150% 100% at 50% 0%)',
+            zIndex: 1,
           }}
         />
 
-       
-        <Box sx={{ position: "relative", zIndex: 3 }}> 
+
+        <Box sx={{ position: "relative", zIndex: 3 }}>
           <Header />
         </Box>
 
@@ -52,7 +52,7 @@ function LoginPage() {
             py: 4,
             pb: 2,
             position: "relative",
-            zIndex: 2, 
+            zIndex: 2,
           }}
         >
           <Grid
@@ -92,11 +92,16 @@ function LoginPage() {
                   variant="subtitle1"
                   color="textSecondary"
                   paragraph
-                  sx={{ lineHeight: 1.4, fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" }, color: '#4E5A65', fontFamily: 'Inter, sans-serif' }}
+                  sx={{
+                    lineHeight: 1.3,  // Adjust this to make the lines closer
+                    fontSize: { xs: "0.875rem", sm: "0.95rem", md: "1rem" },  // Slightly smaller font
+                    color: '#4E5A65',
+                    fontFamily: 'Inter, sans-serif'
+                  }}
                 >
-                  Secure Campus is your trusted partner in college security. From managing visitors to upholding student discipline,
-                  we ensure a safe and efficient environment. Experience peace of mind with our comprehensive safety solutions.
+                  Secure Campus is your trusted partner in college security. From managing visitors to upholding student discipline, we ensure a safe and efficient environment. Experience peace of mind with our comprehensive safety solutions.
                 </Typography>
+
               </Box>
             </Grid>
             <Grid item xs={12}>

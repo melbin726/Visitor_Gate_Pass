@@ -31,8 +31,8 @@ const VisitorTable2 = ({ visitors }) => {
   const [expandedRows, setExpandedRows] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [fromDate, setFromDate] = useState(null); // From date state
-  const [toDate, setToDate] = useState(null); // To date state
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
 
   const toggleRow = (index) => {
     setExpandedRows(prev =>
@@ -89,6 +89,11 @@ const VisitorTable2 = ({ visitors }) => {
                 backgroundColor: "#f0f0f0 !important",
                 borderColor: "black",
               },
+              // Reduce size on small screens
+              '@media (max-width: 600px)': {
+                padding: "4px 8px",
+                fontSize: "12px"
+              }
             }}
             endIcon={
               <ExpandMore
@@ -142,11 +147,31 @@ const VisitorTable2 = ({ visitors }) => {
         </Box>
 
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="visitor table">
+          <Table
+            sx={{
+              minWidth: 650,
+              // Adjust for small screens
+              '@media (max-width: 600px)': {
+                fontSize: "12px",
+                minWidth: "100%",
+              },
+            }}
+            aria-label="visitor table"
+          >
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
-                  <TableCell key={column.accessor} sx={{ fontWeight: "bold" }}>
+                  <TableCell
+                    key={column.accessor}
+                    sx={{
+                      fontWeight: "bold",
+                      // Adjust for mobile
+                      '@media (max-width: 600px)': {
+                        fontSize: "10px",
+                        padding: "8px",
+                      }
+                    }}
+                  >
                     <Box sx={{ display: "flex", alignItems: "center" }}>{column.Header}</Box>
                   </TableCell>
                 ))}
@@ -159,7 +184,16 @@ const VisitorTable2 = ({ visitors }) => {
                   <React.Fragment key={index}>
                     <TableRow hover onClick={() => toggleRow(index)} sx={{ cursor: "pointer" }}>
                       {columns.map((column) => (
-                        <TableCell key={column.accessor}>
+                        <TableCell
+                          key={column.accessor}
+                          sx={{
+                            // Adjust row size for mobile
+                            '@media (max-width: 600px)': {
+                              fontSize: "12px",
+                              padding: "6px",
+                            },
+                          }}
+                        >
                           {column.accessor === "check_in_time" ||
                             column.accessor === "check_out_time"
                             ? formatDateWithPadding(row[column.accessor])
@@ -174,8 +208,6 @@ const VisitorTable2 = ({ visitors }) => {
                         <TableCell colSpan={columns.length}>
                           <Collapse in={expandedRows.includes(index)} timeout="auto" unmountOnExit>
                             <Box sx={{ padding: 2, backgroundColor: "#f9f9f9" }}>
-
-
                               <Grid container spacing={2}>
                                 <Grid item xs={12} md={8}>
                                   <Typography variant="subtitle1" gutterBottom>
@@ -197,41 +229,68 @@ const VisitorTable2 = ({ visitors }) => {
                                     <b>Group Size:</b> {row.group_size}
                                   </Typography>
                                 </Grid>
-                                <Grid item xs={12} md={4}>
+                                <Grid
+                                  item
+                                  xs={12}
+                                  md={4}
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    // Adjust avatar size for small screens
+                                    '@media (max-width: 600px)': {
+                                      justifyContent: "flex-start",
+                                    }
+                                  }}
+                                >
                                   {row.photos ? (
                                     <Avatar
                                       src={row.photos}
                                       alt="Profile"
-                                      sx={{ width: 150, height: 150, borderRadius: "8px" }}
+                                      sx={{
+                                        width: 150,
+                                        height: 150,
+                                        borderRadius: "8px",
+                                        // Reduce avatar size for mobile
+                                        '@media (max-width: 600px)': {
+                                          width: 100,
+                                          height: 100,
+                                        }
+                                      }}
                                     />
                                   ) : (
                                     <Avatar
                                       src={profile}
                                       alt="Default Profile"
-                                      sx={{ width: 150, height: 150, borderRadius: "8px" }}
+                                      sx={{
+                                        width: 150,
+                                        height: 150,
+                                        borderRadius: "8px",
+                                        // Reduce avatar size for mobile
+                                        '@media (max-width: 600px)': {
+                                          width: 100,
+                                          height: 100,
+                                        }
+                                      }}
                                     />
                                   )}
                                 </Grid>
                               </Grid>
                               {row.visitor_cards.length > 0 ? (
-                                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}> {/* New Flexbox container */}
-
+                                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
                                   {row.visitor_cards.map((card, cardIndex) => (
                                     <Box
                                       key={cardIndex}
                                       sx={{
-                                        backgroundColor:
-                                          card.status === "checked_out"
-                                            ? "#e8f5e9"
-                                            : "#ffebee",
+                                        backgroundColor: card.status === "checked_out" ? "#e8f5e9" : "#ffebee",
                                         padding: "10px",
                                         marginBottom: "10px",
                                         borderRadius: "8px",
                                         width: "30%",
-
-
-
-
+                                        // Adjust card layout for mobile
+                                        '@media (max-width: 600px)': {
+                                          width: "100%",
+                                        },
                                       }}
                                     >
                                       <Typography variant="body2" gutterBottom>
@@ -241,8 +300,7 @@ const VisitorTable2 = ({ visitors }) => {
                                         <b>Exit Gate:</b> {card.exit_gate || "N/A"}
                                       </Typography>
                                       <Typography variant="body2" gutterBottom>
-                                        <b>Check-out Time:</b>{" "}
-                                        {formatDateWithPadding(card.check_out_time)}
+                                        <b>Check-out Time:</b> {formatDateWithPadding(card.check_out_time)}
                                       </Typography>
                                       <Typography variant="body2" gutterBottom>
                                         <b>Status:</b>{" "}
@@ -251,12 +309,8 @@ const VisitorTable2 = ({ visitors }) => {
                                           sx={{
                                             padding: "2px 8px",
                                             borderRadius: "4px",
-                                            backgroundColor:
-                                              card.status === "checked_out"
-                                                ? "#28a745"
-                                                : "#f44336",
+                                            backgroundColor: card.status === "checked_out" ? "#28a745" : "#f44336",
                                             color: "#fff",
-
                                           }}
                                         >
                                           {card.status}
@@ -270,9 +324,8 @@ const VisitorTable2 = ({ visitors }) => {
                                   No group members found.
                                 </Typography>
                               )}
-
-
                             </Box>
+
                           </Collapse>
                         </TableCell>
                       </TableRow>
@@ -290,23 +343,12 @@ const VisitorTable2 = ({ visitors }) => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{ marginBottom: '50px' }}  // Apply margin-bottom using sx
         />
 
+
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", mt: 2 }}>
-          <IconButton onClick={() => setPage((prev) => Math.max(prev - 1, 0))} disabled={page === 0}>
-            <ChevronLeft />
-          </IconButton>
-          <Typography>
-            Page {page + 1} of {Math.ceil(filteredVisitors.length / rowsPerPage)}
-          </Typography>
-          <IconButton
-            onClick={() =>
-              setPage((prev) => Math.min(prev + 1, Math.floor(filteredVisitors.length / rowsPerPage)))
-            }
-            disabled={page >= Math.floor(filteredVisitors.length / rowsPerPage)}
-          >
-            <ChevronRight />
-          </IconButton>
+
         </Box>
       </Box>
     </LocalizationProvider>

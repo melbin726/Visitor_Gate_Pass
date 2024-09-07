@@ -31,16 +31,16 @@ function Footer() {
         © 2024 - All rights reserved - Kristu Jayanti Software Development Centre
       </Typography>
       <Box sx={{ mt: { xs: 1, md: 0 }, display: 'flex', justifyContent: 'center' }}>
-        <IconButton color="inherit" href="https://instagram.com" sx={{ mx: 0.5, p: 0.5 }}> 
+        <IconButton color="inherit" href="https://www.instagram.com/kristujayanticollegeautonomous?igsh=YXg2MXFkZXhheHl6" sx={{ mx: 0.5, p: 0.5 }}> 
           <InstagramIcon fontSize="small" /> 
         </IconButton>
         <IconButton color="inherit" href="https://kristujayanti.edu.in/home/" sx={{ mx: 0.5, p: 0.5 }}>
           <PublicIcon fontSize="small" />
         </IconButton>
-        <IconButton color="inherit" href="https://twitter.com" sx={{ mx: 0.5, p: 0.5 }}>
+        <IconButton color="inherit" href="https://x.com/i/flow/login?redirect_after_login=%2FKJCAutonomous" sx={{ mx: 0.5, p: 0.5 }}>
           <TwitterIcon fontSize="small" />
         </IconButton>
-        <IconButton color="inherit" href="https://youtube.com" sx={{ mx: 0.5, p: 0.5 }}>
+        <IconButton color="inherit" href="https://www.youtube.com/@KristuJayantiCollegeAutonomous" sx={{ mx: 0.5, p: 0.5 }}>
           <YouTubeIcon fontSize="small" />
         </IconButton>
       </Box>

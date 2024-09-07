@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
-import StatusBadge from "./StatusBadge.jsx";
+import StatusBadge from "../../components/DataGrid/StatusBadge.jsx";
 import {
   Table,
   TableBody,
@@ -19,6 +19,9 @@ import {
 
 const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   marginTop: theme.spacing(4),
+  '@media (max-width: 600px)': {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const StyledTableHead = styled(TableHead)(({ theme }) => ({
@@ -27,6 +30,10 @@ const StyledTableHead = styled(TableHead)(({ theme }) => ({
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontWeight: "bold",
+  '@media (max-width: 600px)': {
+    fontSize: "12px",
+    padding: theme.spacing(1),
+  },
 }));
 
 const FilterContainer = styled('div')(({ theme }) => ({
@@ -48,6 +55,12 @@ const PaginationControls = styled('div')(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   marginTop: theme.spacing(2),
+  '@media (max-width: 600px)': {
+    marginTop: theme.spacing(1),
+    flexDirection: "column",
+    alignItems: "center",
+    gap: theme.spacing(1),
+  },
 }));
 
 const HorizontalStatusBadgeContainer = styled(Box)({
@@ -162,34 +175,48 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
       }}
     >
       <FilterContainer>
-  <Typography
-    variant="h5"
-    sx={{
-     
-      paddingLeft: {
-        xs: 2, 
-      },
-    }}
-  >
-    Today's Visitors
-  </Typography>
-  <TextField
-    sx={{
-     
-      paddingLeft: {
-        xs: 2, 
-      },
-    }}
-    variant="outlined"
-    size="small"
-    placeholder="Filter by name or phone number"
-    value={filterText}
-    onChange={(e) => setFilterText(e.target.value)}
-  />
-</FilterContainer>
+        <Typography
+          variant="h5"
+          sx={{
+            paddingLeft: {
+              xs: 2, 
+            },
+            fontSize: {
+              xs: "18px",
+              sm: "20px",
+              md: "24px",
+            },
+          }}
+        >
+          Today's Visitors
+        </Typography>
+        <TextField
+          sx={{
+            paddingLeft: {
+              xs: 2, 
+            },
+            width: {
+              xs: "100%", // Full width on mobile
+              sm: "auto", // Auto width on larger screens
+            },
+            "& .MuiInputBase-root": { // Adjust input styles inside TextField
+              fontSize: "12px", // Reduce font size for small screens
+              padding: {
+                xs: "4px 8px", // Thinner padding on mobile
+                sm: "8px 12px", // Default padding on larger screens
+              },
+            },
+          }}
+          variant="outlined"
+          size="small"
+          placeholder="Filter by name or phone number"
+          value={filterText}
+          onChange={(e) => setFilterText(e.target.value)}
+        />
+      </FilterContainer>
 
       <StyledTableContainer component={Paper}>
-        <Table {...getTableProps()}>
+        <Table {...getTableProps()} size="small">
           <StyledTableHead>
             {headerGroups.map((headerGroup) => (
               <TableRow {...headerGroup.getHeaderGroupProps()}>
@@ -216,7 +243,19 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
               return (
                 <TableRow {...row.getRowProps()}>
                   {row.cells.map((cell) => (
-                    <TableCell {...cell.getCellProps()}>
+                    <TableCell
+                      {...cell.getCellProps()}
+                      sx={{
+                        fontSize: {
+                          xs: "12px",
+                          sm: "14px",
+                        },
+                        padding: {
+                          xs: "8px",
+                          sm: "10px",
+                        },
+                      }}
+                    >
                       {cell.render("Cell")}
                     </TableCell>
                   ))}
@@ -232,21 +271,47 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
           variant="outlined"
           onClick={() => previousPage()}
           disabled={!canPreviousPage}
+          sx={{
+            fontSize: {
+              xs: "10px", // Smaller font size for mobile
+              sm: "12px", // Larger font size for bigger screens
+            },
+            padding: {
+              xs: "4px 6px", // Thinner button padding on small screens
+              sm: "8px 12px", // Default padding on larger screens
+            },
+          }}
         >
           Previous
         </Button>
-        <Typography>
+        <Typography
+          sx={{
+            fontSize: {
+              xs: "12px",
+              sm: "14px",
+            },
+          }}
+        >
           Page {pageIndex + 1} of {pageCount}
         </Typography>
         <Button
           variant="outlined"
           onClick={() => nextPage()}
           disabled={!canNextPage}
+          sx={{
+            fontSize: {
+              xs: "10px", // Smaller font size for mobile
+              sm: "12px", // Larger font size for bigger screens
+            },
+            padding: {
+              xs: "4px 6px", // Thinner button padding on small screens
+              sm: "8px 12px", // Default padding on larger screens
+            },
+          }}
         >
           Next
         </Button>
       </PaginationControls>
-      
     </Container>
   );
 };

@@ -63,7 +63,7 @@ const Visitor_Details = () => {
         <CompleteSidebar isActive="visitorDetails" />
         <main
           className="mainContent"
-          style={{ flexGrow: 1, paddingBottom: "80px" }} // Increased padding to make room for footer
+          style={{ flexGrow: 1, paddingBottom: "80px" }} // Padding to give space for footer
         >
           <Container
             maxWidth="lg"
@@ -71,31 +71,27 @@ const Visitor_Details = () => {
               backgroundColor: "transparent",
               padding: { xs: 2, sm: 3, md: 4 },
               minHeight: "100vh",
-              paddingBottom: "80px" // Ensure there is enough space at the bottom for the footer
+              paddingBottom: "120px", // Ensures space for the footer
             }}
           >
             <Typography variant="h4"sx={{
-          marginBottom: 2,
-          fontSize: {
-            xs: '1.5rem', // Smaller font size on extra-small screens
-            sm: '2rem',   // Medium font size on small screens
-            md: '2.125rem', // Default h4 size on medium and larger screens
-          },
-        }}>
-               Visitor Details
+              marginBottom: 2,
+              fontSize: {
+                xs: '1.5rem', 
+                sm: '2rem',  
+                md: '2.125rem', 
+              },
+            }}>
+              Visitor Details
             </Typography>
 
             <Box
               sx={{
-                
-                display:"flex",
-              
-                justifyContent: "flex-end",  // This will only apply when display is flex
-                alignItems: "center",        // This will only apply when display is flex
+                display: "flex",
+                justifyContent: "flex-end", 
+                alignItems: "center",       
                 marginBottom: 3,
-                
               }}
-              
             >
               <TextField
                 variant="outlined"
@@ -112,7 +108,6 @@ const Visitor_Details = () => {
                     borderRadius: "20px",
                     backgroundColor: "#fff",
                     boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)"
-                    
                   }
                 }}
                 sx={{
@@ -123,8 +118,8 @@ const Visitor_Details = () => {
                   },
                   marginRight: 2,
                   padding: {
-                    xs: '6px 8px',  // Smaller padding for small screens
-                    sm: '8px 12px', // Normal padding for larger screens
+                    xs: '6px 8px', 
+                    sm: '8px 12px', 
                   },
                 }}
               />
@@ -137,7 +132,7 @@ const Visitor_Details = () => {
               ) : filteredVisitors.length === 0 ? (
                 <Typography variant="h6">No Visitor Found!</Typography>
               ) : (
-                <VisitorTable2 visitors={filteredVisitors} />
+                <VisitorTable2 visitors={filteredVisitors} /> // Only one pagination is used in VisitorTable2
               )}
             </Box>
           </Container>

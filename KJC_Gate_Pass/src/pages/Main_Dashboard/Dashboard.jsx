@@ -60,7 +60,7 @@ function Dashboard() {
       <div className="totalContent">
         <div className="content">
           <CompleteSidebar isActive="dashboard" />
-          <main className="main-content" style={{ paddingBottom: "50px" }}> {/* Added padding here */}
+          <main className="main-content" style={{ paddingBottom: "50px" }}> 
             <div className="Widgets">
               <DashboardWidget
                 isCountWidget={true}

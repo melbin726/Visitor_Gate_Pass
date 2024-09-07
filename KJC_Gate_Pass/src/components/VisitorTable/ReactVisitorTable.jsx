@@ -162,30 +162,32 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
       }}
     >
       <FilterContainer>
-        <Typography variant="h5" sx={{
-          marginTop: {
-            xs: 2, 
-            sm: 3, 
-            md: 4, 
-            lg: 5, 
-          },
-        }}>Today's Visitors</Typography>
-        <TextField
-          sx={{
-            marginTop: {
-              xs: 2, 
-              sm: 3, 
-              md: 4, 
-              lg: 5, 
-            },
-          }}
-          variant="outlined"
-          size="small"
-          placeholder="Filter by name or phone number"
-          value={filterText}
-          onChange={(e) => setFilterText(e.target.value)}
-        />
-      </FilterContainer>
+  <Typography
+    variant="h5"
+    sx={{
+     
+      paddingLeft: {
+        xs: 2, 
+      },
+    }}
+  >
+    Today's Visitors
+  </Typography>
+  <TextField
+    sx={{
+     
+      paddingLeft: {
+        xs: 2, 
+      },
+    }}
+    variant="outlined"
+    size="small"
+    placeholder="Filter by name or phone number"
+    value={filterText}
+    onChange={(e) => setFilterText(e.target.value)}
+  />
+</FilterContainer>
+
       <StyledTableContainer component={Paper}>
         <Table {...getTableProps()}>
           <StyledTableHead>

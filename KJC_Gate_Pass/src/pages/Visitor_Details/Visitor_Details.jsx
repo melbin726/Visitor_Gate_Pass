@@ -4,7 +4,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner.jsx";
 import CompleteSidebar from "../../components/SideBarNavi/CompleteSidebar.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import VisitorTable2 from "./VisitorTable2.jsx";
-import Download_Button from "./Download_Button.jsx"; // Your original download button component
+import Download_Button from "./Download_Button.jsx"; 
 import axios from "axios";
 import { API_BASE_URL } from "../../library/helper.js";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -65,7 +65,7 @@ const Visitor_Details = () => {
           <CompleteSidebar isActive="visitorDetails" />
           <main
             className="mainContent"
-            style={{ paddingBottom: "50px" }} 
+            style={{ paddingBottom: "50px" }}
           >
             <Container
               maxWidth="lg"
@@ -73,23 +73,23 @@ const Visitor_Details = () => {
                 backgroundColor: "transparent",
                 padding: { xs: 2, sm: 3, md: 4 },
                 minHeight: "100vh",
-                paddingBottom: "50px" 
+                paddingBottom: "50px"
               }}
             >
               <Typography variant="h5" sx={{ marginBottom: 2 }}>
                 Today's Visitors
               </Typography>
 
-              {/* Filter and Download Button */}
+
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "flex-end", // Align to right
+                  justifyContent: "flex-end",
                   alignItems: "center",
-                  marginBottom: 3 // Spacing below the filter section
+                  marginBottom: 3
                 }}
               >
-                {/* Search Field */}
+
                 <TextField
                   variant="outlined"
                   placeholder="Search"
@@ -109,18 +109,18 @@ const Visitor_Details = () => {
                   }}
                   sx={{
                     width: {
-                      xs: "70%", // Adjusted for smaller screens
-                      sm: "50%", // Adjusted for tablets
-                      md: "30%" // Adjusted for larger screens
+                      xs: "70%",
+                      sm: "50%",
+                      md: "30%"
                     },
-                    marginRight: 2 // Space between search and download button
+                    marginRight: 2
                   }}
                 />
 
                 <Download_Button />
               </Box>
 
-              {/* Visitor Data Table */}
+
               <Box>
                 {loading ? (
                   <LoadingSpinner />

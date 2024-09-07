@@ -198,7 +198,7 @@
   align-items: center;
   font-weight: 500;
   color: white;
-  width: fit-content;
+  
   height: fit-content;
   padding: 5px 8px 6px 8px;
   border-radius: 5px;
@@ -208,7 +208,7 @@
 .vt_right-section-formm {
   justify-items: center;
   align-items: center;
-  width: fit-content;
+ 
   height: 180px;
   display: flex;
   flex-direction: column;

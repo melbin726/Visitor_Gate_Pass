@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronFirst, ChevronLast, icons, LogOut } from "lucide-react";
 import circleLogo from "../../assets/KJC_Logo.svg";
-import "./Sidebar.css"; // Import the CSS file for styling
+import "./Sidebar.css"; 
 
 const SidebarContext = createContext();
 export const Sidebar = ({ children }) => {

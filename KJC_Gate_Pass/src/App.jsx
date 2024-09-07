@@ -7,8 +7,10 @@ import Checkout_Visitor from "./pages/Checkout_Visitor/Checkout_Visitor.jsx";
 import Visitor_Details from "./pages/Visitor_Details/Visitor_Details.jsx";
 import Pre_Approve from "./pages/Pre_Approve/Pre_Approve.jsx";
 
+
 function App() {
   return (
+    
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />

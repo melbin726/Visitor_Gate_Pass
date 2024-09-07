@@ -93,92 +93,127 @@ function LoginForm() {
 
   return (
     <Paper
-  elevation={6}
-  sx={{
-    p: 3, // Reduced padding
-    borderRadius: "12px", // Slightly reduced border-radius
-    width: "100%",
-    maxWidth: "350px", // Reduced max width
-    mx: "auto",
-  }}
->
-  {!showForgotPassword ? (
-    <Box component="form" onSubmit={handleLogin}>
-      
-      <TextField
-        label="Email"
-        value={email}
-        onChange={handleEmailChange}
-        fullWidth
-        margin="normal"
-        variant="outlined"
-        required
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            borderRadius: "10px", // Reduced border radius
-            "& input": {
-              padding: "10px 12px", // Reduced padding
+      elevation={6}
+      sx={{
+        p: 3,
+        borderRadius: "12px",
+        width: "100%",
+        maxWidth: "350px",
+        mx: "auto",
+        "@media (max-width: 600px)": {
+          fontSize: "12px", 
+        },
+      }}
+    >
+      {!showForgotPassword ? (
+        <Box
+          component="form"
+          onSubmit={handleLogin}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "10px",
+              "& input": {
+                padding: "10px 12px",
+                "@media (max-width: 600px)": {
+                  padding: "8px 10px", 
+                },
+              },
             },
-          },
-        }}
-      />
-      <TextField
-        label="Password"
-        type={showPassword ? "text" : "password"}
-        value={password}
-        onChange={handlePasswordChange}
-        fullWidth
-        margin="normal"
-        variant="outlined"
-        required
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={togglePasswordVisibility} edge="end">
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            borderRadius: "10px",
-            "& input": {
-              padding: "10px 12px",
+            "@media (max-width: 600px)": {
+              fontSize: "12px", 
             },
-          },
-        }}
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        fullWidth
-        sx={{
-          mt: 2,
-          py: 1.2, // Reduced padding for height
-          borderRadius: "10px", // Slightly curved edges
-          fontSize: "15px", // Reduced font size
-        }}
-      >
-        Sign in
-      </Button>
-      <Typography
-        variant="body2"
-        color="primary"
-        align="center"
-        sx={{ mt: 2, cursor: "pointer" }}
-        onClick={handleForgotPassword}
-      >
-        Forgot your password?
-      </Typography>
-    </Box>
-  ) : (
-    <ForgotPasswordForm onBackToLogin={handleBackToLogin} />
-  )}
-  <ToastContainer />
-</Paper>
-
+          }}
+        >
+          <TextField
+            label="Email"
+            value={email}
+            onChange={handleEmailChange}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            required
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "10px",
+                "& input": {
+                  padding: "10px 12px",
+                  "@media (max-width: 600px)": {
+                    padding: "8px 10px", 
+                    
+                  },
+                },
+              },
+            }}
+          />
+          <TextField
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={handlePasswordChange}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            required
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={togglePasswordVisibility} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "10px",
+                "& input": {
+                  padding: "10px 12px",
+                  "@media (max-width: 600px)": {
+                    padding: "8px 10px", 
+                  },
+                },
+              },
+            }}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{
+              mt: 2,
+              py: 1.2,
+              borderRadius: "10px",
+              fontSize: "15px",
+              "@media (max-width: 600px)": {
+                fontSize: "12px", 
+                py: 1,
+              },
+            }}
+          >
+            Sign in
+          </Button>
+          <Typography
+            variant="body2"
+            color="primary"
+            align="center"
+            sx={{
+              mt: 2,
+              cursor: "pointer",
+              "@media (max-width: 600px)": {
+                fontSize: "12px", 
+              },
+            }}
+            onClick={handleForgotPassword}
+          >
+            Forgot your password?
+          </Typography>
+        </Box>
+      ) : (
+        <ForgotPasswordForm onBackToLogin={handleBackToLogin} />
+      )}
+      <ToastContainer />
+    </Paper>
   );
 }
 

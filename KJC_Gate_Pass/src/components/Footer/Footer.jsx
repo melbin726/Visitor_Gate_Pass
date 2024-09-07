@@ -27,7 +27,7 @@ function Footer() {
           maxWidth: '100%',
       }}
     >
-      <Typography variant="body2" sx={{ fontSize: '0.8rem' }}> 
+      <Typography variant="body2" sx={{ fontSize: '0.8rem' , fontFamily: 'Inter, sans-serif',}}> 
         © 2024 - All rights reserved - Kristu Jayanti Software Development Centre
       </Typography>
       <Box sx={{ mt: { xs: 1, md: 0 }, display: 'flex', justifyContent: 'center' }}>

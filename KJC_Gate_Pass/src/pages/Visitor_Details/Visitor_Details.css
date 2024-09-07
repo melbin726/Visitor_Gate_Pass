@@ -1,31 +1,31 @@
-/* Full viewport height and width for main content */
 .totalContent {
   width: 100vw !important;
   height: 100vh !important;
   background-color: #f9f9f9;
-  
+
 }
 
-/* Sidebar styling */
+
 .fakeSideBAr {
   width: 175px;
 }
-.fakeBody{
-  
-    height: calc(100vh - 38px);
-    padding-bottom: 5px;
+
+.fakeBody {
+
+  height: calc(100vh - 38px);
+  padding-bottom: 5px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   position: fixed;
-  top: 0;   
-  left: 0;  /* Fixes the element to the left of the screen */
+  top: 0;
+  left: 0;
   width: 100%;
 }
 
-/* Main content area flexbox */
 
-/* Form container */
+
+
 .register-form2 {
   display: inline-flex;
   flex-direction: column;
@@ -91,7 +91,7 @@
 .vd_name_sections {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Align items to the left */
+  justify-content: flex-start;
   width: 100%;
   font-size: 14px;
   padding: 10px;
@@ -106,8 +106,9 @@
 .table {
   width: 100%;
 }
+
 .vt_searchcontainer {
-  /* background-color:black; */
+
   margin-left: 2px;
   padding: 7px;
   border: 1px solid grey;
@@ -122,7 +123,7 @@
 }
 
 .main-form-vd h1 {
-  background-color: none; /* This value is actually not valid; you might want to remove or change it */
+  background-color: none;
   color: rgb(142, 141, 141);
   font-family: "Comic Sans MS", cursive;
   font-weight: bold;

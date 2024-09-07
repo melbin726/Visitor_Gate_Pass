@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "@date-io/dayjs": "^3.0.0",
+    "@mui/lab": "^5.0.0-alpha.91",
+    "@mui/material": "^5.15.14",
     "@mui/x-date-pickers": "^7.14.0",
     "dayjs": "^1.11.13",
     "lucide-react": "^0.436.0",

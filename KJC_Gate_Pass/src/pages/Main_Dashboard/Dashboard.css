@@ -1,9 +1,7 @@
-
-
 .fakeBody {
   height: 100%;
   width: 100%;
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 
@@ -70,7 +68,6 @@
 
 .Widgets {
   width: 95%;
-  height: fit-content;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

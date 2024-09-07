@@ -17,10 +17,9 @@ function LoginPage() {
           backgroundColor: '#fff',
           boxSizing: "border-box",
           width: "100%",
-          pb: 5,
+          pb: 0, 
         }}
       >
-
         <Box
           sx={{
             position: 'absolute',
@@ -33,7 +32,6 @@ function LoginPage() {
             zIndex: 1,
           }}
         />
-
 
         <Box sx={{ position: "relative", zIndex: 3 }}>
           <Header />
@@ -93,8 +91,8 @@ function LoginPage() {
                   color="textSecondary"
                   paragraph
                   sx={{
-                    lineHeight: 1.3,  // Adjust this to make the lines closer
-                    fontSize: { xs: "0.875rem", sm: "0.95rem", md: "1rem" },  // Slightly smaller font
+                    lineHeight: 1.3,  
+                    fontSize: { xs: "0.875rem", sm: "0.95rem", md: "1rem" },  
                     color: '#4E5A65',
                     fontFamily: 'Inter, sans-serif'
                   }}
@@ -155,7 +153,13 @@ function LoginPage() {
           </Grid>
         </Box>
 
-        <Footer />
+        {/* Footer */}
+        <Footer 
+          sx={{
+            mt: { xs: 0 },  
+            pb: { xs: 0 }, 
+          }}
+        />
       </Box>
     </div>
   );

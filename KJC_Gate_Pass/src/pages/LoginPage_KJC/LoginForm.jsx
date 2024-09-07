@@ -124,57 +124,67 @@ function LoginForm() {
             },
           }}
         >
-          <TextField
-            label="Email"
-            value={email}
-            onChange={handleEmailChange}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            required
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "10px",
-                "& input": {
-                  padding: "10px 12px",
-                  "@media (max-width: 600px)": {
-                    padding: "8px 10px", 
-                    
-                  },
-                },
-              },
-            }}
-          />
-          <TextField
-            label="Password"
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={handlePasswordChange}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={togglePasswordVisibility} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "10px",
-                "& input": {
-                  padding: "10px 12px",
-                  "@media (max-width: 600px)": {
-                    padding: "8px 10px", 
-                  },
-                },
-              },
-            }}
-          />
+         <TextField
+  label="Email"
+  value={email}
+  onChange={handleEmailChange}
+  fullWidth
+  margin="normal"
+  variant="outlined"
+  required
+  sx={{
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "10px",
+      height: "44px", // Set a specific height for the input field
+      "& input": {
+        padding: "0 12px",  // Adjust the padding for better vertical centering
+        height: "44px",  // Ensure the input height matches
+        lineHeight: "44px", // Adjust the line height
+        "@media (max-width: 600px)": {
+          padding: "0 10px", 
+          height: "40px", // Smaller height for mobile
+          lineHeight: "40px",
+        },
+      },
+    },
+  }}
+/>
+<TextField
+  label="Password"
+  type={showPassword ? "text" : "password"}
+  value={password}
+  onChange={handlePasswordChange}
+  fullWidth
+  margin="normal"
+  variant="outlined"
+  required
+  InputProps={{
+    endAdornment: (
+      <InputAdornment position="end">
+        <IconButton onClick={togglePasswordVisibility} edge="end">
+          {showPassword ? <VisibilityOff /> : <Visibility />}
+        </IconButton>
+      </InputAdornment>
+    ),
+  }}
+  sx={{
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "10px",
+      height: "44px", // Set a specific height for the input field
+      "& input": {
+        padding: "0 12px", // Adjust the padding for better vertical centering
+        height: "44px", // Ensure the input height matches
+        lineHeight: "44px", // Adjust the line height
+        "@media (max-width: 600px)": {
+          padding: "0 10px",
+          height: "40px", // Smaller height for mobile
+          lineHeight: "40px",
+        },
+      },
+    },
+  }}
+/>
+
           <Button
             type="submit"
             variant="contained"

@@ -14,7 +14,6 @@ import {
   Typography,
   TextField,
   InputAdornment,
-  IconButton
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -59,82 +58,92 @@ const Visitor_Details = () => {
   };
 
   return (
-    <div className="fakeBody">
-      <div className="totalContent">
-        <div className="content">
-          <CompleteSidebar isActive="visitorDetails" />
-          <main
-            className="mainContent"
-            style={{ paddingBottom: "50px" }}
+    <div className="fakeBody" style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <div className="totalContent" style={{ flexGrow: 1, display: "flex" }}>
+        <CompleteSidebar isActive="visitorDetails" />
+        <main
+          className="mainContent"
+          style={{ flexGrow: 1, paddingBottom: "80px" }} // Increased padding to make room for footer
+        >
+          <Container
+            maxWidth="lg"
+            sx={{
+              backgroundColor: "transparent",
+              padding: { xs: 2, sm: 3, md: 4 },
+              minHeight: "100vh",
+              paddingBottom: "80px" // Ensure there is enough space at the bottom for the footer
+            }}
           >
-            <Container
-              maxWidth="lg"
+            <Typography variant="h4"sx={{
+          marginBottom: 2,
+          fontSize: {
+            xs: '1.5rem', // Smaller font size on extra-small screens
+            sm: '2rem',   // Medium font size on small screens
+            md: '2.125rem', // Default h4 size on medium and larger screens
+          },
+        }}>
+               Visitor Details
+            </Typography>
+
+            <Box
               sx={{
-                backgroundColor: "transparent",
-                padding: { xs: 2, sm: 3, md: 4 },
-                minHeight: "100vh",
-                paddingBottom: "50px"
+                
+                display:"flex",
+              
+                justifyContent: "flex-end",  // This will only apply when display is flex
+                alignItems: "center",        // This will only apply when display is flex
+                marginBottom: 3,
+                
               }}
+              
             >
-              <Typography variant="h5" sx={{ marginBottom: 2 }}>
-                Today's Visitors
-              </Typography>
-
-
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                  marginBottom: 3
+              <TextField
+                variant="outlined"
+                placeholder="Search"
+                value={filterText}
+                onChange={handleFilterChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                  sx: {
+                    borderRadius: "20px",
+                    backgroundColor: "#fff",
+                    boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)"
+                    
+                  }
                 }}
-              >
+                sx={{
+                  width: {
+                    xs: "80%",
+                    sm: "80%",
+                    md: "60%"
+                  },
+                  marginRight: 2,
+                  padding: {
+                    xs: '6px 8px',  // Smaller padding for small screens
+                    sm: '8px 12px', // Normal padding for larger screens
+                  },
+                }}
+              />
+              <Download_Button />
+            </Box>
 
-                <TextField
-                  variant="outlined"
-                  placeholder="Search"
-                  value={filterText}
-                  onChange={handleFilterChange}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                    sx: {
-                      borderRadius: "20px",
-                      backgroundColor: "#fff",
-                      boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)"
-                    }
-                  }}
-                  sx={{
-                    width: {
-                      xs: "70%",
-                      sm: "50%",
-                      md: "30%"
-                    },
-                    marginRight: 2
-                  }}
-                />
-
-                <Download_Button />
-              </Box>
-
-
-              <Box>
-                {loading ? (
-                  <LoadingSpinner />
-                ) : filteredVisitors.length === 0 ? (
-                  <Typography variant="h6">No Visitor Found!</Typography>
-                ) : (
-                  <VisitorTable2 visitors={filteredVisitors} />
-                )}
-              </Box>
-            </Container>
-          </main>
-        </div>
-        <Footer />
+            <Box>
+              {loading ? (
+                <LoadingSpinner />
+              ) : filteredVisitors.length === 0 ? (
+                <Typography variant="h6">No Visitor Found!</Typography>
+              ) : (
+                <VisitorTable2 visitors={filteredVisitors} />
+              )}
+            </Box>
+          </Container>
+        </main>
       </div>
+      <Footer style={{ position: "fixed", bottom: 0, width: "100%" }} />
     </div>
   );
 };

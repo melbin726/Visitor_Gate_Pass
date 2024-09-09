@@ -129,11 +129,19 @@ const VisitorTable2 = ({ visitors }) => {
         >
           <Grid container spacing={2} justifyContent="flex-end">
             <Grid item xs={12} sm={6} md={3}>
-              <DatePicker sx={{
-                '& .MuiIconButton-root': {
-                  color: 'black',
-                },
-              }}
+              <DatePicker
+                sx={{
+                  '& .MuiIconButton-root': {
+                    color: 'black !important',
+                    backgroundColor: 'white !important',
+
+                    '&:hover': {
+                      color: 'white !important',
+                      backgroundColor: 'black !important',
+
+                    },
+                  },
+                }}
                 label="From Date"
                 value={fromDate ? dayjs(fromDate) : null}
                 onChange={(newValue) => setFromDate(newValue ? dayjs(newValue).toDate() : null)}
@@ -141,11 +149,17 @@ const VisitorTable2 = ({ visitors }) => {
               />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-              <DatePicker sx={{
-                '& .MuiIconButton-root': {
-                  color: 'black',
-                },
-              }}
+              <DatePicker
+                sx={{
+                  '& .MuiIconButton-root': {
+                    color: 'black !important',
+                    backgroundColor: 'white !important',
+                    '&:hover': {
+                      color: 'white !important',
+                      backgroundColor: 'black !important',
+                    },
+                  },
+                }}
                 label="To Date"
                 value={toDate ? dayjs(toDate) : null}
                 onChange={(newValue) => setToDate(newValue ? dayjs(newValue).toDate() : null)}
@@ -154,6 +168,7 @@ const VisitorTable2 = ({ visitors }) => {
             </Grid>
           </Grid>
         </Box>
+
 
         <TableContainer component={Paper}>
           <Table
@@ -246,7 +261,7 @@ const VisitorTable2 = ({ visitors }) => {
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
-                                    // Adjust avatar size for small screens
+
                                     '@media (max-width: 600px)': {
                                       justifyContent: "flex-start",
                                     }
@@ -260,7 +275,7 @@ const VisitorTable2 = ({ visitors }) => {
                                         width: 150,
                                         height: 150,
                                         borderRadius: "8px",
-                                        // Reduce avatar size for mobile
+
                                         '@media (max-width: 600px)': {
                                           width: 100,
                                           height: 100,
@@ -275,7 +290,7 @@ const VisitorTable2 = ({ visitors }) => {
                                         width: 150,
                                         height: 150,
                                         borderRadius: "8px",
-                                        // Reduce avatar size for mobile
+
                                         '@media (max-width: 600px)': {
                                           width: 100,
                                           height: 100,
@@ -296,7 +311,7 @@ const VisitorTable2 = ({ visitors }) => {
                                         marginBottom: "10px",
                                         borderRadius: "8px",
                                         width: "30%",
-                                        // Adjust card layout for mobile
+
                                         '@media (max-width: 600px)': {
                                           width: "100%",
                                         },
@@ -352,7 +367,7 @@ const VisitorTable2 = ({ visitors }) => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{ marginBottom: '50px' }}  // Apply margin-bottom using sx
+          sx={{ marginBottom: '50px' }}
         />
 
 

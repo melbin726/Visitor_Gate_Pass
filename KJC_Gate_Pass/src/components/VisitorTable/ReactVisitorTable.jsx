@@ -160,17 +160,17 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
   );
 
   return (
-    <Container 
-      maxWidth="lg" 
-      sx={{ 
-        mt: 8, 
-        px: { 
-          xs: 0,  
-          sm: 0,  
-          md: 3, 
-          lg: 4, 
-          xl: 5,  
-          marginBottom:6, 
+    <Container
+      maxWidth="lg"
+      sx={{
+        mt: 8,
+        px: {
+          xs: 0,
+          sm: 0,
+          md: 3,
+          lg: 4,
+          xl: 5,
+          marginBottom: 6,
         },
       }}
     >
@@ -179,7 +179,7 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
           variant="h5"
           sx={{
             paddingLeft: {
-              xs: 2, 
+              xs: 2,
             },
             fontSize: {
               xs: "18px",
@@ -193,17 +193,17 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
         <TextField
           sx={{
             paddingLeft: {
-              xs: 2, 
+              xs: 2,
             },
             width: {
-              xs: "100%", 
-              sm: "auto", 
+              xs: "100%",
+              sm: "auto",
             },
-            "& .MuiInputBase-root": { 
-              fontSize: "12px", 
+            "& .MuiInputBase-root": {
+              fontSize: "12px",
               padding: {
-                xs: "4px 8px", 
-                sm: "8px 12px", 
+                xs: "4px 8px",
+                sm: "8px 12px",
               },
             },
           }}
@@ -266,83 +266,83 @@ const ReactVisitorTable = ({ visitors, totalVisitorCount }) => {
         </Table>
       </StyledTableContainer>
 
-     <PaginationControls
-  sx={{
-    display: "flex",
-    alignItems: "center", 
-    justifyContent: "space-between", 
-    gap: "8px",
-    flexDirection: {
-      xs: "row",
-      sm: "row", 
-    },
-    flexWrap: "nowrap", 
-    marginTop: {
-      xs: 1,
-      sm: 2,
-    },
-  }}
->
-  <Button
-    variant="outlined"
-    onClick={() => previousPage()}
-    disabled={!canPreviousPage}
-    sx={{
-      fontSize: {
-        xs: "8px",
-        sm: "10px", 
-        md: "12px", 
-      },
-      padding: {
-        xs: "4px 8px",
-        sm: "6px 10px",
-        md: "8px 12px", 
-      },
-      minWidth: {
-        xs: "50px",
-        sm: "80px", 
-      },
-    }}
-  >
-    Previous
-  </Button>
+      <PaginationControls
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "8px",
+          flexDirection: {
+            xs: "row",
+            sm: "row",
+          },
+          flexWrap: "nowrap",
+          marginTop: {
+            xs: 1,
+            sm: 2,
+          },
+        }}
+      >
+        <Button
+          variant="outlined"
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+          sx={{
+            fontSize: {
+              xs: "8px",
+              sm: "10px",
+              md: "12px",
+            },
+            padding: {
+              xs: "4px 8px",
+              sm: "6px 10px",
+              md: "8px 12px",
+            },
+            minWidth: {
+              xs: "50px",
+              sm: "80px",
+            },
+          }}
+        >
+          Previous
+        </Button>
 
-  <Typography
-    sx={{
-      fontSize: {
-        xs: "8px", 
-        sm: "10px", 
-        md: "12px", 
-      },
-    }}
-  >
-    Page {pageIndex + 1} of {pageCount}
-  </Typography>
+        <Typography
+          sx={{
+            fontSize: {
+              xs: "8px",
+              sm: "10px",
+              md: "12px",
+            },
+          }}
+        >
+          Page {pageIndex + 1} of {pageCount}
+        </Typography>
 
-  <Button
-    variant="outlined"
-    onClick={() => nextPage()}
-    disabled={!canNextPage}
-    sx={{
-      fontSize: {
-        xs: "8px", 
-        sm: "10px", 
-        md: "12px", 
-      },
-      padding: {
-        xs: "4px 8px", 
-        sm: "6px 10px", 
-        md: "8px 12px",
-      },
-      minWidth: {
-        xs: "50px", 
-        sm: "80px", 
-      },
-    }}
-  >
-    Next
-  </Button>
-</PaginationControls>
+        <Button
+          variant="outlined"
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+          sx={{
+            fontSize: {
+              xs: "8px",
+              sm: "10px",
+              md: "12px",
+            },
+            padding: {
+              xs: "4px 8px",
+              sm: "6px 10px",
+              md: "8px 12px",
+            },
+            minWidth: {
+              xs: "50px",
+              sm: "80px",
+            },
+          }}
+        >
+          Next
+        </Button>
+      </PaginationControls>
 
     </Container>
   );

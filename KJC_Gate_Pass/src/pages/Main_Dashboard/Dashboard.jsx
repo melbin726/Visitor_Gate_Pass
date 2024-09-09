@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import axios from "axios";
 import CompleteSidebar from "../../components/SideBarNavi/CompleteSidebar.jsx";
-import Footer from "../../components/Footer/Footer.jsx";  
+import Footer from "../../components/Footer/Footer.jsx";
 
 function Dashboard() {
   const { width, height } = useWindowSize();
@@ -60,7 +60,7 @@ function Dashboard() {
       <div className="totalContent">
         <div className="content">
           <CompleteSidebar isActive="dashboard" />
-          <main className="main-content" style={{ paddingBottom: "50px" }}> 
+          <main className="main-content" style={{ paddingBottom: "50px" }}>
             <div className="Widgets">
               <DashboardWidget
                 isCountWidget={true}
@@ -86,7 +86,7 @@ function Dashboard() {
             </div>
             <div className="data-grid">
               {loading ? (
-                <LoadingSpinner /> 
+                <LoadingSpinner />
               ) : (
                 <ReactVisitorTable
                   visitors={visitorData}
@@ -97,7 +97,7 @@ function Dashboard() {
             </div>
           </main>
         </div>
-        <Footer /> 
+        <Footer />
       </div>
     </div>
   );

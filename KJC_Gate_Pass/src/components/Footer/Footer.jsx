@@ -7,32 +7,32 @@ import PublicIcon from '@mui/icons-material/Public';
 
 function Footer() {
   return (
-    <Box 
+    <Box
       sx={{
-          position: { xs: 'static', md: 'fixed' }, 
-          zIndex: { md: 10 }, 
-          bottom: { md: 0 },
-          backgroundColor: '#000', 
-          color: '#fff', 
-          py: 0.5, 
-          px: 2, 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center',
-          flexDirection: { xs: 'column', md: 'row' }, 
-          textAlign: { xs: 'center', md: 'left' }, 
-          width: '100%', 
-          boxSizing: 'border-box', 
-          mt: 'auto', 
-          maxWidth: '100%',
+        position: { xs: 'static', md: 'fixed' },
+        zIndex: { md: 10 },
+        bottom: { md: 0 },
+        backgroundColor: '#000',
+        color: '#fff',
+        py: 0.5,
+        px: 2,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: { xs: 'column', md: 'row' },
+        textAlign: { xs: 'center', md: 'left' },
+        width: '100%',
+        boxSizing: 'border-box',
+        mt: 'auto',
+        maxWidth: '100%',
       }}
     >
-      <Typography variant="body2" sx={{ fontSize: '0.8rem' , fontFamily: 'Inter, sans-serif',}}> 
+      <Typography variant="body2" sx={{ fontSize: '0.8rem', fontFamily: 'Inter, sans-serif', }}>
         © 2024 - All rights reserved - Kristu Jayanti Software Development Centre
       </Typography>
       <Box sx={{ mt: { xs: 1, md: 0 }, display: 'flex', justifyContent: 'center' }}>
-        <IconButton color="inherit" href="https://www.instagram.com/kristujayanticollegeautonomous?igsh=YXg2MXFkZXhheHl6" sx={{ mx: 0.5, p: 0.5 }}> 
-          <InstagramIcon fontSize="small" /> 
+        <IconButton color="inherit" href="https://www.instagram.com/kristujayanticollegeautonomous?igsh=YXg2MXFkZXhheHl6" sx={{ mx: 0.5, p: 0.5 }}>
+          <InstagramIcon fontSize="small" />
         </IconButton>
         <IconButton color="inherit" href="https://kristujayanti.edu.in/home/" sx={{ mx: 0.5, p: 0.5 }}>
           <PublicIcon fontSize="small" />

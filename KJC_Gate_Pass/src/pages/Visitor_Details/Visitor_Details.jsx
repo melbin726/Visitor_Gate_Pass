@@ -4,7 +4,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner.jsx";
 import CompleteSidebar from "../../components/SideBarNavi/CompleteSidebar.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import VisitorTable2 from "./VisitorTable2.jsx";
-import Download_Button from "./Download_Button.jsx"; 
+import Download_Button from "./Download_Button.jsx";
 import axios from "axios";
 import { API_BASE_URL } from "../../library/helper.js";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -63,7 +63,7 @@ const Visitor_Details = () => {
         <CompleteSidebar isActive="visitorDetails" />
         <main
           className="mainContent"
-          style={{ flexGrow: 1, paddingBottom: "80px" }} 
+          style={{ flexGrow: 1, paddingBottom: "80px" }}
         >
           <Container
             maxWidth="lg"
@@ -71,15 +71,15 @@ const Visitor_Details = () => {
               backgroundColor: "transparent",
               padding: { xs: 2, sm: 3, md: 4 },
               minHeight: "100vh",
-              paddingBottom: "120px", 
+              paddingBottom: "120px",
             }}
           >
-            <Typography variant="h4"sx={{
+            <Typography variant="h4" sx={{
               marginBottom: 2,
               fontSize: {
-                xs: '1.5rem', 
-                sm: '2rem',  
-                md: '2.125rem', 
+                xs: '1.5rem',
+                sm: '2rem',
+                md: '2.125rem',
               },
             }}>
               Visitor Details
@@ -88,8 +88,8 @@ const Visitor_Details = () => {
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "flex-end", 
-                alignItems: "center",       
+                justifyContent: "flex-end",
+                alignItems: "center",
                 marginBottom: 3,
               }}
             >
@@ -118,8 +118,8 @@ const Visitor_Details = () => {
                   },
                   marginRight: 2,
                   padding: {
-                    xs: '6px 8px', 
-                    sm: '8px 12px', 
+                    xs: '6px 8px',
+                    sm: '8px 12px',
                   },
                 }}
               />
@@ -132,7 +132,7 @@ const Visitor_Details = () => {
               ) : filteredVisitors.length === 0 ? (
                 <Typography variant="h6">No Visitor Found!</Typography>
               ) : (
-                <VisitorTable2 visitors={filteredVisitors} /> 
+                <VisitorTable2 visitors={filteredVisitors} />
               )}
             </Box>
           </Container>

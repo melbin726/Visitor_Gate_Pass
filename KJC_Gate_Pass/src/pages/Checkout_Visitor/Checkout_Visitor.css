@@ -1,24 +1,21 @@
-/*Checkout_Visitor.css */
-
-/* General reset and base styling */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
+  box-sizing: border-box;
 }
 
-/* Full viewport height and width for main content */
+
 .totalContent {
   width: 100vw !important;
   height: 100vh !important;
 }
 
-/* Sidebar styling */
+
 .fakeSideBAr {
   width: 175px;
 }
 
-/* Main content area flexbox */
+
 .mainContent {
   display: flex;
   justify-content: center;
@@ -28,7 +25,6 @@
   padding: 10px;
 }
 
-/* Form container */
 .checkout-register-form {
   display: inline-flex;
   flex-direction: column;
@@ -41,9 +37,10 @@
 }
 
 .checkout-register-form .left-section-form {
-  /* flex: 1 0 100px; */
+
   flex: 2;
 }
+
 .fetch-ids {
   display: flex;
   flex-direction: row;
@@ -82,14 +79,14 @@
 }
 
 .checkout-register-form .photo {
-  width: 300px; /* Adjust width as needed, e.g., 300px or 400px */
+  width: 300px;
   min-width: 300px;
-  height: 180px; /* Maintain aspect ratio */
+  height: 180px;
   min-height: 150px;
-  max-width: 400px; /* Optional: constrain maximum width */
-  border: 1px solid #c2c2c2; /* Optional: border for the webcam feed */
-  border-radius: 5px; /* Optional: rounded corners */
-  background-color: #ffffff; /* Black background for the webcam feed */
+  max-width: 400px;
+  border: 1px solid #c2c2c2;
+  border-radius: 5px;
+  background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
